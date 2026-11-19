@@ -1,0 +1,9 @@
+{
+  "model_version": "churn-xgboost-smote-isotonic-v1",
+  "n": 200,
+  "mean_ms": 66.04,
+  "p50_ms": 64.07,
+  "p95_ms": 77.47,
+  "p99_ms": 93.4,
+  "note": "In-process TestClient on this VM (1.5 shared CPUs). Includes HTTP handling and the SQLite log write."
+}

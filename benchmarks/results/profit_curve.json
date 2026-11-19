@@ -1,0 +1,3998 @@
+[
+  {
+    "threshold": 0.0,
+    "tp": 374,
+    "fp": 1035,
+    "profit": 116550.0
+  },
+  {
+    "threshold": 0.0002,
+    "tp": 374,
+    "fp": 1019,
+    "profit": 117350.0
+  },
+  {
+    "threshold": 0.0003,
+    "tp": 374,
+    "fp": 1017,
+    "profit": 117450.0
+  },
+  {
+    "threshold": 0.0035,
+    "tp": 374,
+    "fp": 1017,
+    "profit": 117450.0
+  },
+  {
+    "threshold": 0.004,
+    "tp": 374,
+    "fp": 1010,
+    "profit": 117800.0
+  },
+  {
+    "threshold": 0.0041,
+    "tp": 374,
+    "fp": 1007,
+    "profit": 117950.0
+  },
+  {
+    "threshold": 0.0055,
+    "tp": 374,
+    "fp": 1005,
+    "profit": 118050.0
+  },
+  {
+    "threshold": 0.0056,
+    "tp": 374,
+    "fp": 1004,
+    "profit": 118100.0
+  },
+  {
+    "threshold": 0.0072,
+    "tp": 374,
+    "fp": 1004,
+    "profit": 118100.0
+  },
+  {
+    "threshold": 0.0075,
+    "tp": 374,
+    "fp": 1003,
+    "profit": 118150.0
+  },
+  {
+    "threshold": 0.0076,
+    "tp": 374,
+    "fp": 998,
+    "profit": 118400.0
+  },
+  {
+    "threshold": 0.0081,
+    "tp": 374,
+    "fp": 994,
+    "profit": 118600.0
+  },
+  {
+    "threshold": 0.0095,
+    "tp": 374,
+    "fp": 979,
+    "profit": 119350.0
+  },
+  {
+    "threshold": 0.0096,
+    "tp": 374,
+    "fp": 976,
+    "profit": 119500.0
+  },
+  {
+    "threshold": 0.0113,
+    "tp": 374,
+    "fp": 974,
+    "profit": 119600.0
+  },
+  {
+    "threshold": 0.0116,
+    "tp": 374,
+    "fp": 974,
+    "profit": 119600.0
+  },
+  {
+    "threshold": 0.012,
+    "tp": 373,
+    "fp": 928,
+    "profit": 121450.0
+  },
+  {
+    "threshold": 0.0136,
+    "tp": 372,
+    "fp": 900,
+    "profit": 122400.0
+  },
+  {
+    "threshold": 0.0137,
+    "tp": 372,
+    "fp": 884,
+    "profit": 123200.0
+  },
+  {
+    "threshold": 0.0154,
+    "tp": 372,
+    "fp": 873,
+    "profit": 123750.0
+  },
+  {
+    "threshold": 0.016,
+    "tp": 372,
+    "fp": 873,
+    "profit": 123750.0
+  },
+  {
+    "threshold": 0.0177,
+    "tp": 372,
+    "fp": 872,
+    "profit": 123800.0
+  },
+  {
+    "threshold": 0.0197,
+    "tp": 372,
+    "fp": 864,
+    "profit": 124200.0
+  },
+  {
+    "threshold": 0.0198,
+    "tp": 372,
+    "fp": 863,
+    "profit": 124250.0
+  },
+  {
+    "threshold": 0.02,
+    "tp": 372,
+    "fp": 863,
+    "profit": 124250.0
+  },
+  {
+    "threshold": 0.0212,
+    "tp": 372,
+    "fp": 818,
+    "profit": 126500.0
+  },
+  {
+    "threshold": 0.0221,
+    "tp": 372,
+    "fp": 811,
+    "profit": 126850.0
+  },
+  {
+    "threshold": 0.0232,
+    "tp": 371,
+    "fp": 807,
+    "profit": 126600.0
+  },
+  {
+    "threshold": 0.0233,
+    "tp": 371,
+    "fp": 800,
+    "profit": 126950.0
+  },
+  {
+    "threshold": 0.0249,
+    "tp": 371,
+    "fp": 800,
+    "profit": 126950.0
+  },
+  {
+    "threshold": 0.0255,
+    "tp": 371,
+    "fp": 797,
+    "profit": 127100.0
+  },
+  {
+    "threshold": 0.0261,
+    "tp": 371,
+    "fp": 796,
+    "profit": 127150.0
+  },
+  {
+    "threshold": 0.0296,
+    "tp": 370,
+    "fp": 793,
+    "profit": 126850.0
+  },
+  {
+    "threshold": 0.0299,
+    "tp": 370,
+    "fp": 778,
+    "profit": 127600.0
+  },
+  {
+    "threshold": 0.0314,
+    "tp": 369,
+    "fp": 772,
+    "profit": 127450.0
+  },
+  {
+    "threshold": 0.0317,
+    "tp": 369,
+    "fp": 771,
+    "profit": 127500.0
+  },
+  {
+    "threshold": 0.0334,
+    "tp": 369,
+    "fp": 767,
+    "profit": 127700.0
+  },
+  {
+    "threshold": 0.0335,
+    "tp": 369,
+    "fp": 764,
+    "profit": 127850.0
+  },
+  {
+    "threshold": 0.035,
+    "tp": 369,
+    "fp": 764,
+    "profit": 127850.0
+  },
+  {
+    "threshold": 0.0352,
+    "tp": 369,
+    "fp": 761,
+    "profit": 128000.0
+  },
+  {
+    "threshold": 0.0362,
+    "tp": 369,
+    "fp": 761,
+    "profit": 128000.0
+  },
+  {
+    "threshold": 0.037,
+    "tp": 369,
+    "fp": 758,
+    "profit": 128150.0
+  },
+  {
+    "threshold": 0.0371,
+    "tp": 369,
+    "fp": 757,
+    "profit": 128200.0
+  },
+  {
+    "threshold": 0.038,
+    "tp": 369,
+    "fp": 757,
+    "profit": 128200.0
+  },
+  {
+    "threshold": 0.0381,
+    "tp": 369,
+    "fp": 751,
+    "profit": 128500.0
+  },
+  {
+    "threshold": 0.0388,
+    "tp": 369,
+    "fp": 747,
+    "profit": 128700.0
+  },
+  {
+    "threshold": 0.0394,
+    "tp": 369,
+    "fp": 746,
+    "profit": 128750.0
+  },
+  {
+    "threshold": 0.0395,
+    "tp": 369,
+    "fp": 746,
+    "profit": 128750.0
+  },
+  {
+    "threshold": 0.0398,
+    "tp": 368,
+    "fp": 744,
+    "profit": 128400.0
+  },
+  {
+    "threshold": 0.0427,
+    "tp": 367,
+    "fp": 738,
+    "profit": 128250.0
+  },
+  {
+    "threshold": 0.0428,
+    "tp": 367,
+    "fp": 738,
+    "profit": 128250.0
+  },
+  {
+    "threshold": 0.0434,
+    "tp": 367,
+    "fp": 735,
+    "profit": 128400.0
+  },
+  {
+    "threshold": 0.0455,
+    "tp": 367,
+    "fp": 726,
+    "profit": 128850.0
+  },
+  {
+    "threshold": 0.0469,
+    "tp": 367,
+    "fp": 726,
+    "profit": 128850.0
+  },
+  {
+    "threshold": 0.0473,
+    "tp": 366,
+    "fp": 725,
+    "profit": 128450.0
+  },
+  {
+    "threshold": 0.0478,
+    "tp": 366,
+    "fp": 725,
+    "profit": 128450.0
+  },
+  {
+    "threshold": 0.048,
+    "tp": 366,
+    "fp": 723,
+    "profit": 128550.0
+  },
+  {
+    "threshold": 0.0483,
+    "tp": 366,
+    "fp": 721,
+    "profit": 128650.0
+  },
+  {
+    "threshold": 0.049,
+    "tp": 366,
+    "fp": 720,
+    "profit": 128700.0
+  },
+  {
+    "threshold": 0.0497,
+    "tp": 366,
+    "fp": 720,
+    "profit": 128700.0
+  },
+  {
+    "threshold": 0.05,
+    "tp": 365,
+    "fp": 719,
+    "profit": 128300.0
+  },
+  {
+    "threshold": 0.051,
+    "tp": 365,
+    "fp": 717,
+    "profit": 128400.0
+  },
+  {
+    "threshold": 0.0512,
+    "tp": 365,
+    "fp": 716,
+    "profit": 128450.0
+  },
+  {
+    "threshold": 0.0519,
+    "tp": 365,
+    "fp": 716,
+    "profit": 128450.0
+  },
+  {
+    "threshold": 0.0524,
+    "tp": 365,
+    "fp": 704,
+    "profit": 129050.0
+  },
+  {
+    "threshold": 0.0526,
+    "tp": 365,
+    "fp": 702,
+    "profit": 129150.0
+  },
+  {
+    "threshold": 0.0527,
+    "tp": 365,
+    "fp": 702,
+    "profit": 129150.0
+  },
+  {
+    "threshold": 0.053,
+    "tp": 365,
+    "fp": 701,
+    "profit": 129200.0
+  },
+  {
+    "threshold": 0.0533,
+    "tp": 365,
+    "fp": 698,
+    "profit": 129350.0
+  },
+  {
+    "threshold": 0.0541,
+    "tp": 363,
+    "fp": 692,
+    "profit": 128750.0
+  },
+  {
+    "threshold": 0.0543,
+    "tp": 363,
+    "fp": 691,
+    "profit": 128800.0
+  },
+  {
+    "threshold": 0.0569,
+    "tp": 363,
+    "fp": 689,
+    "profit": 128900.0
+  },
+  {
+    "threshold": 0.0571,
+    "tp": 363,
+    "fp": 688,
+    "profit": 128950.0
+  },
+  {
+    "threshold": 0.0574,
+    "tp": 363,
+    "fp": 688,
+    "profit": 128950.0
+  },
+  {
+    "threshold": 0.0582,
+    "tp": 363,
+    "fp": 679,
+    "profit": 129400.0
+  },
+  {
+    "threshold": 0.0587,
+    "tp": 363,
+    "fp": 678,
+    "profit": 129450.0
+  },
+  {
+    "threshold": 0.0588,
+    "tp": 363,
+    "fp": 677,
+    "profit": 129500.0
+  },
+  {
+    "threshold": 0.059,
+    "tp": 363,
+    "fp": 677,
+    "profit": 129500.0
+  },
+  {
+    "threshold": 0.0592,
+    "tp": 363,
+    "fp": 675,
+    "profit": 129600.0
+  },
+  {
+    "threshold": 0.0612,
+    "tp": 363,
+    "fp": 675,
+    "profit": 129600.0
+  },
+  {
+    "threshold": 0.0615,
+    "tp": 363,
+    "fp": 674,
+    "profit": 129650.0
+  },
+  {
+    "threshold": 0.0618,
+    "tp": 363,
+    "fp": 668,
+    "profit": 129950.0
+  },
+  {
+    "threshold": 0.0623,
+    "tp": 363,
+    "fp": 659,
+    "profit": 130400.0
+  },
+  {
+    "threshold": 0.0626,
+    "tp": 363,
+    "fp": 658,
+    "profit": 130450.0
+  },
+  {
+    "threshold": 0.0628,
+    "tp": 363,
+    "fp": 653,
+    "profit": 130700.0
+  },
+  {
+    "threshold": 0.0629,
+    "tp": 363,
+    "fp": 652,
+    "profit": 130750.0
+  },
+  {
+    "threshold": 0.0637,
+    "tp": 363,
+    "fp": 647,
+    "profit": 131000.0
+  },
+  {
+    "threshold": 0.064,
+    "tp": 363,
+    "fp": 647,
+    "profit": 131000.0
+  },
+  {
+    "threshold": 0.0642,
+    "tp": 363,
+    "fp": 644,
+    "profit": 131150.0
+  },
+  {
+    "threshold": 0.0656,
+    "tp": 363,
+    "fp": 644,
+    "profit": 131150.0
+  },
+  {
+    "threshold": 0.0676,
+    "tp": 363,
+    "fp": 643,
+    "profit": 131200.0
+  },
+  {
+    "threshold": 0.0678,
+    "tp": 363,
+    "fp": 639,
+    "profit": 131400.0
+  },
+  {
+    "threshold": 0.0711,
+    "tp": 363,
+    "fp": 639,
+    "profit": 131400.0
+  },
+  {
+    "threshold": 0.0713,
+    "tp": 363,
+    "fp": 636,
+    "profit": 131550.0
+  },
+  {
+    "threshold": 0.0714,
+    "tp": 363,
+    "fp": 636,
+    "profit": 131550.0
+  },
+  {
+    "threshold": 0.0716,
+    "tp": 363,
+    "fp": 633,
+    "profit": 131700.0
+  },
+  {
+    "threshold": 0.0724,
+    "tp": 363,
+    "fp": 631,
+    "profit": 131800.0
+  },
+  {
+    "threshold": 0.0725,
+    "tp": 363,
+    "fp": 629,
+    "profit": 131900.0
+  },
+  {
+    "threshold": 0.0729,
+    "tp": 363,
+    "fp": 628,
+    "profit": 131950.0
+  },
+  {
+    "threshold": 0.0736,
+    "tp": 363,
+    "fp": 628,
+    "profit": 131950.0
+  },
+  {
+    "threshold": 0.0739,
+    "tp": 363,
+    "fp": 625,
+    "profit": 132100.0
+  },
+  {
+    "threshold": 0.0758,
+    "tp": 363,
+    "fp": 624,
+    "profit": 132150.0
+  },
+  {
+    "threshold": 0.0761,
+    "tp": 363,
+    "fp": 622,
+    "profit": 132250.0
+  },
+  {
+    "threshold": 0.0766,
+    "tp": 363,
+    "fp": 614,
+    "profit": 132650.0
+  },
+  {
+    "threshold": 0.0767,
+    "tp": 363,
+    "fp": 613,
+    "profit": 132700.0
+  },
+  {
+    "threshold": 0.0775,
+    "tp": 363,
+    "fp": 612,
+    "profit": 132750.0
+  },
+  {
+    "threshold": 0.0793,
+    "tp": 361,
+    "fp": 612,
+    "profit": 131850.0
+  },
+  {
+    "threshold": 0.0808,
+    "tp": 361,
+    "fp": 610,
+    "profit": 131950.0
+  },
+  {
+    "threshold": 0.0809,
+    "tp": 360,
+    "fp": 609,
+    "profit": 131550.0
+  },
+  {
+    "threshold": 0.0821,
+    "tp": 360,
+    "fp": 608,
+    "profit": 131600.0
+  },
+  {
+    "threshold": 0.0822,
+    "tp": 360,
+    "fp": 608,
+    "profit": 131600.0
+  },
+  {
+    "threshold": 0.0827,
+    "tp": 360,
+    "fp": 606,
+    "profit": 131700.0
+  },
+  {
+    "threshold": 0.083,
+    "tp": 360,
+    "fp": 606,
+    "profit": 131700.0
+  },
+  {
+    "threshold": 0.0837,
+    "tp": 360,
+    "fp": 605,
+    "profit": 131750.0
+  },
+  {
+    "threshold": 0.0848,
+    "tp": 360,
+    "fp": 602,
+    "profit": 131900.0
+  },
+  {
+    "threshold": 0.0856,
+    "tp": 360,
+    "fp": 598,
+    "profit": 132100.0
+  },
+  {
+    "threshold": 0.0857,
+    "tp": 360,
+    "fp": 598,
+    "profit": 132100.0
+  },
+  {
+    "threshold": 0.086,
+    "tp": 359,
+    "fp": 596,
+    "profit": 131750.0
+  },
+  {
+    "threshold": 0.0863,
+    "tp": 359,
+    "fp": 592,
+    "profit": 131950.0
+  },
+  {
+    "threshold": 0.0865,
+    "tp": 359,
+    "fp": 591,
+    "profit": 132000.0
+  },
+  {
+    "threshold": 0.0867,
+    "tp": 359,
+    "fp": 590,
+    "profit": 132050.0
+  },
+  {
+    "threshold": 0.0871,
+    "tp": 359,
+    "fp": 590,
+    "profit": 132050.0
+  },
+  {
+    "threshold": 0.0874,
+    "tp": 359,
+    "fp": 587,
+    "profit": 132200.0
+  },
+  {
+    "threshold": 0.0904,
+    "tp": 358,
+    "fp": 579,
+    "profit": 132150.0
+  },
+  {
+    "threshold": 0.0905,
+    "tp": 358,
+    "fp": 579,
+    "profit": 132150.0
+  },
+  {
+    "threshold": 0.0926,
+    "tp": 358,
+    "fp": 578,
+    "profit": 132200.0
+  },
+  {
+    "threshold": 0.0933,
+    "tp": 358,
+    "fp": 574,
+    "profit": 132400.0
+  },
+  {
+    "threshold": 0.0934,
+    "tp": 357,
+    "fp": 570,
+    "profit": 132150.0
+  },
+  {
+    "threshold": 0.0943,
+    "tp": 357,
+    "fp": 569,
+    "profit": 132200.0
+  },
+  {
+    "threshold": 0.095,
+    "tp": 357,
+    "fp": 568,
+    "profit": 132250.0
+  },
+  {
+    "threshold": 0.0952,
+    "tp": 355,
+    "fp": 566,
+    "profit": 131450.0
+  },
+  {
+    "threshold": 0.0956,
+    "tp": 354,
+    "fp": 566,
+    "profit": 131000.0
+  },
+  {
+    "threshold": 0.0957,
+    "tp": 354,
+    "fp": 566,
+    "profit": 131000.0
+  },
+  {
+    "threshold": 0.0969,
+    "tp": 354,
+    "fp": 563,
+    "profit": 131150.0
+  },
+  {
+    "threshold": 0.097,
+    "tp": 354,
+    "fp": 563,
+    "profit": 131150.0
+  },
+  {
+    "threshold": 0.098,
+    "tp": 354,
+    "fp": 558,
+    "profit": 131400.0
+  },
+  {
+    "threshold": 0.0989,
+    "tp": 354,
+    "fp": 556,
+    "profit": 131500.0
+  },
+  {
+    "threshold": 0.099,
+    "tp": 354,
+    "fp": 554,
+    "profit": 131600.0
+  },
+  {
+    "threshold": 0.1003,
+    "tp": 354,
+    "fp": 552,
+    "profit": 131700.0
+  },
+  {
+    "threshold": 0.103,
+    "tp": 354,
+    "fp": 552,
+    "profit": 131700.0
+  },
+  {
+    "threshold": 0.1033,
+    "tp": 354,
+    "fp": 549,
+    "profit": 131850.0
+  },
+  {
+    "threshold": 0.1045,
+    "tp": 354,
+    "fp": 548,
+    "profit": 131900.0
+  },
+  {
+    "threshold": 0.1053,
+    "tp": 354,
+    "fp": 547,
+    "profit": 131950.0
+  },
+  {
+    "threshold": 0.1065,
+    "tp": 352,
+    "fp": 540,
+    "profit": 131400.0
+  },
+  {
+    "threshold": 0.1066,
+    "tp": 352,
+    "fp": 539,
+    "profit": 131450.0
+  },
+  {
+    "threshold": 0.1076,
+    "tp": 352,
+    "fp": 539,
+    "profit": 131450.0
+  },
+  {
+    "threshold": 0.1082,
+    "tp": 352,
+    "fp": 537,
+    "profit": 131550.0
+  },
+  {
+    "threshold": 0.1086,
+    "tp": 352,
+    "fp": 537,
+    "profit": 131550.0
+  },
+  {
+    "threshold": 0.1093,
+    "tp": 352,
+    "fp": 536,
+    "profit": 131600.0
+  },
+  {
+    "threshold": 0.1097,
+    "tp": 351,
+    "fp": 533,
+    "profit": 131300.0
+  },
+  {
+    "threshold": 0.1099,
+    "tp": 351,
+    "fp": 529,
+    "profit": 131500.0
+  },
+  {
+    "threshold": 0.1104,
+    "tp": 350,
+    "fp": 529,
+    "profit": 131050.0
+  },
+  {
+    "threshold": 0.1107,
+    "tp": 350,
+    "fp": 528,
+    "profit": 131100.0
+  },
+  {
+    "threshold": 0.1108,
+    "tp": 350,
+    "fp": 527,
+    "profit": 131150.0
+  },
+  {
+    "threshold": 0.1133,
+    "tp": 350,
+    "fp": 525,
+    "profit": 131250.0
+  },
+  {
+    "threshold": 0.1141,
+    "tp": 350,
+    "fp": 525,
+    "profit": 131250.0
+  },
+  {
+    "threshold": 0.1152,
+    "tp": 350,
+    "fp": 523,
+    "profit": 131350.0
+  },
+  {
+    "threshold": 0.1159,
+    "tp": 350,
+    "fp": 522,
+    "profit": 131400.0
+  },
+  {
+    "threshold": 0.1166,
+    "tp": 350,
+    "fp": 521,
+    "profit": 131450.0
+  },
+  {
+    "threshold": 0.1169,
+    "tp": 350,
+    "fp": 521,
+    "profit": 131450.0
+  },
+  {
+    "threshold": 0.1178,
+    "tp": 349,
+    "fp": 520,
+    "profit": 131050.0
+  },
+  {
+    "threshold": 0.1183,
+    "tp": 349,
+    "fp": 519,
+    "profit": 131100.0
+  },
+  {
+    "threshold": 0.1189,
+    "tp": 349,
+    "fp": 519,
+    "profit": 131100.0
+  },
+  {
+    "threshold": 0.1193,
+    "tp": 348,
+    "fp": 514,
+    "profit": 130900.0
+  },
+  {
+    "threshold": 0.1204,
+    "tp": 346,
+    "fp": 510,
+    "profit": 130200.0
+  },
+  {
+    "threshold": 0.1206,
+    "tp": 346,
+    "fp": 507,
+    "profit": 130350.0
+  },
+  {
+    "threshold": 0.1212,
+    "tp": 346,
+    "fp": 507,
+    "profit": 130350.0
+  },
+  {
+    "threshold": 0.1222,
+    "tp": 345,
+    "fp": 505,
+    "profit": 130000.0
+  },
+  {
+    "threshold": 0.1245,
+    "tp": 345,
+    "fp": 504,
+    "profit": 130050.0
+  },
+  {
+    "threshold": 0.1246,
+    "tp": 345,
+    "fp": 504,
+    "profit": 130050.0
+  },
+  {
+    "threshold": 0.1248,
+    "tp": 345,
+    "fp": 500,
+    "profit": 130250.0
+  },
+  {
+    "threshold": 0.1264,
+    "tp": 345,
+    "fp": 499,
+    "profit": 130300.0
+  },
+  {
+    "threshold": 0.1267,
+    "tp": 345,
+    "fp": 498,
+    "profit": 130350.0
+  },
+  {
+    "threshold": 0.1279,
+    "tp": 344,
+    "fp": 496,
+    "profit": 130000.0
+  },
+  {
+    "threshold": 0.1284,
+    "tp": 344,
+    "fp": 496,
+    "profit": 130000.0
+  },
+  {
+    "threshold": 0.13,
+    "tp": 343,
+    "fp": 494,
+    "profit": 129650.0
+  },
+  {
+    "threshold": 0.1306,
+    "tp": 341,
+    "fp": 489,
+    "profit": 129000.0
+  },
+  {
+    "threshold": 0.1318,
+    "tp": 341,
+    "fp": 489,
+    "profit": 129000.0
+  },
+  {
+    "threshold": 0.1329,
+    "tp": 341,
+    "fp": 484,
+    "profit": 129250.0
+  },
+  {
+    "threshold": 0.1331,
+    "tp": 341,
+    "fp": 484,
+    "profit": 129250.0
+  },
+  {
+    "threshold": 0.1336,
+    "tp": 341,
+    "fp": 481,
+    "profit": 129400.0
+  },
+  {
+    "threshold": 0.1341,
+    "tp": 341,
+    "fp": 480,
+    "profit": 129450.0
+  },
+  {
+    "threshold": 0.1363,
+    "tp": 341,
+    "fp": 479,
+    "profit": 129500.0
+  },
+  {
+    "threshold": 0.1375,
+    "tp": 341,
+    "fp": 478,
+    "profit": 129550.0
+  },
+  {
+    "threshold": 0.1384,
+    "tp": 341,
+    "fp": 478,
+    "profit": 129550.0
+  },
+  {
+    "threshold": 0.1386,
+    "tp": 341,
+    "fp": 476,
+    "profit": 129650.0
+  },
+  {
+    "threshold": 0.1394,
+    "tp": 341,
+    "fp": 475,
+    "profit": 129700.0
+  },
+  {
+    "threshold": 0.1397,
+    "tp": 341,
+    "fp": 475,
+    "profit": 129700.0
+  },
+  {
+    "threshold": 0.141,
+    "tp": 341,
+    "fp": 473,
+    "profit": 129800.0
+  },
+  {
+    "threshold": 0.1415,
+    "tp": 341,
+    "fp": 472,
+    "profit": 129850.0
+  },
+  {
+    "threshold": 0.1419,
+    "tp": 341,
+    "fp": 471,
+    "profit": 129900.0
+  },
+  {
+    "threshold": 0.1425,
+    "tp": 341,
+    "fp": 470,
+    "profit": 129950.0
+  },
+  {
+    "threshold": 0.1427,
+    "tp": 341,
+    "fp": 469,
+    "profit": 130000.0
+  },
+  {
+    "threshold": 0.1429,
+    "tp": 341,
+    "fp": 468,
+    "profit": 130050.0
+  },
+  {
+    "threshold": 0.1448,
+    "tp": 341,
+    "fp": 468,
+    "profit": 130050.0
+  },
+  {
+    "threshold": 0.1449,
+    "tp": 341,
+    "fp": 466,
+    "profit": 130150.0
+  },
+  {
+    "threshold": 0.1454,
+    "tp": 341,
+    "fp": 466,
+    "profit": 130150.0
+  },
+  {
+    "threshold": 0.1459,
+    "tp": 341,
+    "fp": 465,
+    "profit": 130200.0
+  },
+  {
+    "threshold": 0.146,
+    "tp": 341,
+    "fp": 463,
+    "profit": 130300.0
+  },
+  {
+    "threshold": 0.1465,
+    "tp": 341,
+    "fp": 463,
+    "profit": 130300.0
+  },
+  {
+    "threshold": 0.1466,
+    "tp": 341,
+    "fp": 461,
+    "profit": 130400.0
+  },
+  {
+    "threshold": 0.1469,
+    "tp": 341,
+    "fp": 460,
+    "profit": 130450.0
+  },
+  {
+    "threshold": 0.1481,
+    "tp": 341,
+    "fp": 460,
+    "profit": 130450.0
+  },
+  {
+    "threshold": 0.1499,
+    "tp": 341,
+    "fp": 459,
+    "profit": 130500.0
+  },
+  {
+    "threshold": 0.1506,
+    "tp": 340,
+    "fp": 454,
+    "profit": 130300.0
+  },
+  {
+    "threshold": 0.1514,
+    "tp": 340,
+    "fp": 452,
+    "profit": 130400.0
+  },
+  {
+    "threshold": 0.1517,
+    "tp": 340,
+    "fp": 450,
+    "profit": 130500.0
+  },
+  {
+    "threshold": 0.1522,
+    "tp": 340,
+    "fp": 449,
+    "profit": 130550.0
+  },
+  {
+    "threshold": 0.1526,
+    "tp": 340,
+    "fp": 449,
+    "profit": 130550.0
+  },
+  {
+    "threshold": 0.1544,
+    "tp": 340,
+    "fp": 448,
+    "profit": 130600.0
+  },
+  {
+    "threshold": 0.1548,
+    "tp": 339,
+    "fp": 446,
+    "profit": 130250.0
+  },
+  {
+    "threshold": 0.1559,
+    "tp": 339,
+    "fp": 445,
+    "profit": 130300.0
+  },
+  {
+    "threshold": 0.157,
+    "tp": 339,
+    "fp": 445,
+    "profit": 130300.0
+  },
+  {
+    "threshold": 0.1577,
+    "tp": 339,
+    "fp": 444,
+    "profit": 130350.0
+  },
+  {
+    "threshold": 0.1579,
+    "tp": 339,
+    "fp": 436,
+    "profit": 130750.0
+  },
+  {
+    "threshold": 0.1581,
+    "tp": 339,
+    "fp": 435,
+    "profit": 130800.0
+  },
+  {
+    "threshold": 0.1583,
+    "tp": 339,
+    "fp": 432,
+    "profit": 130950.0
+  },
+  {
+    "threshold": 0.1588,
+    "tp": 339,
+    "fp": 432,
+    "profit": 130950.0
+  },
+  {
+    "threshold": 0.1598,
+    "tp": 338,
+    "fp": 429,
+    "profit": 130650.0
+  },
+  {
+    "threshold": 0.1606,
+    "tp": 338,
+    "fp": 429,
+    "profit": 130650.0
+  },
+  {
+    "threshold": 0.1618,
+    "tp": 338,
+    "fp": 427,
+    "profit": 130750.0
+  },
+  {
+    "threshold": 0.1629,
+    "tp": 338,
+    "fp": 425,
+    "profit": 130850.0
+  },
+  {
+    "threshold": 0.163,
+    "tp": 338,
+    "fp": 425,
+    "profit": 130850.0
+  },
+  {
+    "threshold": 0.1633,
+    "tp": 338,
+    "fp": 421,
+    "profit": 131050.0
+  },
+  {
+    "threshold": 0.1649,
+    "tp": 338,
+    "fp": 421,
+    "profit": 131050.0
+  },
+  {
+    "threshold": 0.1654,
+    "tp": 338,
+    "fp": 420,
+    "profit": 131100.0
+  },
+  {
+    "threshold": 0.1677,
+    "tp": 338,
+    "fp": 417,
+    "profit": 131250.0
+  },
+  {
+    "threshold": 0.1684,
+    "tp": 338,
+    "fp": 417,
+    "profit": 131250.0
+  },
+  {
+    "threshold": 0.1685,
+    "tp": 337,
+    "fp": 412,
+    "profit": 131050.0
+  },
+  {
+    "threshold": 0.1696,
+    "tp": 337,
+    "fp": 410,
+    "profit": 131150.0
+  },
+  {
+    "threshold": 0.1698,
+    "tp": 337,
+    "fp": 410,
+    "profit": 131150.0
+  },
+  {
+    "threshold": 0.1702,
+    "tp": 337,
+    "fp": 408,
+    "profit": 131250.0
+  },
+  {
+    "threshold": 0.1706,
+    "tp": 336,
+    "fp": 408,
+    "profit": 130800.0
+  },
+  {
+    "threshold": 0.1707,
+    "tp": 336,
+    "fp": 407,
+    "profit": 130850.0
+  },
+  {
+    "threshold": 0.1711,
+    "tp": 336,
+    "fp": 405,
+    "profit": 130950.0
+  },
+  {
+    "threshold": 0.1727,
+    "tp": 335,
+    "fp": 403,
+    "profit": 130600.0
+  },
+  {
+    "threshold": 0.1728,
+    "tp": 335,
+    "fp": 402,
+    "profit": 130650.0
+  },
+  {
+    "threshold": 0.1737,
+    "tp": 335,
+    "fp": 402,
+    "profit": 130650.0
+  },
+  {
+    "threshold": 0.1759,
+    "tp": 333,
+    "fp": 400,
+    "profit": 129850.0
+  },
+  {
+    "threshold": 0.1763,
+    "tp": 333,
+    "fp": 400,
+    "profit": 129850.0
+  },
+  {
+    "threshold": 0.1768,
+    "tp": 333,
+    "fp": 398,
+    "profit": 129950.0
+  },
+  {
+    "threshold": 0.1781,
+    "tp": 333,
+    "fp": 398,
+    "profit": 129950.0
+  },
+  {
+    "threshold": 0.1795,
+    "tp": 333,
+    "fp": 397,
+    "profit": 130000.0
+  },
+  {
+    "threshold": 0.1799,
+    "tp": 332,
+    "fp": 396,
+    "profit": 129600.0
+  },
+  {
+    "threshold": 0.1802,
+    "tp": 332,
+    "fp": 395,
+    "profit": 129650.0
+  },
+  {
+    "threshold": 0.1804,
+    "tp": 332,
+    "fp": 394,
+    "profit": 129700.0
+  },
+  {
+    "threshold": 0.1805,
+    "tp": 331,
+    "fp": 394,
+    "profit": 129250.0
+  },
+  {
+    "threshold": 0.1814,
+    "tp": 331,
+    "fp": 394,
+    "profit": 129250.0
+  },
+  {
+    "threshold": 0.1835,
+    "tp": 330,
+    "fp": 389,
+    "profit": 129050.0
+  },
+  {
+    "threshold": 0.1836,
+    "tp": 330,
+    "fp": 388,
+    "profit": 129100.0
+  },
+  {
+    "threshold": 0.1841,
+    "tp": 330,
+    "fp": 387,
+    "profit": 129150.0
+  },
+  {
+    "threshold": 0.1845,
+    "tp": 330,
+    "fp": 387,
+    "profit": 129150.0
+  },
+  {
+    "threshold": 0.1855,
+    "tp": 329,
+    "fp": 387,
+    "profit": 128700.0
+  },
+  {
+    "threshold": 0.1865,
+    "tp": 328,
+    "fp": 385,
+    "profit": 128350.0
+  },
+  {
+    "threshold": 0.1876,
+    "tp": 325,
+    "fp": 374,
+    "profit": 127550.0
+  },
+  {
+    "threshold": 0.1891,
+    "tp": 325,
+    "fp": 373,
+    "profit": 127600.0
+  },
+  {
+    "threshold": 0.1894,
+    "tp": 325,
+    "fp": 372,
+    "profit": 127650.0
+  },
+  {
+    "threshold": 0.1911,
+    "tp": 325,
+    "fp": 371,
+    "profit": 127700.0
+  },
+  {
+    "threshold": 0.1933,
+    "tp": 324,
+    "fp": 371,
+    "profit": 127250.0
+  },
+  {
+    "threshold": 0.1946,
+    "tp": 324,
+    "fp": 369,
+    "profit": 127350.0
+  },
+  {
+    "threshold": 0.1948,
+    "tp": 324,
+    "fp": 366,
+    "profit": 127500.0
+  },
+  {
+    "threshold": 0.1959,
+    "tp": 324,
+    "fp": 365,
+    "profit": 127550.0
+  },
+  {
+    "threshold": 0.1962,
+    "tp": 322,
+    "fp": 359,
+    "profit": 126950.0
+  },
+  {
+    "threshold": 0.1965,
+    "tp": 321,
+    "fp": 357,
+    "profit": 126600.0
+  },
+  {
+    "threshold": 0.1973,
+    "tp": 321,
+    "fp": 356,
+    "profit": 126650.0
+  },
+  {
+    "threshold": 0.1977,
+    "tp": 321,
+    "fp": 355,
+    "profit": 126700.0
+  },
+  {
+    "threshold": 0.1983,
+    "tp": 320,
+    "fp": 355,
+    "profit": 126250.0
+  },
+  {
+    "threshold": 0.1987,
+    "tp": 320,
+    "fp": 354,
+    "profit": 126300.0
+  },
+  {
+    "threshold": 0.1988,
+    "tp": 320,
+    "fp": 351,
+    "profit": 126450.0
+  },
+  {
+    "threshold": 0.2005,
+    "tp": 320,
+    "fp": 351,
+    "profit": 126450.0
+  },
+  {
+    "threshold": 0.2008,
+    "tp": 320,
+    "fp": 349,
+    "profit": 126550.0
+  },
+  {
+    "threshold": 0.2022,
+    "tp": 320,
+    "fp": 349,
+    "profit": 126550.0
+  },
+  {
+    "threshold": 0.2048,
+    "tp": 320,
+    "fp": 348,
+    "profit": 126600.0
+  },
+  {
+    "threshold": 0.2053,
+    "tp": 320,
+    "fp": 346,
+    "profit": 126700.0
+  },
+  {
+    "threshold": 0.2055,
+    "tp": 319,
+    "fp": 346,
+    "profit": 126250.0
+  },
+  {
+    "threshold": 0.2061,
+    "tp": 319,
+    "fp": 346,
+    "profit": 126250.0
+  },
+  {
+    "threshold": 0.2067,
+    "tp": 319,
+    "fp": 344,
+    "profit": 126350.0
+  },
+  {
+    "threshold": 0.2072,
+    "tp": 319,
+    "fp": 344,
+    "profit": 126350.0
+  },
+  {
+    "threshold": 0.2083,
+    "tp": 319,
+    "fp": 342,
+    "profit": 126450.0
+  },
+  {
+    "threshold": 0.2084,
+    "tp": 319,
+    "fp": 342,
+    "profit": 126450.0
+  },
+  {
+    "threshold": 0.2086,
+    "tp": 319,
+    "fp": 341,
+    "profit": 126500.0
+  },
+  {
+    "threshold": 0.2102,
+    "tp": 318,
+    "fp": 340,
+    "profit": 126100.0
+  },
+  {
+    "threshold": 0.2116,
+    "tp": 318,
+    "fp": 339,
+    "profit": 126150.0
+  },
+  {
+    "threshold": 0.2129,
+    "tp": 318,
+    "fp": 336,
+    "profit": 126300.0
+  },
+  {
+    "threshold": 0.2169,
+    "tp": 318,
+    "fp": 335,
+    "profit": 126350.0
+  },
+  {
+    "threshold": 0.2172,
+    "tp": 316,
+    "fp": 332,
+    "profit": 125600.0
+  },
+  {
+    "threshold": 0.2191,
+    "tp": 316,
+    "fp": 331,
+    "profit": 125650.0
+  },
+  {
+    "threshold": 0.2211,
+    "tp": 316,
+    "fp": 330,
+    "profit": 125700.0
+  },
+  {
+    "threshold": 0.2212,
+    "tp": 316,
+    "fp": 329,
+    "profit": 125750.0
+  },
+  {
+    "threshold": 0.2216,
+    "tp": 316,
+    "fp": 328,
+    "profit": 125800.0
+  },
+  {
+    "threshold": 0.2219,
+    "tp": 315,
+    "fp": 328,
+    "profit": 125350.0
+  },
+  {
+    "threshold": 0.2223,
+    "tp": 314,
+    "fp": 326,
+    "profit": 125000.0
+  },
+  {
+    "threshold": 0.2225,
+    "tp": 314,
+    "fp": 326,
+    "profit": 125000.0
+  },
+  {
+    "threshold": 0.2229,
+    "tp": 313,
+    "fp": 324,
+    "profit": 124650.0
+  },
+  {
+    "threshold": 0.2233,
+    "tp": 313,
+    "fp": 323,
+    "profit": 124700.0
+  },
+  {
+    "threshold": 0.2242,
+    "tp": 313,
+    "fp": 322,
+    "profit": 124750.0
+  },
+  {
+    "threshold": 0.2251,
+    "tp": 313,
+    "fp": 320,
+    "profit": 124850.0
+  },
+  {
+    "threshold": 0.2253,
+    "tp": 313,
+    "fp": 318,
+    "profit": 124950.0
+  },
+  {
+    "threshold": 0.2264,
+    "tp": 313,
+    "fp": 318,
+    "profit": 124950.0
+  },
+  {
+    "threshold": 0.228,
+    "tp": 313,
+    "fp": 315,
+    "profit": 125100.0
+  },
+  {
+    "threshold": 0.2291,
+    "tp": 313,
+    "fp": 315,
+    "profit": 125100.0
+  },
+  {
+    "threshold": 0.2309,
+    "tp": 312,
+    "fp": 314,
+    "profit": 124700.0
+  },
+  {
+    "threshold": 0.2318,
+    "tp": 312,
+    "fp": 314,
+    "profit": 124700.0
+  },
+  {
+    "threshold": 0.2326,
+    "tp": 312,
+    "fp": 313,
+    "profit": 124750.0
+  },
+  {
+    "threshold": 0.2328,
+    "tp": 311,
+    "fp": 312,
+    "profit": 124350.0
+  },
+  {
+    "threshold": 0.2339,
+    "tp": 311,
+    "fp": 310,
+    "profit": 124450.0
+  },
+  {
+    "threshold": 0.234,
+    "tp": 311,
+    "fp": 308,
+    "profit": 124550.0
+  },
+  {
+    "threshold": 0.2343,
+    "tp": 310,
+    "fp": 306,
+    "profit": 124200.0
+  },
+  {
+    "threshold": 0.2349,
+    "tp": 310,
+    "fp": 306,
+    "profit": 124200.0
+  },
+  {
+    "threshold": 0.235,
+    "tp": 309,
+    "fp": 306,
+    "profit": 123750.0
+  },
+  {
+    "threshold": 0.238,
+    "tp": 307,
+    "fp": 304,
+    "profit": 122950.0
+  },
+  {
+    "threshold": 0.2431,
+    "tp": 307,
+    "fp": 304,
+    "profit": 122950.0
+  },
+  {
+    "threshold": 0.2435,
+    "tp": 306,
+    "fp": 302,
+    "profit": 122600.0
+  },
+  {
+    "threshold": 0.2439,
+    "tp": 305,
+    "fp": 301,
+    "profit": 122200.0
+  },
+  {
+    "threshold": 0.2442,
+    "tp": 305,
+    "fp": 300,
+    "profit": 122250.0
+  },
+  {
+    "threshold": 0.2446,
+    "tp": 305,
+    "fp": 299,
+    "profit": 122300.0
+  },
+  {
+    "threshold": 0.2447,
+    "tp": 305,
+    "fp": 299,
+    "profit": 122300.0
+  },
+  {
+    "threshold": 0.2448,
+    "tp": 303,
+    "fp": 299,
+    "profit": 121400.0
+  },
+  {
+    "threshold": 0.2481,
+    "tp": 303,
+    "fp": 299,
+    "profit": 121400.0
+  },
+  {
+    "threshold": 0.2486,
+    "tp": 303,
+    "fp": 298,
+    "profit": 121450.0
+  },
+  {
+    "threshold": 0.2497,
+    "tp": 303,
+    "fp": 297,
+    "profit": 121500.0
+  },
+  {
+    "threshold": 0.2506,
+    "tp": 303,
+    "fp": 294,
+    "profit": 121650.0
+  },
+  {
+    "threshold": 0.2512,
+    "tp": 303,
+    "fp": 293,
+    "profit": 121700.0
+  },
+  {
+    "threshold": 0.2524,
+    "tp": 302,
+    "fp": 292,
+    "profit": 121300.0
+  },
+  {
+    "threshold": 0.2534,
+    "tp": 302,
+    "fp": 291,
+    "profit": 121350.0
+  },
+  {
+    "threshold": 0.2559,
+    "tp": 300,
+    "fp": 291,
+    "profit": 120450.0
+  },
+  {
+    "threshold": 0.2565,
+    "tp": 299,
+    "fp": 290,
+    "profit": 120050.0
+  },
+  {
+    "threshold": 0.2583,
+    "tp": 299,
+    "fp": 290,
+    "profit": 120050.0
+  },
+  {
+    "threshold": 0.2586,
+    "tp": 299,
+    "fp": 288,
+    "profit": 120150.0
+  },
+  {
+    "threshold": 0.2587,
+    "tp": 299,
+    "fp": 287,
+    "profit": 120200.0
+  },
+  {
+    "threshold": 0.26,
+    "tp": 298,
+    "fp": 286,
+    "profit": 119800.0
+  },
+  {
+    "threshold": 0.2606,
+    "tp": 296,
+    "fp": 286,
+    "profit": 118900.0
+  },
+  {
+    "threshold": 0.2616,
+    "tp": 296,
+    "fp": 285,
+    "profit": 118950.0
+  },
+  {
+    "threshold": 0.262,
+    "tp": 296,
+    "fp": 284,
+    "profit": 119000.0
+  },
+  {
+    "threshold": 0.2657,
+    "tp": 295,
+    "fp": 282,
+    "profit": 118650.0
+  },
+  {
+    "threshold": 0.2695,
+    "tp": 294,
+    "fp": 281,
+    "profit": 118250.0
+  },
+  {
+    "threshold": 0.2701,
+    "tp": 294,
+    "fp": 280,
+    "profit": 118300.0
+  },
+  {
+    "threshold": 0.2708,
+    "tp": 294,
+    "fp": 280,
+    "profit": 118300.0
+  },
+  {
+    "threshold": 0.2709,
+    "tp": 293,
+    "fp": 280,
+    "profit": 117850.0
+  },
+  {
+    "threshold": 0.2745,
+    "tp": 292,
+    "fp": 279,
+    "profit": 117450.0
+  },
+  {
+    "threshold": 0.2751,
+    "tp": 292,
+    "fp": 277,
+    "profit": 117550.0
+  },
+  {
+    "threshold": 0.2771,
+    "tp": 292,
+    "fp": 277,
+    "profit": 117550.0
+  },
+  {
+    "threshold": 0.2795,
+    "tp": 291,
+    "fp": 277,
+    "profit": 117100.0
+  },
+  {
+    "threshold": 0.2811,
+    "tp": 291,
+    "fp": 276,
+    "profit": 117150.0
+  },
+  {
+    "threshold": 0.2823,
+    "tp": 291,
+    "fp": 271,
+    "profit": 117400.0
+  },
+  {
+    "threshold": 0.2824,
+    "tp": 291,
+    "fp": 271,
+    "profit": 117400.0
+  },
+  {
+    "threshold": 0.2829,
+    "tp": 291,
+    "fp": 268,
+    "profit": 117550.0
+  },
+  {
+    "threshold": 0.283,
+    "tp": 291,
+    "fp": 267,
+    "profit": 117600.0
+  },
+  {
+    "threshold": 0.2831,
+    "tp": 291,
+    "fp": 267,
+    "profit": 117600.0
+  },
+  {
+    "threshold": 0.2845,
+    "tp": 289,
+    "fp": 267,
+    "profit": 116700.0
+  },
+  {
+    "threshold": 0.2863,
+    "tp": 289,
+    "fp": 266,
+    "profit": 116750.0
+  },
+  {
+    "threshold": 0.2873,
+    "tp": 288,
+    "fp": 265,
+    "profit": 116350.0
+  },
+  {
+    "threshold": 0.2881,
+    "tp": 288,
+    "fp": 265,
+    "profit": 116350.0
+  },
+  {
+    "threshold": 0.2888,
+    "tp": 288,
+    "fp": 263,
+    "profit": 116450.0
+  },
+  {
+    "threshold": 0.2892,
+    "tp": 288,
+    "fp": 262,
+    "profit": 116500.0
+  },
+  {
+    "threshold": 0.2909,
+    "tp": 288,
+    "fp": 262,
+    "profit": 116500.0
+  },
+  {
+    "threshold": 0.2929,
+    "tp": 288,
+    "fp": 261,
+    "profit": 116550.0
+  },
+  {
+    "threshold": 0.2931,
+    "tp": 287,
+    "fp": 261,
+    "profit": 116100.0
+  },
+  {
+    "threshold": 0.2934,
+    "tp": 286,
+    "fp": 259,
+    "profit": 115750.0
+  },
+  {
+    "threshold": 0.2938,
+    "tp": 286,
+    "fp": 259,
+    "profit": 115750.0
+  },
+  {
+    "threshold": 0.2963,
+    "tp": 286,
+    "fp": 257,
+    "profit": 115850.0
+  },
+  {
+    "threshold": 0.2964,
+    "tp": 285,
+    "fp": 256,
+    "profit": 115450.0
+  },
+  {
+    "threshold": 0.2969,
+    "tp": 285,
+    "fp": 256,
+    "profit": 115450.0
+  },
+  {
+    "threshold": 0.2976,
+    "tp": 285,
+    "fp": 255,
+    "profit": 115500.0
+  },
+  {
+    "threshold": 0.298,
+    "tp": 284,
+    "fp": 255,
+    "profit": 115050.0
+  },
+  {
+    "threshold": 0.2984,
+    "tp": 283,
+    "fp": 255,
+    "profit": 114600.0
+  },
+  {
+    "threshold": 0.2998,
+    "tp": 282,
+    "fp": 255,
+    "profit": 114150.0
+  },
+  {
+    "threshold": 0.3026,
+    "tp": 282,
+    "fp": 252,
+    "profit": 114300.0
+  },
+  {
+    "threshold": 0.3076,
+    "tp": 282,
+    "fp": 251,
+    "profit": 114350.0
+  },
+  {
+    "threshold": 0.3085,
+    "tp": 282,
+    "fp": 250,
+    "profit": 114400.0
+  },
+  {
+    "threshold": 0.3086,
+    "tp": 280,
+    "fp": 249,
+    "profit": 113550.0
+  },
+  {
+    "threshold": 0.309,
+    "tp": 280,
+    "fp": 248,
+    "profit": 113600.0
+  },
+  {
+    "threshold": 0.3091,
+    "tp": 280,
+    "fp": 245,
+    "profit": 113750.0
+  },
+  {
+    "threshold": 0.3104,
+    "tp": 280,
+    "fp": 245,
+    "profit": 113750.0
+  },
+  {
+    "threshold": 0.3106,
+    "tp": 279,
+    "fp": 244,
+    "profit": 113350.0
+  },
+  {
+    "threshold": 0.311,
+    "tp": 279,
+    "fp": 244,
+    "profit": 113350.0
+  },
+  {
+    "threshold": 0.312,
+    "tp": 277,
+    "fp": 242,
+    "profit": 112550.0
+  },
+  {
+    "threshold": 0.3145,
+    "tp": 277,
+    "fp": 241,
+    "profit": 112600.0
+  },
+  {
+    "threshold": 0.3147,
+    "tp": 275,
+    "fp": 240,
+    "profit": 111750.0
+  },
+  {
+    "threshold": 0.3148,
+    "tp": 275,
+    "fp": 240,
+    "profit": 111750.0
+  },
+  {
+    "threshold": 0.3169,
+    "tp": 275,
+    "fp": 238,
+    "profit": 111850.0
+  },
+  {
+    "threshold": 0.3187,
+    "tp": 273,
+    "fp": 238,
+    "profit": 110950.0
+  },
+  {
+    "threshold": 0.3189,
+    "tp": 273,
+    "fp": 237,
+    "profit": 111000.0
+  },
+  {
+    "threshold": 0.3193,
+    "tp": 272,
+    "fp": 236,
+    "profit": 110600.0
+  },
+  {
+    "threshold": 0.3196,
+    "tp": 272,
+    "fp": 236,
+    "profit": 110600.0
+  },
+  {
+    "threshold": 0.3209,
+    "tp": 270,
+    "fp": 236,
+    "profit": 109700.0
+  },
+  {
+    "threshold": 0.3216,
+    "tp": 270,
+    "fp": 236,
+    "profit": 109700.0
+  },
+  {
+    "threshold": 0.3219,
+    "tp": 270,
+    "fp": 235,
+    "profit": 109750.0
+  },
+  {
+    "threshold": 0.3226,
+    "tp": 270,
+    "fp": 234,
+    "profit": 109800.0
+  },
+  {
+    "threshold": 0.3229,
+    "tp": 269,
+    "fp": 233,
+    "profit": 109400.0
+  },
+  {
+    "threshold": 0.3245,
+    "tp": 269,
+    "fp": 232,
+    "profit": 109450.0
+  },
+  {
+    "threshold": 0.325,
+    "tp": 268,
+    "fp": 230,
+    "profit": 109100.0
+  },
+  {
+    "threshold": 0.3251,
+    "tp": 268,
+    "fp": 229,
+    "profit": 109150.0
+  },
+  {
+    "threshold": 0.3291,
+    "tp": 268,
+    "fp": 228,
+    "profit": 109200.0
+  },
+  {
+    "threshold": 0.3296,
+    "tp": 268,
+    "fp": 227,
+    "profit": 109250.0
+  },
+  {
+    "threshold": 0.3314,
+    "tp": 267,
+    "fp": 226,
+    "profit": 108850.0
+  },
+  {
+    "threshold": 0.3348,
+    "tp": 267,
+    "fp": 225,
+    "profit": 108900.0
+  },
+  {
+    "threshold": 0.3367,
+    "tp": 267,
+    "fp": 224,
+    "profit": 108950.0
+  },
+  {
+    "threshold": 0.3368,
+    "tp": 267,
+    "fp": 223,
+    "profit": 109000.0
+  },
+  {
+    "threshold": 0.3383,
+    "tp": 267,
+    "fp": 223,
+    "profit": 109000.0
+  },
+  {
+    "threshold": 0.3397,
+    "tp": 266,
+    "fp": 223,
+    "profit": 108550.0
+  },
+  {
+    "threshold": 0.3408,
+    "tp": 263,
+    "fp": 219,
+    "profit": 107400.0
+  },
+  {
+    "threshold": 0.3409,
+    "tp": 262,
+    "fp": 218,
+    "profit": 107000.0
+  },
+  {
+    "threshold": 0.3418,
+    "tp": 262,
+    "fp": 217,
+    "profit": 107050.0
+  },
+  {
+    "threshold": 0.3441,
+    "tp": 262,
+    "fp": 217,
+    "profit": 107050.0
+  },
+  {
+    "threshold": 0.3448,
+    "tp": 260,
+    "fp": 217,
+    "profit": 106150.0
+  },
+  {
+    "threshold": 0.3452,
+    "tp": 259,
+    "fp": 217,
+    "profit": 105700.0
+  },
+  {
+    "threshold": 0.3453,
+    "tp": 258,
+    "fp": 217,
+    "profit": 105250.0
+  },
+  {
+    "threshold": 0.3468,
+    "tp": 258,
+    "fp": 217,
+    "profit": 105250.0
+  },
+  {
+    "threshold": 0.3471,
+    "tp": 256,
+    "fp": 216,
+    "profit": 104400.0
+  },
+  {
+    "threshold": 0.3493,
+    "tp": 255,
+    "fp": 212,
+    "profit": 104150.0
+  },
+  {
+    "threshold": 0.3503,
+    "tp": 254,
+    "fp": 212,
+    "profit": 103700.0
+  },
+  {
+    "threshold": 0.351,
+    "tp": 254,
+    "fp": 210,
+    "profit": 103800.0
+  },
+  {
+    "threshold": 0.3511,
+    "tp": 253,
+    "fp": 210,
+    "profit": 103350.0
+  },
+  {
+    "threshold": 0.3512,
+    "tp": 252,
+    "fp": 210,
+    "profit": 102900.0
+  },
+  {
+    "threshold": 0.355,
+    "tp": 251,
+    "fp": 209,
+    "profit": 102500.0
+  },
+  {
+    "threshold": 0.3566,
+    "tp": 251,
+    "fp": 208,
+    "profit": 102550.0
+  },
+  {
+    "threshold": 0.3577,
+    "tp": 250,
+    "fp": 208,
+    "profit": 102100.0
+  },
+  {
+    "threshold": 0.359,
+    "tp": 249,
+    "fp": 205,
+    "profit": 101800.0
+  },
+  {
+    "threshold": 0.3631,
+    "tp": 247,
+    "fp": 202,
+    "profit": 101050.0
+  },
+  {
+    "threshold": 0.3638,
+    "tp": 246,
+    "fp": 202,
+    "profit": 100600.0
+  },
+  {
+    "threshold": 0.3671,
+    "tp": 245,
+    "fp": 200,
+    "profit": 100250.0
+  },
+  {
+    "threshold": 0.3696,
+    "tp": 245,
+    "fp": 200,
+    "profit": 100250.0
+  },
+  {
+    "threshold": 0.372,
+    "tp": 245,
+    "fp": 199,
+    "profit": 100300.0
+  },
+  {
+    "threshold": 0.3721,
+    "tp": 245,
+    "fp": 198,
+    "profit": 100350.0
+  },
+  {
+    "threshold": 0.373,
+    "tp": 245,
+    "fp": 197,
+    "profit": 100400.0
+  },
+  {
+    "threshold": 0.3735,
+    "tp": 243,
+    "fp": 194,
+    "profit": 99650.0
+  },
+  {
+    "threshold": 0.3747,
+    "tp": 242,
+    "fp": 194,
+    "profit": 99200.0
+  },
+  {
+    "threshold": 0.3774,
+    "tp": 242,
+    "fp": 194,
+    "profit": 99200.0
+  },
+  {
+    "threshold": 0.3775,
+    "tp": 239,
+    "fp": 192,
+    "profit": 97950.0
+  },
+  {
+    "threshold": 0.3784,
+    "tp": 239,
+    "fp": 192,
+    "profit": 97950.0
+  },
+  {
+    "threshold": 0.3793,
+    "tp": 239,
+    "fp": 191,
+    "profit": 98000.0
+  },
+  {
+    "threshold": 0.38,
+    "tp": 237,
+    "fp": 191,
+    "profit": 97100.0
+  },
+  {
+    "threshold": 0.3818,
+    "tp": 237,
+    "fp": 191,
+    "profit": 97100.0
+  },
+  {
+    "threshold": 0.3824,
+    "tp": 236,
+    "fp": 191,
+    "profit": 96650.0
+  },
+  {
+    "threshold": 0.3825,
+    "tp": 235,
+    "fp": 191,
+    "profit": 96200.0
+  },
+  {
+    "threshold": 0.3875,
+    "tp": 235,
+    "fp": 189,
+    "profit": 96300.0
+  },
+  {
+    "threshold": 0.3886,
+    "tp": 235,
+    "fp": 189,
+    "profit": 96300.0
+  },
+  {
+    "threshold": 0.3916,
+    "tp": 234,
+    "fp": 188,
+    "profit": 95900.0
+  },
+  {
+    "threshold": 0.3926,
+    "tp": 234,
+    "fp": 188,
+    "profit": 95900.0
+  },
+  {
+    "threshold": 0.3958,
+    "tp": 234,
+    "fp": 185,
+    "profit": 96050.0
+  },
+  {
+    "threshold": 0.3966,
+    "tp": 234,
+    "fp": 185,
+    "profit": 96050.0
+  },
+  {
+    "threshold": 0.3981,
+    "tp": 234,
+    "fp": 183,
+    "profit": 96150.0
+  },
+  {
+    "threshold": 0.3996,
+    "tp": 234,
+    "fp": 181,
+    "profit": 96250.0
+  },
+  {
+    "threshold": 0.3998,
+    "tp": 233,
+    "fp": 181,
+    "profit": 95800.0
+  },
+  {
+    "threshold": 0.4006,
+    "tp": 233,
+    "fp": 180,
+    "profit": 95850.0
+  },
+  {
+    "threshold": 0.4016,
+    "tp": 232,
+    "fp": 179,
+    "profit": 95450.0
+  },
+  {
+    "threshold": 0.4037,
+    "tp": 232,
+    "fp": 178,
+    "profit": 95500.0
+  },
+  {
+    "threshold": 0.4042,
+    "tp": 228,
+    "fp": 174,
+    "profit": 93900.0
+  },
+  {
+    "threshold": 0.4047,
+    "tp": 228,
+    "fp": 174,
+    "profit": 93900.0
+  },
+  {
+    "threshold": 0.4058,
+    "tp": 228,
+    "fp": 171,
+    "profit": 94050.0
+  },
+  {
+    "threshold": 0.4063,
+    "tp": 228,
+    "fp": 171,
+    "profit": 94050.0
+  },
+  {
+    "threshold": 0.4077,
+    "tp": 228,
+    "fp": 170,
+    "profit": 94100.0
+  },
+  {
+    "threshold": 0.4087,
+    "tp": 225,
+    "fp": 168,
+    "profit": 92850.0
+  },
+  {
+    "threshold": 0.4098,
+    "tp": 224,
+    "fp": 165,
+    "profit": 92550.0
+  },
+  {
+    "threshold": 0.41,
+    "tp": 224,
+    "fp": 163,
+    "profit": 92650.0
+  },
+  {
+    "threshold": 0.4102,
+    "tp": 224,
+    "fp": 163,
+    "profit": 92650.0
+  },
+  {
+    "threshold": 0.4106,
+    "tp": 223,
+    "fp": 163,
+    "profit": 92200.0
+  },
+  {
+    "threshold": 0.411,
+    "tp": 223,
+    "fp": 160,
+    "profit": 92350.0
+  },
+  {
+    "threshold": 0.4112,
+    "tp": 223,
+    "fp": 160,
+    "profit": 92350.0
+  },
+  {
+    "threshold": 0.4141,
+    "tp": 223,
+    "fp": 159,
+    "profit": 92400.0
+  },
+  {
+    "threshold": 0.4151,
+    "tp": 223,
+    "fp": 158,
+    "profit": 92450.0
+  },
+  {
+    "threshold": 0.4181,
+    "tp": 223,
+    "fp": 154,
+    "profit": 92650.0
+  },
+  {
+    "threshold": 0.4191,
+    "tp": 222,
+    "fp": 154,
+    "profit": 92200.0
+  },
+  {
+    "threshold": 0.4216,
+    "tp": 217,
+    "fp": 151,
+    "profit": 90100.0
+  },
+  {
+    "threshold": 0.4231,
+    "tp": 215,
+    "fp": 150,
+    "profit": 89250.0
+  },
+  {
+    "threshold": 0.4254,
+    "tp": 215,
+    "fp": 149,
+    "profit": 89300.0
+  },
+  {
+    "threshold": 0.428,
+    "tp": 215,
+    "fp": 148,
+    "profit": 89350.0
+  },
+  {
+    "threshold": 0.4308,
+    "tp": 215,
+    "fp": 148,
+    "profit": 89350.0
+  },
+  {
+    "threshold": 0.4321,
+    "tp": 214,
+    "fp": 146,
+    "profit": 89000.0
+  },
+  {
+    "threshold": 0.4334,
+    "tp": 214,
+    "fp": 146,
+    "profit": 89000.0
+  },
+  {
+    "threshold": 0.4346,
+    "tp": 213,
+    "fp": 145,
+    "profit": 88600.0
+  },
+  {
+    "threshold": 0.4349,
+    "tp": 213,
+    "fp": 145,
+    "profit": 88600.0
+  },
+  {
+    "threshold": 0.437,
+    "tp": 213,
+    "fp": 144,
+    "profit": 88650.0
+  },
+  {
+    "threshold": 0.4374,
+    "tp": 213,
+    "fp": 142,
+    "profit": 88750.0
+  },
+  {
+    "threshold": 0.4405,
+    "tp": 212,
+    "fp": 141,
+    "profit": 88350.0
+  },
+  {
+    "threshold": 0.4415,
+    "tp": 212,
+    "fp": 139,
+    "profit": 88450.0
+  },
+  {
+    "threshold": 0.4419,
+    "tp": 212,
+    "fp": 139,
+    "profit": 88450.0
+  },
+  {
+    "threshold": 0.4425,
+    "tp": 211,
+    "fp": 138,
+    "profit": 88050.0
+  },
+  {
+    "threshold": 0.4445,
+    "tp": 210,
+    "fp": 133,
+    "profit": 87850.0
+  },
+  {
+    "threshold": 0.4455,
+    "tp": 207,
+    "fp": 128,
+    "profit": 86750.0
+  },
+  {
+    "threshold": 0.447,
+    "tp": 206,
+    "fp": 128,
+    "profit": 86300.0
+  },
+  {
+    "threshold": 0.448,
+    "tp": 205,
+    "fp": 128,
+    "profit": 85850.0
+  },
+  {
+    "threshold": 0.449,
+    "tp": 205,
+    "fp": 128,
+    "profit": 85850.0
+  },
+  {
+    "threshold": 0.4516,
+    "tp": 205,
+    "fp": 126,
+    "profit": 85950.0
+  },
+  {
+    "threshold": 0.453,
+    "tp": 205,
+    "fp": 126,
+    "profit": 85950.0
+  },
+  {
+    "threshold": 0.4541,
+    "tp": 203,
+    "fp": 125,
+    "profit": 85100.0
+  },
+  {
+    "threshold": 0.4555,
+    "tp": 203,
+    "fp": 125,
+    "profit": 85100.0
+  },
+  {
+    "threshold": 0.4598,
+    "tp": 203,
+    "fp": 124,
+    "profit": 85150.0
+  },
+  {
+    "threshold": 0.4615,
+    "tp": 202,
+    "fp": 123,
+    "profit": 84750.0
+  },
+  {
+    "threshold": 0.4634,
+    "tp": 202,
+    "fp": 121,
+    "profit": 84850.0
+  },
+  {
+    "threshold": 0.4643,
+    "tp": 202,
+    "fp": 120,
+    "profit": 84900.0
+  },
+  {
+    "threshold": 0.4646,
+    "tp": 201,
+    "fp": 119,
+    "profit": 84500.0
+  },
+  {
+    "threshold": 0.4656,
+    "tp": 201,
+    "fp": 118,
+    "profit": 84550.0
+  },
+  {
+    "threshold": 0.4668,
+    "tp": 199,
+    "fp": 118,
+    "profit": 83650.0
+  },
+  {
+    "threshold": 0.4686,
+    "tp": 199,
+    "fp": 118,
+    "profit": 83650.0
+  },
+  {
+    "threshold": 0.4696,
+    "tp": 199,
+    "fp": 116,
+    "profit": 83750.0
+  },
+  {
+    "threshold": 0.4697,
+    "tp": 199,
+    "fp": 115,
+    "profit": 83800.0
+  },
+  {
+    "threshold": 0.4707,
+    "tp": 198,
+    "fp": 112,
+    "profit": 83500.0
+  },
+  {
+    "threshold": 0.4708,
+    "tp": 198,
+    "fp": 112,
+    "profit": 83500.0
+  },
+  {
+    "threshold": 0.4727,
+    "tp": 197,
+    "fp": 112,
+    "profit": 83050.0
+  },
+  {
+    "threshold": 0.4737,
+    "tp": 195,
+    "fp": 109,
+    "profit": 82300.0
+  },
+  {
+    "threshold": 0.4751,
+    "tp": 190,
+    "fp": 100,
+    "profit": 80500.0
+  },
+  {
+    "threshold": 0.4762,
+    "tp": 190,
+    "fp": 100,
+    "profit": 80500.0
+  },
+  {
+    "threshold": 0.4797,
+    "tp": 186,
+    "fp": 99,
+    "profit": 78750.0
+  },
+  {
+    "threshold": 0.4883,
+    "tp": 186,
+    "fp": 97,
+    "profit": 78850.0
+  },
+  {
+    "threshold": 0.4893,
+    "tp": 186,
+    "fp": 97,
+    "profit": 78850.0
+  },
+  {
+    "threshold": 0.4896,
+    "tp": 186,
+    "fp": 96,
+    "profit": 78900.0
+  },
+  {
+    "threshold": 0.4898,
+    "tp": 185,
+    "fp": 94,
+    "profit": 78550.0
+  },
+  {
+    "threshold": 0.4899,
+    "tp": 185,
+    "fp": 93,
+    "profit": 78600.0
+  },
+  {
+    "threshold": 0.4906,
+    "tp": 185,
+    "fp": 93,
+    "profit": 78600.0
+  },
+  {
+    "threshold": 0.4923,
+    "tp": 185,
+    "fp": 91,
+    "profit": 78700.0
+  },
+  {
+    "threshold": 0.4931,
+    "tp": 185,
+    "fp": 91,
+    "profit": 78700.0
+  },
+  {
+    "threshold": 0.5004,
+    "tp": 185,
+    "fp": 90,
+    "profit": 78750.0
+  },
+  {
+    "threshold": 0.5015,
+    "tp": 183,
+    "fp": 89,
+    "profit": 77900.0
+  },
+  {
+    "threshold": 0.5037,
+    "tp": 183,
+    "fp": 88,
+    "profit": 77950.0
+  },
+  {
+    "threshold": 0.5054,
+    "tp": 182,
+    "fp": 88,
+    "profit": 77500.0
+  },
+  {
+    "threshold": 0.5064,
+    "tp": 181,
+    "fp": 88,
+    "profit": 77050.0
+  },
+  {
+    "threshold": 0.509,
+    "tp": 181,
+    "fp": 86,
+    "profit": 77150.0
+  },
+  {
+    "threshold": 0.5139,
+    "tp": 181,
+    "fp": 85,
+    "profit": 77200.0
+  },
+  {
+    "threshold": 0.514,
+    "tp": 180,
+    "fp": 84,
+    "profit": 76800.0
+  },
+  {
+    "threshold": 0.5147,
+    "tp": 179,
+    "fp": 84,
+    "profit": 76350.0
+  },
+  {
+    "threshold": 0.5157,
+    "tp": 177,
+    "fp": 82,
+    "profit": 75550.0
+  },
+  {
+    "threshold": 0.518,
+    "tp": 175,
+    "fp": 82,
+    "profit": 74650.0
+  },
+  {
+    "threshold": 0.5193,
+    "tp": 175,
+    "fp": 82,
+    "profit": 74650.0
+  },
+  {
+    "threshold": 0.5205,
+    "tp": 175,
+    "fp": 81,
+    "profit": 74700.0
+  },
+  {
+    "threshold": 0.5226,
+    "tp": 173,
+    "fp": 78,
+    "profit": 73950.0
+  },
+  {
+    "threshold": 0.5231,
+    "tp": 172,
+    "fp": 77,
+    "profit": 73550.0
+  },
+  {
+    "threshold": 0.5232,
+    "tp": 172,
+    "fp": 76,
+    "profit": 73600.0
+  },
+  {
+    "threshold": 0.5243,
+    "tp": 172,
+    "fp": 75,
+    "profit": 73650.0
+  },
+  {
+    "threshold": 0.5262,
+    "tp": 171,
+    "fp": 75,
+    "profit": 73200.0
+  },
+  {
+    "threshold": 0.5272,
+    "tp": 171,
+    "fp": 73,
+    "profit": 73300.0
+  },
+  {
+    "threshold": 0.5297,
+    "tp": 170,
+    "fp": 73,
+    "profit": 72850.0
+  },
+  {
+    "threshold": 0.5331,
+    "tp": 170,
+    "fp": 73,
+    "profit": 72850.0
+  },
+  {
+    "threshold": 0.5336,
+    "tp": 168,
+    "fp": 72,
+    "profit": 72000.0
+  },
+  {
+    "threshold": 0.5346,
+    "tp": 168,
+    "fp": 72,
+    "profit": 72000.0
+  },
+  {
+    "threshold": 0.5372,
+    "tp": 164,
+    "fp": 69,
+    "profit": 70350.0
+  },
+  {
+    "threshold": 0.5382,
+    "tp": 162,
+    "fp": 69,
+    "profit": 69450.0
+  },
+  {
+    "threshold": 0.5385,
+    "tp": 162,
+    "fp": 68,
+    "profit": 69500.0
+  },
+  {
+    "threshold": 0.5406,
+    "tp": 162,
+    "fp": 68,
+    "profit": 69500.0
+  },
+  {
+    "threshold": 0.5439,
+    "tp": 161,
+    "fp": 68,
+    "profit": 69050.0
+  },
+  {
+    "threshold": 0.5451,
+    "tp": 154,
+    "fp": 63,
+    "profit": 66150.0
+  },
+  {
+    "threshold": 0.547,
+    "tp": 154,
+    "fp": 63,
+    "profit": 66150.0
+  },
+  {
+    "threshold": 0.5475,
+    "tp": 154,
+    "fp": 62,
+    "profit": 66200.0
+  },
+  {
+    "threshold": 0.5506,
+    "tp": 153,
+    "fp": 60,
+    "profit": 65850.0
+  },
+  {
+    "threshold": 0.5515,
+    "tp": 152,
+    "fp": 60,
+    "profit": 65400.0
+  },
+  {
+    "threshold": 0.5599,
+    "tp": 152,
+    "fp": 59,
+    "profit": 65450.0
+  },
+  {
+    "threshold": 0.56,
+    "tp": 149,
+    "fp": 59,
+    "profit": 64100.0
+  },
+  {
+    "threshold": 0.5636,
+    "tp": 149,
+    "fp": 58,
+    "profit": 64150.0
+  },
+  {
+    "threshold": 0.574,
+    "tp": 148,
+    "fp": 58,
+    "profit": 63700.0
+  },
+  {
+    "threshold": 0.5789,
+    "tp": 145,
+    "fp": 56,
+    "profit": 62450.0
+  },
+  {
+    "threshold": 0.5832,
+    "tp": 144,
+    "fp": 56,
+    "profit": 62000.0
+  },
+  {
+    "threshold": 0.5882,
+    "tp": 134,
+    "fp": 51,
+    "profit": 57750.0
+  },
+  {
+    "threshold": 0.5891,
+    "tp": 134,
+    "fp": 50,
+    "profit": 57800.0
+  },
+  {
+    "threshold": 0.5918,
+    "tp": 134,
+    "fp": 50,
+    "profit": 57800.0
+  },
+  {
+    "threshold": 0.594,
+    "tp": 131,
+    "fp": 44,
+    "profit": 56750.0
+  },
+  {
+    "threshold": 0.5966,
+    "tp": 129,
+    "fp": 44,
+    "profit": 55850.0
+  },
+  {
+    "threshold": 0.5974,
+    "tp": 127,
+    "fp": 44,
+    "profit": 54950.0
+  },
+  {
+    "threshold": 0.601,
+    "tp": 127,
+    "fp": 44,
+    "profit": 54950.0
+  },
+  {
+    "threshold": 0.6016,
+    "tp": 124,
+    "fp": 42,
+    "profit": 53700.0
+  },
+  {
+    "threshold": 0.6025,
+    "tp": 123,
+    "fp": 42,
+    "profit": 53250.0
+  },
+  {
+    "threshold": 0.6051,
+    "tp": 123,
+    "fp": 42,
+    "profit": 53250.0
+  },
+  {
+    "threshold": 0.6052,
+    "tp": 123,
+    "fp": 41,
+    "profit": 53300.0
+  },
+  {
+    "threshold": 0.6056,
+    "tp": 122,
+    "fp": 41,
+    "profit": 52850.0
+  },
+  {
+    "threshold": 0.6061,
+    "tp": 121,
+    "fp": 41,
+    "profit": 52400.0
+  },
+  {
+    "threshold": 0.6144,
+    "tp": 117,
+    "fp": 38,
+    "profit": 50750.0
+  },
+  {
+    "threshold": 0.6179,
+    "tp": 115,
+    "fp": 37,
+    "profit": 49900.0
+  },
+  {
+    "threshold": 0.6184,
+    "tp": 114,
+    "fp": 37,
+    "profit": 49450.0
+  },
+  {
+    "threshold": 0.619,
+    "tp": 114,
+    "fp": 37,
+    "profit": 49450.0
+  },
+  {
+    "threshold": 0.6198,
+    "tp": 114,
+    "fp": 36,
+    "profit": 49500.0
+  },
+  {
+    "threshold": 0.6235,
+    "tp": 110,
+    "fp": 35,
+    "profit": 47750.0
+  },
+  {
+    "threshold": 0.6259,
+    "tp": 110,
+    "fp": 35,
+    "profit": 47750.0
+  },
+  {
+    "threshold": 0.6332,
+    "tp": 109,
+    "fp": 35,
+    "profit": 47300.0
+  },
+  {
+    "threshold": 0.6363,
+    "tp": 107,
+    "fp": 34,
+    "profit": 46450.0
+  },
+  {
+    "threshold": 0.6369,
+    "tp": 102,
+    "fp": 33,
+    "profit": 44250.0
+  },
+  {
+    "threshold": 0.6371,
+    "tp": 102,
+    "fp": 33,
+    "profit": 44250.0
+  },
+  {
+    "threshold": 0.6387,
+    "tp": 100,
+    "fp": 33,
+    "profit": 43350.0
+  },
+  {
+    "threshold": 0.6393,
+    "tp": 99,
+    "fp": 33,
+    "profit": 42900.0
+  },
+  {
+    "threshold": 0.6438,
+    "tp": 99,
+    "fp": 33,
+    "profit": 42900.0
+  },
+  {
+    "threshold": 0.6455,
+    "tp": 97,
+    "fp": 33,
+    "profit": 42000.0
+  },
+  {
+    "threshold": 0.6465,
+    "tp": 97,
+    "fp": 32,
+    "profit": 42050.0
+  },
+  {
+    "threshold": 0.6466,
+    "tp": 97,
+    "fp": 32,
+    "profit": 42050.0
+  },
+  {
+    "threshold": 0.6483,
+    "tp": 95,
+    "fp": 32,
+    "profit": 41150.0
+  },
+  {
+    "threshold": 0.6497,
+    "tp": 93,
+    "fp": 32,
+    "profit": 40250.0
+  },
+  {
+    "threshold": 0.6503,
+    "tp": 92,
+    "fp": 32,
+    "profit": 39800.0
+  },
+  {
+    "threshold": 0.652,
+    "tp": 92,
+    "fp": 31,
+    "profit": 39850.0
+  },
+  {
+    "threshold": 0.6525,
+    "tp": 92,
+    "fp": 30,
+    "profit": 39900.0
+  },
+  {
+    "threshold": 0.6546,
+    "tp": 90,
+    "fp": 29,
+    "profit": 39050.0
+  },
+  {
+    "threshold": 0.6589,
+    "tp": 90,
+    "fp": 28,
+    "profit": 39100.0
+  },
+  {
+    "threshold": 0.66,
+    "tp": 90,
+    "fp": 28,
+    "profit": 39100.0
+  },
+  {
+    "threshold": 0.6607,
+    "tp": 89,
+    "fp": 27,
+    "profit": 38700.0
+  },
+  {
+    "threshold": 0.662,
+    "tp": 88,
+    "fp": 27,
+    "profit": 38250.0
+  },
+  {
+    "threshold": 0.6637,
+    "tp": 87,
+    "fp": 27,
+    "profit": 37800.0
+  },
+  {
+    "threshold": 0.6644,
+    "tp": 86,
+    "fp": 27,
+    "profit": 37350.0
+  },
+  {
+    "threshold": 0.6654,
+    "tp": 85,
+    "fp": 27,
+    "profit": 36900.0
+  },
+  {
+    "threshold": 0.668,
+    "tp": 85,
+    "fp": 26,
+    "profit": 36950.0
+  },
+  {
+    "threshold": 0.676,
+    "tp": 84,
+    "fp": 26,
+    "profit": 36500.0
+  },
+  {
+    "threshold": 0.6788,
+    "tp": 83,
+    "fp": 26,
+    "profit": 36050.0
+  },
+  {
+    "threshold": 0.6794,
+    "tp": 81,
+    "fp": 25,
+    "profit": 35200.0
+  },
+  {
+    "threshold": 0.6807,
+    "tp": 80,
+    "fp": 25,
+    "profit": 34750.0
+  },
+  {
+    "threshold": 0.6816,
+    "tp": 80,
+    "fp": 25,
+    "profit": 34750.0
+  },
+  {
+    "threshold": 0.6875,
+    "tp": 78,
+    "fp": 25,
+    "profit": 33850.0
+  },
+  {
+    "threshold": 0.6894,
+    "tp": 78,
+    "fp": 25,
+    "profit": 33850.0
+  },
+  {
+    "threshold": 0.6903,
+    "tp": 76,
+    "fp": 24,
+    "profit": 33000.0
+  },
+  {
+    "threshold": 0.6918,
+    "tp": 76,
+    "fp": 24,
+    "profit": 33000.0
+  },
+  {
+    "threshold": 0.6947,
+    "tp": 74,
+    "fp": 23,
+    "profit": 32150.0
+  },
+  {
+    "threshold": 0.6964,
+    "tp": 72,
+    "fp": 23,
+    "profit": 31250.0
+  },
+  {
+    "threshold": 0.7051,
+    "tp": 72,
+    "fp": 23,
+    "profit": 31250.0
+  },
+  {
+    "threshold": 0.7081,
+    "tp": 71,
+    "fp": 23,
+    "profit": 30800.0
+  },
+  {
+    "threshold": 0.7125,
+    "tp": 69,
+    "fp": 23,
+    "profit": 29900.0
+  },
+  {
+    "threshold": 0.7159,
+    "tp": 68,
+    "fp": 23,
+    "profit": 29450.0
+  },
+  {
+    "threshold": 0.7192,
+    "tp": 68,
+    "fp": 23,
+    "profit": 29450.0
+  },
+  {
+    "threshold": 0.721,
+    "tp": 66,
+    "fp": 22,
+    "profit": 28600.0
+  },
+  {
+    "threshold": 0.7233,
+    "tp": 65,
+    "fp": 21,
+    "profit": 28200.0
+  },
+  {
+    "threshold": 0.7258,
+    "tp": 64,
+    "fp": 21,
+    "profit": 27750.0
+  },
+  {
+    "threshold": 0.7284,
+    "tp": 63,
+    "fp": 21,
+    "profit": 27300.0
+  },
+  {
+    "threshold": 0.7376,
+    "tp": 63,
+    "fp": 21,
+    "profit": 27300.0
+  },
+  {
+    "threshold": 0.7392,
+    "tp": 61,
+    "fp": 21,
+    "profit": 26400.0
+  },
+  {
+    "threshold": 0.7442,
+    "tp": 61,
+    "fp": 20,
+    "profit": 26450.0
+  },
+  {
+    "threshold": 0.7468,
+    "tp": 61,
+    "fp": 20,
+    "profit": 26450.0
+  },
+  {
+    "threshold": 0.7479,
+    "tp": 59,
+    "fp": 19,
+    "profit": 25600.0
+  },
+  {
+    "threshold": 0.75,
+    "tp": 59,
+    "fp": 19,
+    "profit": 25600.0
+  },
+  {
+    "threshold": 0.7522,
+    "tp": 54,
+    "fp": 19,
+    "profit": 23350.0
+  },
+  {
+    "threshold": 0.7685,
+    "tp": 54,
+    "fp": 18,
+    "profit": 23400.0
+  },
+  {
+    "threshold": 0.7702,
+    "tp": 54,
+    "fp": 17,
+    "profit": 23450.0
+  },
+  {
+    "threshold": 0.7728,
+    "tp": 54,
+    "fp": 17,
+    "profit": 23450.0
+  },
+  {
+    "threshold": 0.774,
+    "tp": 53,
+    "fp": 16,
+    "profit": 23050.0
+  },
+  {
+    "threshold": 0.7749,
+    "tp": 52,
+    "fp": 16,
+    "profit": 22600.0
+  },
+  {
+    "threshold": 0.7836,
+    "tp": 51,
+    "fp": 16,
+    "profit": 22150.0
+  },
+  {
+    "threshold": 0.7847,
+    "tp": 49,
+    "fp": 16,
+    "profit": 21250.0
+  },
+  {
+    "threshold": 0.7886,
+    "tp": 48,
+    "fp": 16,
+    "profit": 20800.0
+  },
+  {
+    "threshold": 0.7952,
+    "tp": 48,
+    "fp": 15,
+    "profit": 20850.0
+  },
+  {
+    "threshold": 0.7994,
+    "tp": 48,
+    "fp": 14,
+    "profit": 20900.0
+  },
+  {
+    "threshold": 0.7996,
+    "tp": 44,
+    "fp": 13,
+    "profit": 19150.0
+  },
+  {
+    "threshold": 0.8024,
+    "tp": 43,
+    "fp": 12,
+    "profit": 18750.0
+  },
+  {
+    "threshold": 0.8046,
+    "tp": 43,
+    "fp": 11,
+    "profit": 18800.0
+  },
+  {
+    "threshold": 0.8072,
+    "tp": 43,
+    "fp": 11,
+    "profit": 18800.0
+  },
+  {
+    "threshold": 0.8104,
+    "tp": 38,
+    "fp": 11,
+    "profit": 16550.0
+  },
+  {
+    "threshold": 0.811,
+    "tp": 38,
+    "fp": 11,
+    "profit": 16550.0
+  },
+  {
+    "threshold": 0.8124,
+    "tp": 36,
+    "fp": 11,
+    "profit": 15650.0
+  },
+  {
+    "threshold": 0.8127,
+    "tp": 35,
+    "fp": 10,
+    "profit": 15250.0
+  },
+  {
+    "threshold": 0.8141,
+    "tp": 35,
+    "fp": 10,
+    "profit": 15250.0
+  },
+  {
+    "threshold": 0.8153,
+    "tp": 34,
+    "fp": 10,
+    "profit": 14800.0
+  },
+  {
+    "threshold": 0.823,
+    "tp": 29,
+    "fp": 9,
+    "profit": 12600.0
+  },
+  {
+    "threshold": 0.8262,
+    "tp": 28,
+    "fp": 8,
+    "profit": 12200.0
+  },
+  {
+    "threshold": 0.8312,
+    "tp": 27,
+    "fp": 8,
+    "profit": 11750.0
+  },
+  {
+    "threshold": 0.8339,
+    "tp": 27,
+    "fp": 8,
+    "profit": 11750.0
+  },
+  {
+    "threshold": 0.8365,
+    "tp": 26,
+    "fp": 7,
+    "profit": 11350.0
+  },
+  {
+    "threshold": 0.8373,
+    "tp": 25,
+    "fp": 6,
+    "profit": 10950.0
+  },
+  {
+    "threshold": 0.8409,
+    "tp": 24,
+    "fp": 4,
+    "profit": 10600.0
+  },
+  {
+    "threshold": 0.8442,
+    "tp": 24,
+    "fp": 4,
+    "profit": 10600.0
+  },
+  {
+    "threshold": 0.8497,
+    "tp": 23,
+    "fp": 4,
+    "profit": 10150.0
+  },
+  {
+    "threshold": 0.8547,
+    "tp": 22,
+    "fp": 2,
+    "profit": 9800.0
+  },
+  {
+    "threshold": 0.86,
+    "tp": 21,
+    "fp": 2,
+    "profit": 9350.0
+  },
+  {
+    "threshold": 0.8607,
+    "tp": 17,
+    "fp": 2,
+    "profit": 7550.0
+  },
+  {
+    "threshold": 0.8752,
+    "tp": 17,
+    "fp": 2,
+    "profit": 7550.0
+  },
+  {
+    "threshold": 0.8803,
+    "tp": 15,
+    "fp": 1,
+    "profit": 6700.0
+  },
+  {
+    "threshold": 0.8862,
+    "tp": 15,
+    "fp": 1,
+    "profit": 6700.0
+  },
+  {
+    "threshold": 0.8868,
+    "tp": 9,
+    "fp": 1,
+    "profit": 4000.0
+  },
+  {
+    "threshold": 0.8897,
+    "tp": 8,
+    "fp": 1,
+    "profit": 3550.0
+  },
+  {
+    "threshold": 0.9123,
+    "tp": 7,
+    "fp": 0,
+    "profit": 3150.0
+  },
+  {
+    "threshold": 0.9232,
+    "tp": 7,
+    "fp": 0,
+    "profit": 3150.0
+  },
+  {
+    "threshold": 0.9474,
+    "tp": 5,
+    "fp": 0,
+    "profit": 2250.0
+  },
+  {
+    "threshold": 0.9524,
+    "tp": 4,
+    "fp": 0,
+    "profit": 1800.0
+  },
+  {
+    "threshold": 0.9649,
+    "tp": 4,
+    "fp": 0,
+    "profit": 1800.0
+  },
+  {
+    "threshold": 1.0,
+    "tp": 2,
+    "fp": 0,
+    "profit": 900.0
+  }
+]

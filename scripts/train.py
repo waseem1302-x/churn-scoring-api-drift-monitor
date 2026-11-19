@@ -151,6 +151,7 @@ def main():
     (RESULTS / "contract_rows.json").write_text(json.dumps(contract, indent=2))
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "model_version": champion["model_version"],
         "dataset": {
             "rows": report["rows"],
             "churn_rate": report["churn_rate"],

@@ -1,0 +1,92 @@
+[
+  {
+    "bin": [
+      0.0,
+      0.1
+    ],
+    "count": 501,
+    "mean_predicted": 0.038,
+    "fraction_positive": 0.0399
+  },
+  {
+    "bin": [
+      0.1,
+      0.2
+    ],
+    "count": 237,
+    "mean_predicted": 0.1512,
+    "fraction_positive": 0.1435
+  },
+  {
+    "bin": [
+      0.2,
+      0.3
+    ],
+    "count": 135,
+    "mean_predicted": 0.2487,
+    "fraction_positive": 0.2815
+  },
+  {
+    "bin": [
+      0.3,
+      0.4
+    ],
+    "count": 123,
+    "mean_predicted": 0.3471,
+    "fraction_positive": 0.3984
+  },
+  {
+    "bin": [
+      0.4,
+      0.5
+    ],
+    "count": 138,
+    "mean_predicted": 0.4435,
+    "fraction_positive": 0.3478
+  },
+  {
+    "bin": [
+      0.5,
+      0.6
+    ],
+    "count": 104,
+    "mean_predicted": 0.5506,
+    "fraction_positive": 0.5577
+  },
+  {
+    "bin": [
+      0.6,
+      0.7
+    ],
+    "count": 76,
+    "mean_predicted": 0.6427,
+    "fraction_positive": 0.7237
+  },
+  {
+    "bin": [
+      0.7,
+      0.8
+    ],
+    "count": 38,
+    "mean_predicted": 0.7548,
+    "fraction_positive": 0.7368
+  },
+  {
+    "bin": [
+      0.8,
+      0.9
+    ],
+    "count": 48,
+    "mean_predicted": 0.8394,
+    "fraction_positive": 0.75
+  },
+  {
+    "bin": [
+      0.9,
+      1.0
+    ],
+    "count": 9,
+    "mean_predicted": 0.953,
+    "fraction_positive": 0.8889
+  }
+]

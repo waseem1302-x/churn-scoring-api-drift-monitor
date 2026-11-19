@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-11-19T23:37:54.772121+00:00",
+  "dataset": {
+    "rows": 7043,
+    "churn_rate": 0.2653698707936959,
+    "train_rows": 5634,
+    "test_rows": 1409,
+    "do_nothing_accuracy": 0.7346
+  },
+  "champion": {
+    "model": "xgboost",
+    "handling": "smote",
+    "calibration": "isotonic",
+    "model_version": "churn-xgboost-smote-isotonic-v1",
+    "threshold_frozen": 0.0934,
+    "metrics": {
+      "n": 1409,
+      "churn_rate": 0.2654,
+      "roc_auc": 0.8366,
+      "pr_auc": 0.6395,
+      "brier": 0.1392,
+      "precision_at_100": 0.76,
+      "precision_at_10pct": 0.7589,
+      "precision_at_threshold": 0.3851,
+      "recall_at_threshold": 0.9545,
+      "threshold": 0.0934,
+      "do_nothing_accuracy": 0.7346
+    },
+    "test_profit": 132150.0,
+    "test_profit_per_1000": 93789.92,
+    "oof_profit_per_1000": 94266.95,
+    "train_time_s": 9.42
+  },
+  "best_pr_auc": "churn-xgboost-none-platt-v1",
+  "gate_thresholds": {
+    "roc_auc": 0.8,
+    "pr_auc": 0.55,
+    "brier_max": 0.2,
+    "precision_at_100": 0.5
+  },
+  "s6e3_scale_run": "pending",
+  "s6e3": {
+    "train_time_s": null,
+    "note": "Kaggle credentials not present; scale run pending"
+  },
+  "model_version": "churn-xgboost-smote-isotonic-v1"
+}
