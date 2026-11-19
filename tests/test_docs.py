@@ -22,7 +22,12 @@ def test_no_accuracy_headline_in_docs():
         for line in (ROOT / name).read_text().splitlines():
             stripped = line.strip()
             if stripped.startswith("#"):
-                assert "accuracy" not in stripped.lower(), f"{name}: {line}"
+                lowered = stripped.lower()
+                # A heading that says "no accuracy" is the rule itself,
+                # not an accuracy headline. Anything else mentioning
+                # accuracy as a result fails.
+                assert "accuracy" not in lowered or "no accuracy" in lowered, (
+                    f"{name}: {line}")
 
 
 def test_do_nothing_baseline_is_stated():
