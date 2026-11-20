@@ -76,6 +76,9 @@ def _ensure_model():
 
 @app.get("/health")
 def health():
+    # Load the model here so /health reports the real version (and 503s
+    # when the artifact is missing, which is what a health check is for).
+    _ensure_model()
     return {
         "status": "ok",
         "model_version": _MODEL_VERSION,

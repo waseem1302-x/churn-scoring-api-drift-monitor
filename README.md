@@ -239,13 +239,19 @@ docker run -p 8000:8000 churn-scoring-api
 ```
 
 The image ships the trained artifact, so the container starts
-without training. **Note (verified 20 Nov 2026):** Docker cannot
-start containers in this development VM (the VM's seccomp policy
-blocks `setns`, same as the RAG project). The image was built and
-smoke-tested with Buildah 1.33.7 using chroot isolation instead:
-`buildah bud --isolation=chroot` and a chroot run that loads the
-artifact and scores a row. Build it with Docker on a normal
-machine before trusting it there.
+without training. Image size 823 MB, measured 20 Nov 2026.
+**Note (verified 20 Nov 2026):** Docker cannot start containers in
+this development VM (the VM's seccomp policy blocks `setns`, same
+as the RAG project). The image was built and smoke-tested with
+Buildah 1.33.7 using chroot isolation instead:
+`buildah bud --storage-driver vfs --isolation=chroot` (the default
+overlay driver fails here because the fuse device is missing, and
+the base image pull needed one retry after a transient TLS timeout
+through the egress proxy). A chroot run loads the artifact and
+scores a row (probability 0.2695, tier LOW), and uvicorn started
+the same way answers `/health`, `/score`, and `/metrics` on
+localhost:8000. Build it with Docker on a normal machine before
+trusting it there.
 
 ## What is not done yet
 
