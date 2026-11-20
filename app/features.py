@@ -29,18 +29,23 @@ from app import config
 RANDOM_STATE = config.RANDOM_STATE
 
 
-def build_preprocessor() -> ColumnTransformer:
-    numeric = Pipeline([
+def build_preprocessor(numeric=None, categorical=None) -> ColumnTransformer:
+    """The Telco feature lists are the defaults; the Bank check passes
+    its own lists. The parameters name columns, not steps."""
+    num_cols = numeric if numeric is not None else config.NUMERIC_FEATURES
+    cat_cols = (categorical if categorical is not None
+                else config.CATEGORICAL_FEATURES)
+    num_pipe = Pipeline([
         ("imputer", SimpleImputer(strategy="median")),
         ("scaler", StandardScaler()),
     ])
-    categorical = Pipeline([
+    cat_pipe = Pipeline([
         ("imputer", SimpleImputer(strategy="most_frequent")),
         ("onehot", OneHotEncoder(handle_unknown="ignore")),
     ])
     return ColumnTransformer([
-        ("num", numeric, config.NUMERIC_FEATURES),
-        ("cat", categorical, config.CATEGORICAL_FEATURES),
+        ("num", num_pipe, num_cols),
+        ("cat", cat_pipe, cat_cols),
     ])
 
 
@@ -77,9 +82,13 @@ def _apply_handling(model, name: str, handling: str, scale_pos_weight: float | N
 
 
 def build_pipeline(name: str, handling: str = "none", calibration=None,
-                   scale_pos_weight: float | None = None):
+                   scale_pos_weight: float | None = None,
+                   numeric=None, categorical=None):
     """Build one model. Returns a Pipeline, or a CalibratedClassifierCV
-    wrapping it when calibration is 'platt' (sigmoid) or 'isotonic'."""
+    wrapping it when calibration is 'platt' (sigmoid) or 'isotonic'.
+    numeric/categorical override the Telco feature lists; the Bank
+    generalisation check passes its own lists, and the same pipeline
+    code runs on both schemas."""
     if name not in config.MODELS:
         raise ValueError(f"unknown model: {name}")
     if handling not in config.HANDLINGS:
@@ -88,7 +97,7 @@ def build_pipeline(name: str, handling: str = "none", calibration=None,
         raise ValueError(f"unknown calibration: {calibration}")
     model = _base_model(name, scale_pos_weight)
     model = _apply_handling(model, name, handling, scale_pos_weight)
-    steps = [("preprocessor", build_preprocessor())]
+    steps = [("preprocessor", build_preprocessor(numeric, categorical))]
     if handling == "smote":
         steps.append(("smote", SMOTE(random_state=RANDOM_STATE)))
     steps.append(("model", model))

@@ -88,11 +88,31 @@ the seed, so every run trains and evaluates on the same rows.
 
 ## What is not in this dataset
 
-- No second dataset yet. The Bank Customer Churn generalisation
-  check (10,000 rows, 20.4% churn) is Phase 3.
 - S6E3 synthetic set: fetched 20 Nov 2026 from Kaggle
   (Playground Series S6E3 train.csv, 594,194 rows, churn rate
   22.52%, 0 blank TotalCharges, ids 0 to 594,193). Same schema as
   Telco except the identifier is "id". The 80 MB file lives
   outside the repo and is never committed. Scale numbers are in
   EVAL_RESULTS.md and benchmarks/results/scale_s6e3.json.
+
+## Bank Customer Churn (generalisation check only)
+
+Fetched 20 Nov 2026 from Kaggle (Churn_Modelling.csv, 10,000
+rows, 2,037 churned, 20.37%, 0 nulls, 0 duplicate CustomerIds).
+The file lives outside the repo and is never committed.
+
+The schema is different from Telco: 10 features (CreditScore,
+Geography, Gender, Age, Tenure, Balance, NumOfProducts,
+HasCrCard, IsActiveMember, EstimatedSalary), target Exited (0/1
+already), identifier CustomerId. RowNumber is a row index and
+Surname is a name: neither is a feature. HasCrCard and
+IsActiveMember are 0/1 flags and are treated as numeric, like
+SeniorCitizen on Telco. There are no timestamps here either, so
+the same temporal limit applies.
+
+The check retrains the same pipeline on Bank and reports it
+separately in EVAL_RESULTS.md and
+benchmarks/results/bank_generalisation.json. Nothing is pooled
+with Telco: the Telco artifact cannot score Bank rows, and the
+Bank champion is picked by the same pre-registered rule
+(highest out-of-fold profit) on Bank data alone.

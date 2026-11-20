@@ -36,7 +36,26 @@ S6E3_PATH = Path(
 S6E3_EXPECTED_ROWS = 594194
 S6E3_EXPECTED_CHURN_RATE = 0.2252
 
-# Column provenance and leakage class. "Leakage class" answers one
+# Bank Customer Churn dataset (Kaggle, "Churn_Modelling.csv").
+# A different business (retail bank) and a different schema from
+# Telco, used only as a generalisation check: the same pipeline,
+# retrained on Bank, reported separately, never pooled with Telco.
+# Downloaded 20 Nov 2026 via the Kaggle web UI (Google account
+# waseemmushtaq045@gmail.com); the file lives outside the repo and
+# is never committed.
+BANK_PATH = Path(
+    "/home/hatch/workspace/browser_downloads/sess-1707842952/"
+    "browser-download-20261120T033239.272219571Z-0-Churn_Modelling.csv")
+BANK_EXPECTED_ROWS = 10000
+BANK_EXPECTED_CHURN_RATE = 0.2037
+BANK_TARGET = "Exited"
+BANK_ID_COLUMN = "CustomerId"
+BANK_NUMERIC_FEATURES = [
+    "CreditScore", "Age", "Tenure", "Balance", "NumOfProducts",
+    "HasCrCard", "IsActiveMember", "EstimatedSalary",
+]
+BANK_CATEGORICAL_FEATURES = ["Geography", "Gender"]
+BANK_FEATURES = BANK_NUMERIC_FEATURES + BANK_CATEGORICAL_FEATURES
 # question per column: when does this information exist relative to the
 # churn outcome? A column recorded at or after cancellation would carry
 # the answer. None of the 19 features does: every one is known at signup
@@ -112,6 +131,43 @@ def verify_s6e3(df: pd.DataFrame) -> dict:
     }
 
 
+def load_bank(path=BANK_PATH) -> pd.DataFrame:
+    """Load the Bank churn set. RowNumber is a row index and Surname
+    is a name: neither is a feature. CustomerId stays as the row
+    identifier, like customerID on Telco. Exited is already 0/1."""
+    df = pd.read_csv(path)
+    return df
+
+
+def verify_bank(df: pd.DataFrame) -> dict:
+    """Check the file is the Bank set we think it is. Raises on
+    failure. The churn rate differs from Telco (20.37% vs 26.54%):
+    a different business, recorded, not hidden."""
+    if len(df) != BANK_EXPECTED_ROWS:
+        raise ValueError(f"expected {BANK_EXPECTED_ROWS} rows, got {len(df)}")
+    expected = set(BANK_FEATURES + [BANK_ID_COLUMN, BANK_TARGET,
+                                    "RowNumber", "Surname"])
+    if set(df.columns) != expected:
+        raise ValueError(f"unexpected Bank columns: {sorted(df.columns)}")
+    churn_rate = float(df[BANK_TARGET].mean())
+    if abs(churn_rate - BANK_EXPECTED_CHURN_RATE) > 0.001:
+        raise ValueError(f"expected churn rate ~{BANK_EXPECTED_CHURN_RATE}, got {churn_rate:.4f}")
+    nulls = int(df.isna().sum().sum())
+    if nulls != 0:
+        raise ValueError(f"expected 0 nulls, got {nulls}")
+    dups = int(len(df) - df[BANK_ID_COLUMN].nunique())
+    if dups != 0:
+        raise ValueError(f"expected 0 duplicate customer IDs, got {dups}")
+    return {
+        "rows": len(df),
+        "columns": len(df.columns),
+        "churn_rate": churn_rate,
+        "nulls": nulls,
+        "duplicate_ids": dups,
+        "has_timestamps": has_timestamps(df),
+    }
+
+
 def has_timestamps(df: pd.DataFrame) -> bool:
     lowered = [c.lower() for c in df.columns]
     return any("date" in c or "time" in c for c in lowered)
@@ -148,16 +204,25 @@ def do_nothing_accuracy(df: pd.DataFrame) -> float:
     return float((df[TARGET] == 0).mean())
 
 
-def split(df: pd.DataFrame):
+def split(df: pd.DataFrame, features=FEATURES, target=TARGET,
+          id_column=ID_COLUMN):
     """Stratified 80/20 split, fixed seed. One row per customer, so a
     grouped split by customerID would be vacuous (every group has size
-    1); it is not run and not claimed."""
-    X = df[FEATURES + [ID_COLUMN]]
-    y = df[TARGET]
+    1); it is not run and not claimed. The parameters exist for the
+    Bank generalisation check, which has its own features, target
+    and identifier; Telco calls pass nothing."""
+    X = df[features + [id_column]]
+    y = df[target]
     return train_test_split(
         X, y, test_size=config.TEST_SIZE, random_state=config.RANDOM_STATE,
         stratify=y,
     )
+
+
+def split_bank(df: pd.DataFrame):
+    """The Bank split: same method and seed as Telco, Bank schema."""
+    return split(df, features=BANK_FEATURES, target=BANK_TARGET,
+                 id_column=BANK_ID_COLUMN)
 
 
 def column_spec() -> list:

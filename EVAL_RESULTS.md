@@ -403,6 +403,71 @@ generalisation beyond Telco. The churn rate also differs, 22.52%
 here against 26.54% in Telco: the synthetic set does not preserve
 the exact rate. Full numbers in benchmarks/results/scale_s6e3.json.
 
+## Bank generalisation
+
+The same pipeline, retrained on the Bank Customer Churn dataset
+(10,000 rows, churn 20.37%, 10 features, target Exited), with
+the same 27 configs and the same pre-registered champion rule
+(highest out-of-fold profit). Nothing is pooled with Telco:
+Bank is a different business and schema, and the Telco artifact
+cannot score Bank rows. Full numbers in
+benchmarks/results/bank_generalisation.json. Total train time for
+all 27 configs: 704.9 s.
+
+| Metric | Telco champion | Bank champion |
+|---|---|---|
+| Model | churn-xgboost-smote-isotonic-v1 | churn-xgboost-smote-platt-v1 |
+| ROC-AUC | 0.8366 | 0.8658 |
+| PR-AUC | 0.6395 | 0.7160 |
+| Brier | 0.1392 | 0.0997 |
+| Precision at 100 | 0.76 | 0.93 |
+| Precision at 10% | 0.7589 | 0.85 |
+| Threshold | 0.0934 | 0.0796 |
+| Precision at threshold | 0.3851 | 0.3429 |
+| Recall at threshold | 0.9545 | 0.9066 |
+| Test profit per 1,000 | $93,789.92 | $65,350.00 |
+| Do-nothing accuracy | 0.7346 | 0.7965 |
+
+Bank looks easier than Telco on every ranking metric, and the
+reason is the dataset, not the pipeline: 10 clean features, no
+blank TotalCharges, no messy billing columns. The profit per
+1,000 is lower on Bank ($65,350 against $93,789.92) because the
+churn rate is lower (20.37% against 26.54%): fewer churners to
+save per 1,000 customers. Profit uses the same illustrative
+$50 offer / $500 saved assumptions on both sets, so the numbers
+compare; a bank's real retention economics are not a telecom's.
+
+The Telco champion configuration (XGBoost, SMOTE, isotonic),
+retrained on Bank, is the best Bank config on every ranking
+metric: ROC-AUC 0.8663, PR-AUC 0.7178, Brier 0.0990, precision
+at 100 of 0.94, at its own Bank threshold of 0.08. The
+pre-registered profit rule still picks Platt over it, because
+Platt's out-of-fold profit is $66,006.25 per 1,000 against
+isotonic's $65,943.75: a $62.50 margin, and the top 5 configs
+sit within $281.25 of each other. The same noise story as Telco:
+the rule was kept and the margin is stated, not overridden.
+On test, Platt earns $65,350.00 per 1,000 against isotonic's
+$64,900.00, so the rule and the test agree here, by $450.00.
+
+Two patterns from Telco repeat on Bank. SMOTE hurts ranking
+again (mean PR-AUC: none 0.6246, class_weight 0.6194, SMOTE
+0.6101), and calibration earns its place again (mean Brier:
+raw 0.1317, Platt 0.1136, isotonic 0.1132). One pattern does
+not repeat: logistic regression collapses on Bank (mean PR-AUC
+0.4679, best logistic 0.4789, ROC-AUC 0.7748), where on Telco
+it was nearly as good as XGBoost (mean PR-AUC 0.6296). The
+Bank relationship is more nonlinear than Telco's, so the fast
+logistic alternative from the latency section is a worse trade
+here: it would give up 0.2371 PR-AUC on Bank, not 0.0047.
+
+The Telco frozen threshold does not transfer, and the gap shows
+it plainly: the Telco config scored at 0.0934 on Bank earns
+$65,050.00 per 1,000 (precision 0.3348, recall 0.9115), against
+$64,900.00 at its own Bank threshold of 0.08. The $150.00
+difference is noise on a 2,000-row test set, but the point
+stands: a threshold is fitted to its own data, and reusing
+another dataset's threshold is a guess, not a setting.
+
 ## Comparison with DecisionAPI
 
 DecisionAPI (the closest existing project, read during research)
