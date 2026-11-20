@@ -403,3 +403,22 @@ recorded contract row), and uvicorn started the same way answers
 Build it with Docker on a normal machine before trusting it
 there; the Dockerfile is unchanged and needs no proxy workaround
 there.
+
+### Docker on a normal machine
+
+Not yet verified on a Docker host. This VM cannot run Docker
+containers, so the closest verifiable work is done: the image
+builds with Buildah from the same Dockerfile, and the chroot
+smoke test (contract row 0, probability 0.0137, tier LOW) passes.
+On a normal machine with Docker installed, run:
+
+```bash
+docker build -t churn-scoring-api:phase3 .
+CHURN_API_KEY=your-key bash scripts/run_docker.sh
+```
+
+That script builds the image, starts it on port 8000 with the API
+key set, waits for `/health`, and prints the exact curl command
+to score contract row 0. If it works as written, the Docker-host
+check is done and this note should be updated to say so; until
+then, do not claim the image runs under Docker.
