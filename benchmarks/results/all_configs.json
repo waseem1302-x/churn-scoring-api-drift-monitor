@@ -4,7 +4,7 @@
     "handling": "none",
     "calibration": null,
     "model_version": "churn-logistic-none-raw-v1",
-    "train_time_s": 0.74,
+    "train_time_s": 1.44,
     "oof_threshold": 0.1223,
     "oof_profit_per_1000": 93991.84,
     "test_metrics": {
@@ -120,7 +120,7 @@
     "handling": "none",
     "calibration": "platt",
     "model_version": "churn-logistic-none-platt-v1",
-    "train_time_s": 3.1,
+    "train_time_s": 4.99,
     "oof_threshold": 0.1272,
     "oof_profit_per_1000": 93938.59,
     "test_metrics": {
@@ -236,7 +236,7 @@
     "handling": "none",
     "calibration": "isotonic",
     "model_version": "churn-logistic-none-isotonic-v1",
-    "train_time_s": 2.81,
+    "train_time_s": 4.67,
     "oof_threshold": 0.1209,
     "oof_profit_per_1000": 93725.59,
     "test_metrics": {
@@ -352,7 +352,7 @@
     "handling": "class_weight",
     "calibration": null,
     "model_version": "churn-logistic-class_weight-raw-v1",
-    "train_time_s": 0.97,
+    "train_time_s": 1.55,
     "oof_threshold": 0.2856,
     "oof_profit_per_1000": 94124.96,
     "test_metrics": {
@@ -468,7 +468,7 @@
     "handling": "class_weight",
     "calibration": "platt",
     "model_version": "churn-logistic-class_weight-platt-v1",
-    "train_time_s": 3.49,
+    "train_time_s": 5.59,
     "oof_threshold": 0.1328,
     "oof_profit_per_1000": 94124.96,
     "test_metrics": {
@@ -584,7 +584,7 @@
     "handling": "class_weight",
     "calibration": "isotonic",
     "model_version": "churn-logistic-class_weight-isotonic-v1",
-    "train_time_s": 2.38,
+    "train_time_s": 4.56,
     "oof_threshold": 0.1212,
     "oof_profit_per_1000": 93583.6,
     "test_metrics": {
@@ -700,7 +700,7 @@
     "handling": "smote",
     "calibration": null,
     "model_version": "churn-logistic-smote-raw-v1",
-    "train_time_s": 1.78,
+    "train_time_s": 1.75,
     "oof_threshold": 0.2491,
     "oof_profit_per_1000": 94169.33,
     "test_metrics": {
@@ -816,7 +816,7 @@
     "handling": "smote",
     "calibration": "platt",
     "model_version": "churn-logistic-smote-platt-v1",
-    "train_time_s": 4.08,
+    "train_time_s": 6.4,
     "oof_threshold": 0.1424,
     "oof_profit_per_1000": 94258.08,
     "test_metrics": {
@@ -932,7 +932,7 @@
     "handling": "smote",
     "calibration": "isotonic",
     "model_version": "churn-logistic-smote-isotonic-v1",
-    "train_time_s": 3.88,
+    "train_time_s": 6.56,
     "oof_threshold": 0.088,
     "oof_profit_per_1000": 94142.71,
     "test_metrics": {
@@ -1048,7 +1048,7 @@
     "handling": "none",
     "calibration": null,
     "model_version": "churn-random_forest-none-raw-v1",
-    "train_time_s": 6.03,
+    "train_time_s": 13.18,
     "oof_threshold": 0.1039,
     "oof_profit_per_1000": 92438.76,
     "test_metrics": {
@@ -1164,7 +1164,7 @@
     "handling": "none",
     "calibration": "platt",
     "model_version": "churn-random_forest-none-platt-v1",
-    "train_time_s": 16.34,
+    "train_time_s": 30.81,
     "oof_threshold": 0.1291,
     "oof_profit_per_1000": 93130.99,
     "test_metrics": {
@@ -1280,7 +1280,7 @@
     "handling": "none",
     "calibration": "isotonic",
     "model_version": "churn-random_forest-none-isotonic-v1",
-    "train_time_s": 14.97,
+    "train_time_s": 29.92,
     "oof_threshold": 0.1436,
     "oof_profit_per_1000": 93095.49,
     "test_metrics": {
@@ -1396,7 +1396,7 @@
     "handling": "class_weight",
     "calibration": null,
     "model_version": "churn-random_forest-class_weight-raw-v1",
-    "train_time_s": 6.97,
+    "train_time_s": 13.44,
     "oof_threshold": 0.0933,
     "oof_profit_per_1000": 92616.26,
     "test_metrics": {
@@ -1512,7 +1512,7 @@
     "handling": "class_weight",
     "calibration": "platt",
     "model_version": "churn-random_forest-class_weight-platt-v1",
-    "train_time_s": 18.89,
+    "train_time_s": 37.86,
     "oof_threshold": 0.1088,
     "oof_profit_per_1000": 93548.1,
     "test_metrics": {
@@ -1628,7 +1628,7 @@
     "handling": "class_weight",
     "calibration": "isotonic",
     "model_version": "churn-random_forest-class_weight-isotonic-v1",
-    "train_time_s": 17.49,
+    "train_time_s": 35.8,
     "oof_threshold": 0.1021,
     "oof_profit_per_1000": 93397.23,
     "test_metrics": {
@@ -1744,7 +1744,7 @@
     "handling": "smote",
     "calibration": null,
     "model_version": "churn-random_forest-smote-raw-v1",
-    "train_time_s": 8.9,
+    "train_time_s": 15.83,
     "oof_threshold": 0.1252,
     "oof_profit_per_1000": 92678.38,
     "test_metrics": {
@@ -1860,7 +1860,7 @@
     "handling": "smote",
     "calibration": "platt",
     "model_version": "churn-random_forest-smote-platt-v1",
-    "train_time_s": 22.66,
+    "train_time_s": 41.31,
     "oof_threshold": 0.1068,
     "oof_profit_per_1000": 93681.22,
     "test_metrics": {
@@ -1976,7 +1976,7 @@
     "handling": "smote",
     "calibration": "isotonic",
     "model_version": "churn-random_forest-smote-isotonic-v1",
-    "train_time_s": 20.09,
+    "train_time_s": 39.3,
     "oof_threshold": 0.1025,
     "oof_profit_per_1000": 93548.1,
     "test_metrics": {
@@ -2092,7 +2092,7 @@
     "handling": "none",
     "calibration": null,
     "model_version": "churn-xgboost-none-raw-v1",
-    "train_time_s": 1.91,
+    "train_time_s": 3.79,
     "oof_threshold": 0.0764,
     "oof_profit_per_1000": 93956.34,
     "test_metrics": {
@@ -2208,7 +2208,7 @@
     "handling": "none",
     "calibration": "platt",
     "model_version": "churn-xgboost-none-platt-v1",
-    "train_time_s": 6.4,
+    "train_time_s": 10.67,
     "oof_threshold": 0.11,
     "oof_profit_per_1000": 93903.09,
     "test_metrics": {
@@ -2324,7 +2324,7 @@
     "handling": "none",
     "calibration": "isotonic",
     "model_version": "churn-xgboost-none-isotonic-v1",
-    "train_time_s": 4.11,
+    "train_time_s": 7.89,
     "oof_threshold": 0.0738,
     "oof_profit_per_1000": 93716.72,
     "test_metrics": {
@@ -2440,7 +2440,7 @@
     "handling": "class_weight",
     "calibration": null,
     "model_version": "churn-xgboost-class_weight-raw-v1",
-    "train_time_s": 1.42,
+    "train_time_s": 3.0,
     "oof_threshold": 0.0891,
     "oof_profit_per_1000": 93903.09,
     "test_metrics": {
@@ -2556,7 +2556,7 @@
     "handling": "class_weight",
     "calibration": "platt",
     "model_version": "churn-xgboost-class_weight-platt-v1",
-    "train_time_s": 5.74,
+    "train_time_s": 10.22,
     "oof_threshold": 0.0917,
     "oof_profit_per_1000": 93894.21,
     "test_metrics": {
@@ -2672,7 +2672,7 @@
     "handling": "class_weight",
     "calibration": "isotonic",
     "model_version": "churn-xgboost-class_weight-isotonic-v1",
-    "train_time_s": 3.97,
+    "train_time_s": 7.82,
     "oof_threshold": 0.0742,
     "oof_profit_per_1000": 93876.46,
     "test_metrics": {
@@ -2788,7 +2788,7 @@
     "handling": "smote",
     "calibration": null,
     "model_version": "churn-xgboost-smote-raw-v1",
-    "train_time_s": 4.07,
+    "train_time_s": 8.19,
     "oof_threshold": 0.0699,
     "oof_profit_per_1000": 93982.96,
     "test_metrics": {
@@ -2904,7 +2904,7 @@
     "handling": "smote",
     "calibration": "platt",
     "model_version": "churn-xgboost-smote-platt-v1",
-    "train_time_s": 11.82,
+    "train_time_s": 22.44,
     "oof_threshold": 0.0968,
     "oof_profit_per_1000": 94080.58,
     "test_metrics": {
@@ -3020,7 +3020,7 @@
     "handling": "smote",
     "calibration": "isotonic",
     "model_version": "churn-xgboost-smote-isotonic-v1",
-    "train_time_s": 9.42,
+    "train_time_s": 20.6,
     "oof_threshold": 0.0934,
     "oof_profit_per_1000": 94266.95,
     "test_metrics": {

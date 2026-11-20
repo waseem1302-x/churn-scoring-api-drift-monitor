@@ -1,5 +1,6 @@
 {
-  "generated_at": "2026-11-19T23:37:54.772121+00:00",
+  "generated_at": "2026-11-20T00:46:25.227584+00:00",
+  "model_version": "churn-xgboost-smote-isotonic-v1",
   "dataset": {
     "rows": 7043,
     "churn_rate": 0.2653698707936959,
@@ -29,7 +30,7 @@
     "test_profit": 132150.0,
     "test_profit_per_1000": 93789.92,
     "oof_profit_per_1000": 94266.95,
-    "train_time_s": 9.42
+    "train_time_s": 20.6
   },
   "best_pr_auc": "churn-xgboost-none-platt-v1",
   "gate_thresholds": {
@@ -42,6 +43,5 @@
   "s6e3": {
     "train_time_s": null,
     "note": "Kaggle credentials not present; scale run pending"
-  },
-  "model_version": "churn-xgboost-smote-isotonic-v1"
+  }
 }

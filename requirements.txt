@@ -4,10 +4,20 @@ httpx2==2.16.2
 imbalanced-learn==0.14.2
 joblib==1.6.0
 numpy==2.5.5
-pandas==3.1.1
+pandas==2.3.3
 pydantic==2.14.4
 pytest==9.2.0
 scikit-learn==1.9.1
 scipy==1.18.1
 uvicorn==0.54.0
 xgboost==3.4.1
+
+# Phase 2: Evidently for scheduled drift reports only. Evidently 0.7.23
+# is the latest 0.7.x release and cannot import on pandas 3.1.x
+# (it needs pandas.core.dtypes.common.infer_dtype_from_object, removed
+# in pandas 3.1; issue 1974). pandas is pinned to 2.3.3 for that
+# reason. The downgrade was verified: the full 27-config retrain
+# reproduces the Phase 1 metrics bit for bit (ROC-AUC 0.8366, PR-AUC
+# 0.6395, Brier 0.1392, threshold 0.0934, same champion). Evidently is
+# never on the request path; the live monitor is hand-rolled.
+evidently==0.7.23
