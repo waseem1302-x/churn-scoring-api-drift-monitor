@@ -273,32 +273,41 @@ calibration is what keeps this curve on the diagonal at all.
 
 ## Latency and cost
 
-Measured 20 Nov 2026 with `scripts/measure_latency.py`: 200
-held-out test rows, one at a time, through the API (TestClient,
-in-process, includes HTTP handling and the SQLite log write).
-Re-measured after Phase 2 (the monitor's per-row quality flags
-and the drift-flag log column): p50 63.52 ms against 64.07 ms
-before, mean 69.70 ms against 66.04 ms, p95 99.10 ms against
-77.47 ms, p99 122.84 ms against 93.40 ms. The p50 is unchanged,
-so the monitor costs nothing measurable per request; the p95 and
-p99 moved on a 1.5-shared-CPU VM, which is run-to-run jitter,
-not a monitor cost (the one-time reference build happens in the
-10-row warm-up, before the timed run).
+Measured with `scripts/measure_latency.py`: 200 held-out test
+rows, one at a time, through the API (TestClient, in-process,
+includes HTTP handling and the SQLite log write). Four runs are
+recorded in `benchmarks/results/latency_runs.json`; the latest
+run is also in `benchmarks/results/latency.json`.
 
-| Metric | Phase 1 | Phase 2 |
-|---|---|---|
-| Mean | 66.04 ms | 69.70 ms |
-| p50 | 64.07 ms | 63.52 ms |
-| p95 | 77.47 ms | 99.10 ms |
-| p99 | 93.40 ms | 122.84 ms |
+| Metric | Phase 1 | Phase 2 | Re-measure A | Re-measure B |
+|---|---|---|---|---|
+| Mean | 66.04 ms | 69.70 ms | 83.92 ms | 103.47 ms |
+| p50 | 64.07 ms | 63.52 ms | 68.31 ms | 98.10 ms |
+| p95 | 77.47 ms | 99.10 ms | 176.09 ms | 173.20 ms |
+| p99 | 93.40 ms | 122.84 ms | 233.51 ms | 224.28 ms |
 
-The raw model call alone is 61.97 ms at p50, so the cost is the
-model, not the HTTP layer: the champion is a CalibratedClassifierCV
+The Phase 2 note said the p95 move from 77.47 to 99.10 ms was
+run-to-run jitter, not a monitor cost. The two re-measurements
+prove the jitter claim and widen the band: p95 across the four
+runs spans 77.47 to 176.09 ms. The two fresh runs agree on the
+tail (p95 176.09 vs 173.20 ms) while p50 moved 68.31 to 98.10 ms
+between them minutes apart, and the raw model call got faster
+(p50 51.08 ms against 61.97 ms in Phase 2) while the API got
+slower. Nothing in the request path changed since Phase 2 and
+the artifact is identical, so the numbers are set by shared-CPU
+load on this 1.5-CPU VM, not by the code. The monitor still
+costs nothing measurable per request: p50 was 64.07 ms before
+it and 63.52 ms after it. Quote ranges, not a single number:
+p50 63.52 to 98.10 ms, p95 77.47 to 176.09 ms. Re-measure on
+the deployment machine before quoting latency anywhere else.
+
+The raw model call alone is 51.08 to 61.97 ms at p50 across two
+measurements, so the cost is the model, not the HTTP layer: the champion is a CalibratedClassifierCV
 wrapping three fitted XGBoost models (300 trees each), and every
 score runs all three. A single logistic model scores the same row
 far faster, and DecisionAPI reports p50 9.8 ms for one. The
 trade is explicit: the champion buys 0.0047 PR-AUC over the best
-logistic config (0.6395 vs 0.6348) and pays about 6 times the
+logistic config (0.6395 vs 0.6348) and pays about 6 to 10 times the
 latency for it. If latency mattered more than ranking, the logistic
 config would be the right champion. Cost is $0.00: local CPU, no
 API calls.
@@ -320,10 +329,11 @@ DecisionAPI (the closest existing project, read during research)
 reports Logistic Regression, ROC-AUC 0.833 held-out, PR-AUC 0.625,
 Brier 0.142, latency p50 9.8 ms. This project, same dataset and
 same split shape: ROC-AUC 0.8366, PR-AUC 0.6395, Brier 0.1392,
-latency p50 63.52 ms. Ranking and calibration are better, latency
+latency p50 63.52 to 98.10 ms across four runs (shared-VM jitter,
+see the Latency section). Ranking and calibration are better, latency
 is worse, for the reason above. DecisionAPI also lists its own
 gaps (no tests, drift computed but not returned, threshold not
-tuned); this project has tests (147), returns drift through
+tuned); this project has tests (151), returns drift through
 `GET /drift` and stores drift flags on every log row, and tunes
 the threshold on out-of-fold profit.
 
@@ -449,7 +459,7 @@ python -m scripts.measure_latency  # 200 rows through the API
 python -m scripts.drift_experiments  # injection table
 python -m scripts.retrain          # 12-week scheduled run
 python -m scripts.evidently_report # two HTML reports
-python -m pytest tests/ -q         # 147 passed
+python -m pytest tests/ -q         # 151 passed
 python -m scripts.ci_gate          # metric gate plus drift gate, both pass
 ```
 
@@ -484,8 +494,10 @@ Actions run after the Phase 1 push has not been checked yet.
   profit rule picked it by $8.87 per 1,000.
 - The reliability curve overstates risk in the 0.4 to 0.5 and 0.8
   to 0.9 bins.
-- Latency p50 63.52 ms is about 6 times a single logistic model,
-  because the champion scores three calibrated XGBoost models.
+- Latency is not a single number on this VM: p50 63.52 to 98.10 ms
+  and p95 77.47 to 176.09 ms across four runs, set by shared-CPU
+  load. The champion scores three calibrated XGBoost models,
+  about 6 to 10 times a single fast model.
 - The simulator is not the real world: its labels come from a
   known rule, so its baseline (precision at 100 0.6633, PR-AUC
   0.5463) differs from the Telco test numbers (0.76, 0.6395).

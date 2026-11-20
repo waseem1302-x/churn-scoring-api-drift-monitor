@@ -30,7 +30,7 @@ measured, not claimed.
 - Simulator: longitudinal panel, 2,000 customers, 12 weeks, known drift schedule
 - Retraining: shadow runs only, promotion on a labelled-window win
   above a $2,500 per 1,000 noise-floor margin
-- Testing: pytest 9.2.0, 147 tests
+- Testing: pytest 9.2.0, 151 tests
 - CI: GitHub Actions, eval gate workflow (`.github/workflows/eval.yml`),
   metric gate plus drift gate
 - Containers: Docker
@@ -61,13 +61,13 @@ shown next to every accuracy-adjacent claim so no reader is fooled.
 | Test profit at frozen threshold 0.0934 | $132,150 ($93,790 per 1,000) |
 | Test profit at threshold 0.5 | $78,750 ($55,891 per 1,000) |
 | Risk tiers, churn rate | LOW 10.54%, MEDIUM 42.47%, HIGH 74.27% |
-| Scoring latency p50 / p95 | 63.52 ms / 99.10 ms |
+| Scoring latency p50 / p95 | p50 63.52 to 98.10 ms, p95 77.47 to 176.09 ms across 4 runs (shared-VM jitter) |
 | Clean-window false alarms | 0 of 6 windows, all four detectors |
 | Abrupt price rise, detection delay | 0 windows, all four detectors |
 | Gradual Fiber growth, detection delay | PSI 4 windows (25 points), Jensen-Shannon 2 windows (15 points) |
 | Prevalence shift | Invisible to input detectors, as designed; label shift flagged |
 | Retraining loop, 12-week run | 2 triggers, 1 promotion, 1 refusal |
-| Tests | 147 passed, 0 failed |
+| Tests | 151 passed, 0 failed |
 | CI gate | Pass (metric gate plus drift gate) |
 | Cost | $0.00 (local CPU, no API calls) |
 
@@ -88,7 +88,7 @@ What was actually used, and what each piece does.
 | Drift reports | Evidently 0.7.23 (pandas 2.3.3) | Scheduled HTML reports only, never on the request path |
 | Simulator | Hand-rolled longitudinal panel | `scripts/simulate.py`; known drift schedule, labels from a known rule |
 | Retraining | Shadow runs, promotion margin | `scripts/retrain.py`; log in `benchmarks/results/retraining_log.jsonl` |
-| Testing | pytest | 147 tests |
+| Testing | pytest | 151 tests |
 | CI | GitHub Actions (`.github/workflows/eval.yml`) | Train, latency, drift experiments, retrain, reports, tests, gate on every push/PR |
 | Containers | Docker | See the Docker note below |
 
@@ -299,7 +299,7 @@ Full table: [EVAL_RESULTS.md](EVAL_RESULTS.md). Raw records:
 ## Tests
 
 ```bash
-python -m pytest tests/ -q   # 147 passed
+python -m pytest tests/ -q   # 151 passed
 ```
 
 Tests cover data loading and verification (row and column counts,
