@@ -48,13 +48,33 @@ DEFAULT_THRESHOLDS = {
     "unknown_category_frac": 0.01,
     "out_of_range_frac": 0.25,
     "stale_changed_frac": 0.01,
+    "accumulation_broken_frac": 0.05,
     "precision_at_k_drop": 0.05,
     "pr_auc_drop": 0.03,
 }
 
+# Features whose distribution moves by design as time passes, so a
+# distribution comparison against the fixed training reference is the
+# wrong test for them: tenure grows one month per week for every
+# customer, and TotalCharges accumulates the bills. Compared to
+# training they "drift" forever, starting in week 2 (tenure PSI 0.43
+# on a clean simulator week, measured). They are monitored
+# week-over-week instead: the stale check below, which asks whether
+# they moved since the previous window, not whether they match a
+# snapshot from training. Every other feature is monitored against
+# the training reference.
+ACCUMULATING_FEATURES = ("tenure", "TotalCharges")
+
+# Columns that legitimately appear in a scored window but are not
+# model features: the row id, the label, and the window stamps. A
+# schema change is only a change among the model features.
+IGNORED_COLUMNS = ("customerID", "Churn", "week", "date")
+
 # Features that must move every week for every active customer. Tenure
 # grows by one month per week and TotalCharges accumulates, so a week
 # where almost nobody's value changed means the feed stopped updating.
+# This is also why they are the accumulating features above: they are
+# monitored week-over-week, not against the training reference.
 STALE_PRONE_FEATURES = ("tenure", "TotalCharges")
 
 _EPS = 1e-4
@@ -238,10 +258,10 @@ def data_quality_issues(ref, cur, previous_frame=None, id_column=None,
     issues = []
     ref_cols = set(ref.columns)
     cur_cols = set(cur.columns)
-    for col in sorted(ref_cols - cur_cols):
+    for col in sorted((ref_cols - cur_cols) - set(IGNORED_COLUMNS)):
         issues.append({"feature": col, "kind": "schema_change",
                        "detail": "column present in reference, missing in window"})
-    for col in sorted(cur_cols - ref_cols):
+    for col in sorted((cur_cols - ref_cols) - set(IGNORED_COLUMNS)):
         issues.append({"feature": col, "kind": "schema_change",
                        "detail": "column present in window, not in reference"})
     for col in sorted(ref_cols & cur_cols):
@@ -296,6 +316,25 @@ def data_quality_issues(ref, cur, previous_frame=None, id_column=None,
                               f"the feature stopped updating",
                     "changed_frac": round(float(changed), 4),
                 })
+            # An accumulating total must never go down. Tenure grows by
+            # one a week and TotalCharges grows by the bill, so a week
+            # where the value fell for many customers means the feed
+            # broke (a bad join, a unit change), even though the
+            # distribution still looks plausible. This is the check
+            # that catches a TotalCharges breakage: distribution drift
+            # is the wrong test for an accumulating feature, but its
+            # growth law is exact.
+            both = merged[[cur_col, prev_col]].dropna()
+            if len(both):
+                decreased = float((both[cur_col] < both[prev_col] - 1e-9).mean())
+                if decreased > th["accumulation_broken_frac"]:
+                    issues.append({
+                        "feature": col, "kind": "accumulation_broken",
+                        "detail": f"{decreased:.3f} of customers saw {col} "
+                                  f"fall since the previous window; an "
+                                  f"accumulating feature never falls",
+                        "decreased_frac": round(decreased, 4),
+                    })
     return issues
 
 
@@ -323,14 +362,28 @@ def evaluate_window(ref, cur, ref_scores, cur_scores, threshold,
     for feature in config.FEATURES:
         if feature not in ref.columns or feature not in cur.columns:
             continue
+        if feature in ACCUMULATING_FEATURES:
+            # Distribution drift is the wrong test here: the feature
+            # moves by design (see the constant above). It is monitored
+            # week-over-week by the stale check, not against training.
+            feature_results[feature] = {
+                "feature": feature,
+                "type": "numeric",
+                "skipped": "accumulating",
+                "reason": "distribution moves by design; monitored "
+                          "week-over-week by the stale check",
+                "drifted": False,
+            }
+            continue
         if feature in config.NUMERIC_FEATURES:
             feature_results[feature] = feature_drift_numeric(
                 feature, ref[feature], cur[feature], th)
         else:
             feature_results[feature] = feature_drift_categorical(
                 feature, ref[feature], cur[feature], th)
-    n_evaluated = len(feature_results)
-    n_drifted = sum(1 for r in feature_results.values() if r["drifted"])
+    monitored = [r for r in feature_results.values() if "skipped" not in r]
+    n_evaluated = len(monitored)
+    n_drifted = sum(1 for r in monitored if r["drifted"])
     drift_share = n_drifted / n_evaluated if n_evaluated else 0.0
     pred = prediction_drift(ref_scores, cur_scores, threshold, th)
     quality = data_quality_issues(ref, cur, previous_frame=previous_frame,

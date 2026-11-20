@@ -188,6 +188,36 @@ def test_stale_feature_normal_week_is_not_flagged():
     assert not any(i["kind"] == "stale_feature" for i in issues)
 
 
+def test_accumulation_broken_when_total_charges_fall():
+    # An accumulating total never falls. A week where TotalCharges
+    # dropped for nearly every customer is a broken feed, even though
+    # the values are still in range and the distribution looks fine.
+    prev = pd.DataFrame({
+        "customerID": [f"C{i}" for i in range(200)],
+        "TotalCharges": [2000.0 + i for i in range(200)],
+    })
+    cur = prev.copy()
+    cur["TotalCharges"] = [65.0] * 200
+    issues = monitor.data_quality_issues(
+        prev, cur, previous_frame=prev, id_column="customerID")
+    assert any(i["kind"] == "accumulation_broken"
+               and i["feature"] == "TotalCharges" for i in issues)
+
+
+def test_accumulation_not_broken_on_normal_growth():
+    prev = pd.DataFrame({
+        "customerID": [f"C{i}" for i in range(200)],
+        "TotalCharges": [2000.0 + i for i in range(200)],
+        "tenure": list(range(200)),
+    })
+    cur = prev.copy()
+    cur["TotalCharges"] = cur["TotalCharges"] + 65.0
+    cur["tenure"] = cur["tenure"] + 1
+    issues = monitor.data_quality_issues(
+        prev, cur, previous_frame=prev, id_column="customerID")
+    assert not any(i["kind"] == "accumulation_broken" for i in issues)
+
+
 def test_prediction_drift_flags_a_rate_move():
     ref_scores = np.linspace(0.05, 0.95, 1000)
     cur_scores = np.linspace(0.05, 0.95, 1000) + 0.25
@@ -209,6 +239,39 @@ def test_prediction_drift_quiet_on_same_scores():
     out = monitor.prediction_drift(ref_scores, cur_scores, threshold=0.0934,
                                    thresholds=monitor.DEFAULT_THRESHOLDS)
     assert out["drifted"] is False
+
+
+def test_accumulating_features_skipped_in_evaluate_window():
+    # Tenure and TotalCharges move by design as time passes, so a
+    # distribution comparison against training is the wrong test for
+    # them. The monitor must skip them here (they are covered by the
+    # week-over-week stale check) instead of alarming on every window.
+    rng = np.random.default_rng(21)
+    ref = pd.DataFrame({
+        "tenure": rng.integers(0, 72, 1000),
+        "MonthlyCharges": rng.normal(65, 30, 1000),
+        "TotalCharges": rng.normal(2000, 2000, 1000),
+    })
+    cur = ref.copy()
+    cur["tenure"] = cur["tenure"] + 5
+    cur["TotalCharges"] = cur["TotalCharges"] + 300
+    out = monitor.evaluate_window(
+        ref, cur, rng.uniform(0, 1, 1000), rng.uniform(0, 1, 1000),
+        threshold=0.0934, thresholds=monitor.DEFAULT_THRESHOLDS)
+    assert out["feature_drift"]["tenure"]["skipped"] == "accumulating"
+    assert out["feature_drift"]["TotalCharges"]["skipped"] == "accumulating"
+    assert out["drift_share"] == pytest.approx(0.0, abs=0.01)
+
+
+def test_schema_change_ignores_id_label_and_window_columns():
+    ref = pd.DataFrame({"tenure": [1, 2, 3], "MonthlyCharges": [10.0, 20.0, 30.0]})
+    cur = ref.copy()
+    cur["customerID"] = ["C1", "C2", "C3"]
+    cur["Churn"] = [0, 1, 0]
+    cur["week"] = [1, 1, 1]
+    cur["date"] = ["2026-01-05"] * 3
+    issues = monitor.data_quality_issues(ref, cur)
+    assert not any(i["kind"] == "schema_change" for i in issues)
 
 
 def test_evaluate_window_returns_four_channels():

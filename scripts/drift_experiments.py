@@ -80,7 +80,13 @@ def _window_summary(ref_frame, ref_scores, frame, model, threshold,
 
 def _first_firing_window(summaries, target_feature, detector_key):
     """First window index where the detector fired on the target
-    feature, or None inside the horizon."""
+    feature, or None inside the horizon. Returns "n/a" for a detector
+    that does not apply to the target's type (KS and Wasserstein do
+    not apply to categorical features), so a missing value is never
+    mistaken for "never detected"."""
+    if target_feature not in config.NUMERIC_FEATURES:
+        if detector_key in ("ks_drifted", "wasserstein_drifted"):
+            return "n/a"
     for i, summary in enumerate(summaries):
         result = summary["feature_drift"].get(target_feature)
         if result and result.get(detector_key):
@@ -116,13 +122,19 @@ def main():
     X_train, X_test, y_train, y_test = data.split(df)
     ref_frame = X_train.drop(columns=[config.ID_COLUMN])
     ref_scores = _score(model, ref_frame)
-    ref_metrics = json.loads((RESULTS / "metrics.json").read_text())["champion"]["metrics"]
     print(f"Reference: {len(ref_frame)} train rows, "
           f"model {meta['model_version']}, threshold {threshold}")
 
     top_features = monitor.top_features_by_permutation(
-        model, X_test.drop(columns=[config.ID_COLUMN]), y_test, n=5)
-    print(f"Top-5 features by permutation importance: {top_features}")
+        model, X_test.drop(columns=[config.ID_COLUMN]), y_test, n=8)
+    # Tenure is the most important feature for scoring, but it is an
+    # accumulating feature: it is monitored week-over-week, not by
+    # distribution drift, so the trigger rules use the top features
+    # among the monitored set.
+    top_monitored = [f for f in top_features
+                     if f not in monitor.ACCUMULATING_FEATURES][:5]
+    print(f"Top features by permutation importance: {top_features}")
+    print(f"Top monitored features (trigger rules use these): {top_monitored}")
 
     clean = simulate.simulate(n_customers=N_CUSTOMERS, n_weeks=N_CLEAN_WEEKS,
                               seed=123, schedule=False)
@@ -131,20 +143,40 @@ def main():
     clean_summaries = []
     for i, week_frame in enumerate(clean_weeks):
         prev = clean_weeks[i - 1] if i > 0 else None
+        # No reference metrics here: the clean weeks ARE the baseline
+        # for realised performance on simulated labels. Comparing
+        # simulator labels against the Phase 1 Telco test metrics
+        # would flag every clean week, because the labels come from
+        # the simulator's known rule, not from Telco.
         summary = _window_summary(ref_frame, ref_scores, week_frame, model,
-                                  threshold, ref_metrics, previous_frame=prev)
+                                  threshold, None, previous_frame=prev)
         clean_summaries.append(summary)
         print(f"clean week {i + 1}: drift_share {summary['drift_share']}, "
               f"alerts {summary['alerts']}")
     false_alarms = _clean_false_alarms(clean_summaries)
+    baseline = {
+        "precision_at_100": round(float(np.mean(
+            [s["realised_performance"]["precision_at_100"]
+             for s in clean_summaries])), 4),
+        "pr_auc": round(float(np.mean(
+            [s["realised_performance"]["pr_auc"] for s in clean_summaries])), 4),
+        "churn_rate": round(float(np.mean(
+            [s["realised_performance"]["churn_rate"] for s in clean_summaries])), 4),
+    }
+    print(f"Simulator baseline (mean over {N_CLEAN_WEEKS} clean weeks): {baseline}")
 
-    base = clean_weeks[0]
+    # Injections are built from clean week 2, with clean week 1 as the
+    # previous window, so the week-over-week quality checks (stale,
+    # accumulation) run on real consecutive weeks.
+    base = clean_weeks[1]
+    prev_week = clean_weeks[0]
     injections = {}
 
     # Abrupt price rise: one window, fires or not.
     abrupt = simulate.inject_drift(base, "abrupt_price", seed=11)
     abrupt_summaries = [_window_summary(ref_frame, ref_scores, abrupt, model,
-                                        threshold, ref_metrics)]
+                                        threshold, baseline,
+                                        previous_frame=prev_week)]
     injections["abrupt_price"] = {
         "target": "MonthlyCharges",
         "delays": {name: _first_firing_window(abrupt_summaries, "MonthlyCharges", key)
@@ -158,7 +190,8 @@ def main():
         injected = simulate.inject_drift(base, "gradual_fiber", seed=12,
                                          severity=step)
         gradual_summaries.append(_window_summary(
-            ref_frame, ref_scores, injected, model, threshold, ref_metrics))
+            ref_frame, ref_scores, injected, model, threshold, baseline,
+            previous_frame=prev_week))
     injections["gradual_fiber"] = {
         "target": "InternetService",
         "steps": GRADUAL_STEPS,
@@ -172,7 +205,8 @@ def main():
     # quiet. The performance channel is the detector.
     prevalence = simulate.inject_drift(base, "prevalence", seed=13)
     prev_summary = _window_summary(ref_frame, ref_scores, prevalence, model,
-                                   threshold, ref_metrics)
+                                   threshold, baseline,
+                                   previous_frame=prev_week)
     perf = prev_summary["realised_performance"]
     injections["prevalence"] = {
         "target": "realised_performance",
@@ -186,28 +220,36 @@ def main():
         "precision_at_100_drop": perf["precision_at_100_drop"],
         "pr_auc": perf["pr_auc"],
         "pr_auc_drop": perf["pr_auc_drop"],
-        "reference_precision_at_100": ref_metrics["precision_at_100"],
-        "reference_pr_auc": ref_metrics["pr_auc"],
-        "reference_churn_rate": ref_metrics["churn_rate"],
+        "reference_precision_at_100": baseline["precision_at_100"],
+        "reference_pr_auc": baseline["pr_auc"],
+        "reference_churn_rate": baseline["churn_rate"],
     }
 
     # Single-feature breakage: TotalCharges holds MonthlyCharges.
+    # TotalCharges is an accumulating feature, so distribution drift is
+    # the wrong test for it (see MONITORING.md). The growth-law check
+    # is the detector: an accumulating total never falls, and here it
+    # falls for nearly every customer.
     broken = simulate.inject_drift(base, "breakage_total_charges", seed=14)
     broken_summaries = [_window_summary(ref_frame, ref_scores, broken, model,
-                                        threshold, ref_metrics)]
+                                        threshold, baseline,
+                                        previous_frame=prev_week)]
+    broken_kinds = [i["kind"] for i in broken_summaries[0]["data_quality"]]
     injections["breakage_total_charges"] = {
         "target": "TotalCharges",
-        "delays": {name: _first_firing_window(broken_summaries, "TotalCharges", key)
-                   for name, key in DETECTOR_KEYS.items()},
-        "values_at_detection": broken_summaries[0]["feature_drift"]["TotalCharges"],
+        "detection_channel": "data_quality",
+        "quality_flagged": "accumulation_broken" in broken_kinds,
         "quality_issues": broken_summaries[0]["data_quality"],
+        "feature_drifted": any(
+            r["drifted"] for r in broken_summaries[0]["feature_drift"].values()),
     }
 
     # Null storm: 40% of TotalCharges null. The quality channel is the
     # detector; the distribution detectors see the surviving values.
     nulled = simulate.inject_drift(base, "null_storm", seed=15)
     null_summaries = [_window_summary(ref_frame, ref_scores, nulled, model,
-                                      threshold, ref_metrics)]
+                                      threshold, baseline,
+                                      previous_frame=prev_week)]
     null_kinds = [i["kind"] for i in null_summaries[0]["data_quality"]]
     injections["null_storm"] = {
         "target": "data_quality",
@@ -219,10 +261,10 @@ def main():
 
     # Stale tenure: this week's tenure equals last week's per customer.
     stale = simulate.inject_drift(base, "stale_tenure", seed=16,
-                                  previous_frame=clean_weeks[0])
+                                  previous_frame=prev_week)
     stale_summaries = [_window_summary(ref_frame, ref_scores, stale, model,
-                                       threshold, ref_metrics,
-                                       previous_frame=clean_weeks[0])]
+                                       threshold, baseline,
+                                       previous_frame=prev_week)]
     stale_kinds = [i["kind"] for i in stale_summaries[0]["data_quality"]]
     injections["stale_tenure"] = {
         "target": "data_quality",
@@ -239,6 +281,8 @@ def main():
         "n_ref": len(ref_frame),
         "n_window": N_CUSTOMERS,
         "top_features": top_features,
+        "top_monitored_features": top_monitored,
+        "simulator_baseline": baseline,
         "thresholds_used": monitor.DEFAULT_THRESHOLDS,
         "clean_windows": {
             "n_windows": N_CLEAN_WEEKS,

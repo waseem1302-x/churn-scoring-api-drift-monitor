@@ -1,0 +1,272 @@
+{
+  "generated_at": "2026-11-20T00:51:39.944426+00:00",
+  "model_version": "churn-xgboost-smote-isotonic-v1",
+  "threshold": 0.0934,
+  "n_ref": 5634,
+  "n_window": 2000,
+  "top_features": [
+    "tenure",
+    "Contract",
+    "OnlineSecurity",
+    "TechSupport",
+    "InternetService",
+    "MultipleLines",
+    "TotalCharges",
+    "PaperlessBilling"
+  ],
+  "top_monitored_features": [
+    "Contract",
+    "OnlineSecurity",
+    "TechSupport",
+    "InternetService",
+    "MultipleLines"
+  ],
+  "simulator_baseline": {
+    "precision_at_100": 0.6633,
+    "pr_auc": 0.5463,
+    "churn_rate": 0.2658
+  },
+  "thresholds_used": {
+    "psi_warn": 0.1,
+    "psi_act": 0.25,
+    "ks_p": 0.05,
+    "jensen_shannon": 0.1,
+    "wasserstein": 0.1,
+    "drift_share": 0.5,
+    "predicted_rate_rel_change": 0.1,
+    "score_psi_act": 0.25,
+    "null_rate_rise": 0.05,
+    "unknown_category_frac": 0.01,
+    "out_of_range_frac": 0.25,
+    "stale_changed_frac": 0.01,
+    "accumulation_broken_frac": 0.05,
+    "precision_at_k_drop": 0.05,
+    "pr_auc_drop": 0.03
+  },
+  "clean_windows": {
+    "n_windows": 6,
+    "false_alarms_per_detector": {
+      "psi": {
+        "windows_flagged": 0,
+        "windows_total": 6,
+        "feature_flags_total": 0
+      },
+      "ks": {
+        "windows_flagged": 0,
+        "windows_total": 6,
+        "feature_flags_total": 0
+      },
+      "jensen_shannon": {
+        "windows_flagged": 0,
+        "windows_total": 6,
+        "feature_flags_total": 0
+      },
+      "wasserstein": {
+        "windows_flagged": 0,
+        "windows_total": 6,
+        "feature_flags_total": 0
+      }
+    },
+    "drift_share_by_week": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "alerts_by_week": [
+      {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      }
+    ]
+  },
+  "injections": {
+    "abrupt_price": {
+      "target": "MonthlyCharges",
+      "delays": {
+        "psi": 0,
+        "ks": 0,
+        "jensen_shannon": 0,
+        "wasserstein": 0
+      },
+      "values_at_detection": {
+        "feature": "MonthlyCharges",
+        "type": "numeric",
+        "psi": 1.631,
+        "psi_drifted": true,
+        "ks_stat": 0.3223,
+        "ks_p": 0.0,
+        "ks_drifted": true,
+        "jensen_shannon": 0.3172,
+        "js_drifted": true,
+        "wasserstein": 0.806,
+        "wasserstein_drifted": true,
+        "drifted": true
+      }
+    },
+    "gradual_fiber": {
+      "target": "InternetService",
+      "steps": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25
+      ],
+      "delays": {
+        "psi": 4,
+        "ks": "n/a",
+        "jensen_shannon": 2,
+        "wasserstein": "n/a"
+      },
+      "values_by_step": [
+        {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0089,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0334,
+          "js_drifted": false,
+          "drifted": false
+        },
+        {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0379,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0687,
+          "js_drifted": false,
+          "drifted": false
+        },
+        {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0863,
+          "psi_drifted": false,
+          "jensen_shannon": 0.1037,
+          "js_drifted": true,
+          "drifted": true
+        },
+        {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.1573,
+          "psi_drifted": false,
+          "jensen_shannon": 0.1398,
+          "js_drifted": true,
+          "drifted": true
+        },
+        {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.2523,
+          "psi_drifted": true,
+          "jensen_shannon": 0.1766,
+          "js_drifted": true,
+          "drifted": true
+        }
+      ]
+    },
+    "prevalence": {
+      "target": "realised_performance",
+      "input_detectors_fired": false,
+      "performance_drop_flagged": false,
+      "label_shift_flagged": true,
+      "realised_churn_rate": 0.3875,
+      "churn_rate_change_rel": 0.4579,
+      "precision_at_100": 0.81,
+      "precision_at_100_drop": -0.1467,
+      "pr_auc": 0.6685,
+      "pr_auc_drop": -0.1222,
+      "reference_precision_at_100": 0.6633,
+      "reference_pr_auc": 0.5463,
+      "reference_churn_rate": 0.2658
+    },
+    "breakage_total_charges": {
+      "target": "TotalCharges",
+      "detection_channel": "data_quality",
+      "quality_flagged": true,
+      "quality_issues": [
+        {
+          "feature": "TotalCharges",
+          "kind": "accumulation_broken",
+          "detail": "0.911 of customers saw TotalCharges fall since the previous window; an accumulating feature never falls",
+          "decreased_frac": 0.9115
+        }
+      ],
+      "feature_drifted": false
+    },
+    "null_storm": {
+      "target": "data_quality",
+      "quality_flagged": true,
+      "quality_issues": [
+        {
+          "feature": "TotalCharges",
+          "kind": "null_rate",
+          "detail": "null rate 0.001 in reference, 0.400 in window",
+          "ref_null_rate": 0.0014,
+          "cur_null_rate": 0.4
+        }
+      ],
+      "feature_delays": {
+        "psi": null,
+        "ks": null,
+        "jensen_shannon": null,
+        "wasserstein": null
+      }
+    },
+    "stale_tenure": {
+      "target": "data_quality",
+      "quality_flagged": true,
+      "quality_issues": [
+        {
+          "feature": "tenure",
+          "kind": "stale_feature",
+          "detail": "only 0.000 of customers changed tenure since the previous window; the feature stopped updating",
+          "changed_frac": 0.0
+        }
+      ],
+      "feature_drifted": false
+    }
+  }
+}

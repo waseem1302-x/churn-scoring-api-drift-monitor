@@ -56,10 +56,16 @@ def test_prevalence_caught_by_label_shift(experiments):
     assert info["label_shift_flagged"] is True
 
 
-def test_breakage_detected_in_window_zero(experiments):
-    delays = experiments["injections"]["breakage_total_charges"]["delays"]
-    assert delays["psi"] == 0
-    assert delays["jensen_shannon"] == 0
+def test_breakage_detected_by_growth_check_in_window_zero(experiments):
+    # TotalCharges is an accumulating feature, so distribution drift is
+    # the wrong test for it. The breakage is caught by the growth law
+    # instead: an accumulating total never falls, and here it falls for
+    # nearly every customer.
+    info = experiments["injections"]["breakage_total_charges"]
+    assert info["detection_channel"] == "data_quality"
+    assert info["quality_flagged"] is True
+    kinds = [i["kind"] for i in info["quality_issues"]]
+    assert "accumulation_broken" in kinds
 
 
 def test_null_storm_flagged_by_quality_channel(experiments):
