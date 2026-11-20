@@ -478,7 +478,8 @@ the retraining log holding one promotion and one refusal. The
 drift gate passes. The workflow `.github/workflows/eval.yml`
 runs train, latency, drift experiments, retrain, Evidently
 reports, tests, then the gate on every push and PR. The first
-Actions run after the Phase 1 push has not been checked yet.
+Actions runs after the Phase 1 and Phase 2 pushes both
+succeeded (checked 20 Nov 2026, runs on main, both green).
 
 ## Known limits
 
