@@ -46,6 +46,7 @@ benchmarks/results/retraining_run.json (weekly summaries plus the
 trigger list). The CI gate reads the log.
 """
 
+import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -53,7 +54,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from app import config, data, features, monitor, profit, scoring
+from app import config, data, features, model_store, monitor, profit, scoring
 from scripts import simulate
 
 RESULTS = config.ROOT / "benchmarks" / "results"
@@ -145,6 +146,14 @@ def _profit_per_1000(y_true, y_proba, threshold):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--persist-promotions", action="store_true",
+        help="save each promoted challenger as a versioned artifact "
+             "and move the current-model pointer to it (default off: "
+             "the simulation only records the decision)")
+    args = parser.parse_args()
+
     model, meta = scoring.load_artifact()
     threshold = meta["threshold"]
     experiments_path = RESULTS / "drift_experiments.json"
@@ -240,6 +249,12 @@ def main():
         if decision == "promote":
             current_model = challenger
             current_version = challenger_version
+            if args.persist_promotions:
+                saved = model_store.save_promotion(
+                    challenger, challenger_version, threshold,
+                    source=trigger_id)
+                entry["artifact_file"] = saved.name
+                print(f"  promoted artifact saved: {saved.name}")
 
     RESULTS.mkdir(parents=True, exist_ok=True)
     with open(RESULTS / "retraining_log.jsonl", "w") as f:

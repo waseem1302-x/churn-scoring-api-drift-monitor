@@ -4,7 +4,7 @@ POST /score: one customer in, churn probability and risk tier out.
 GET /health: liveness plus the loaded model version.
 GET /metrics: the measured Phase 1 metrics (from benchmarks/results/).
 
-Auth: /score and /drift need the API key from the
+Auth: /score, /drift and /reload need the API key from the
 CHURN_API_KEY environment variable, sent as the X-API-Key header.
 Missing or wrong key is 401; a server with no key configured is 503
 on those endpoints. /health and /metrics stay open: /health is what
@@ -16,8 +16,11 @@ model version and latency, plus Phase 2 drift flags: the per-row
 quality check, and the alerts from the latest evaluated window.
 GET /drift returns that window's drift summary, computed by the same
 monitor the offline experiments use, against the Phase 1 training
-reference. The served model is the artifact training saved; there is
-no separate serving code path.
+reference. The served model is the artifact the current-model
+pointer names (artifacts/current_model.json), or the Phase 1
+artifact when no promotion has happened. POST /reload re-reads the
+pointer and serves the pointed model; there is no separate serving
+code path.
 """
 
 import json
@@ -33,7 +36,7 @@ import pandas as pd
 from fastapi import Depends, FastAPI, HTTPException, Request
 from pydantic import BaseModel, Field
 
-from app import config, data, db, monitor, scoring
+from app import config, data, db, model_store, monitor, scoring
 
 app = FastAPI(title="Churn Scoring API")
 
@@ -146,7 +149,10 @@ def get_reference():
 def _ensure_model():
     global _MODEL, _MODEL_VERSION, _THRESHOLD
     if _MODEL is None:
-        path = Path(config.ARTIFACT_PATH)
+        try:
+            path = model_store.resolve_current_artifact()
+        except (FileNotFoundError, ValueError) as exc:
+            raise HTTPException(status_code=503, detail=str(exc))
         if not path.exists():
             raise HTTPException(status_code=503, detail="model artifact not found")
         _MODEL, meta = scoring.load_artifact(str(path))
@@ -223,6 +229,22 @@ def drift(_key: None = Depends(require_api_key)):
     summary["window_rows"] = len(rows)
     _LATEST_DRIFT = summary
     return summary
+
+
+@app.post("/reload")
+def reload_model(_key: None = Depends(require_api_key)):
+    """Re-read the current-model pointer and serve the pointed model.
+
+    Called after a promotion moves the pointer. The in-process model
+    is dropped, the drift reference is rebuilt from the new model,
+    and /health afterwards reports the new version. A missing or
+    corrupt pointer is a 503, not a silent fall back to the old model.
+    """
+    global _MODEL
+    _MODEL = None
+    reset_drift_state()
+    _ensure_model()
+    return {"status": "reloaded", "model_version": _MODEL_VERSION}
 
 
 @app.get("/metrics")
