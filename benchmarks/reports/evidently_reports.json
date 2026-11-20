@@ -1,0 +1,12 @@
+{
+  "week02_clean": {
+    "path": "/home/hatch/workspace/resume-projects/churn-scoring-api-drift-monitor/benchmarks/reports/drift_week02_clean.html",
+    "bytes": 4155626,
+    "rows": 2000
+  },
+  "week05_price_rise": {
+    "path": "/home/hatch/workspace/resume-projects/churn-scoring-api-drift-monitor/benchmarks/reports/drift_week05_price_rise.html",
+    "bytes": 4152477,
+    "rows": 2000
+  }
+}
