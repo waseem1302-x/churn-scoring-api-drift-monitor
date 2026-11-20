@@ -1,4 +1,4 @@
-# Architecture, Churn Scoring API plus Drift Monitor (Phase 1)
+# Architecture, Churn Scoring API plus Drift Monitor (Phases 1 and 2)
 
 ## What this system is
 
@@ -6,9 +6,11 @@ A small, honest, production-shaped churn scoring system over the
 IBM Telco Customer Churn dataset. It scores one customer at a time
 through a FastAPI endpoint, logs every score to SQLite, and reports
 ranking, calibration, and profit metrics instead of accuracy. Phase
-1 is the scoring API plus honest evaluation. There is no drift
-monitor yet: that is Phase 2, and the API has no drift fields and
-the log has none, by design.
+1 is the scoring API plus honest evaluation. Phase 2 adds the drift
+monitor (hand-rolled detectors, four alert channels), the
+longitudinal simulator with a known drift schedule, the retraining
+loop with shadow promotion, and Evidently HTML reports. The full
+monitoring story is in `MONITORING.md`.
 
 ## System overview
 
@@ -28,13 +30,26 @@ telco.csv ──► data.py (load + verify) ──► split (stratified 80/20)
                         query time (app/)
 POST /score ──► Pydantic validation ──► scoring.score_row (the same
    pipeline training saved) ──► probability + risk tier
+   ──► monitor.row_quality_flags (per-row drift flags)
    ──► db.log_prediction (SQLite: inputs, probability, tier,
-       model version, latency)
+       model version, latency, drift flags)
+GET /drift ──► recent logged rows vs the training reference
+   ──► monitor.evaluate_window ──► the window's drift summary
+
+                        monitoring (app/, scripts/)
+app/monitor.py ──► hand-rolled PSI, KS, Jensen-Shannon,
+   Wasserstein; four alert channels
+scripts/simulate.py ──► longitudinal panel, known drift schedule
+scripts/drift_experiments.py ──► detection delay, false alarms
+scripts/retrain.py ──► shadow runs, promotion margin, log
+scripts/evidently_report.py ──► Evidently HTML reports (clean and
+   price-rise weeks), never on the request path
 
                         quality (scripts/, tests/)
 scripts/train.py ──► benchmarks/results/all_configs.json
 scripts/measure_latency.py ──► benchmarks/results/latency.json
 scripts/ci_gate.py + .github/workflows/eval.yml ──► quality gate
+   (metric gate plus drift gate)
 tests/test_contract.py ──► the artifact reproduces its recorded scores
 ```
 
@@ -48,11 +63,16 @@ tests/test_contract.py ──► the artifact reproduces its recorded scores
 | `app/metrics.py` | ROC-AUC, PR-AUC, Brier, precision at k, reliability curve | The measurement instrument. No accuracy function exists in this file, by design. |
 | `app/profit.py` | Profit at a threshold, profit curve, best threshold | One formula, from the two explicit assumptions in config: profit = TP x ($500 - $50) - FP x $50. |
 | `app/scoring.py` | `load_artifact`, `score_row`, `risk_tier` | The serving path. The API scores through the exact object training saved. |
-| `app/db.py` | SQLite prediction log | The audit trail: every score with inputs, probability, tier, model version, latency. |
-| `app/api.py` | FastAPI: `GET /health`, `POST /score`, `GET /metrics` | One scoring endpoint. Pydantic rejects unknown categories, negative tenure, and bad SeniorCitizen values with 422. |
+| `app/db.py` | SQLite prediction log | The audit trail: every score with inputs, probability, tier, model version, latency, and drift flags (per-row quality flags plus the latest window alerts). `init_db` adds the `drift_flags` column to a Phase 1 database by migration. |
+| `app/api.py` | FastAPI: `GET /health`, `POST /score`, `GET /metrics`, `GET /drift` | One scoring endpoint. Pydantic rejects unknown categories, negative tenure, and bad SeniorCitizen values with 422. `GET /drift` compares the recent logged rows (at least 200, at most 500) against the training reference with the same monitor the offline experiments use. |
+| `app/monitor.py` | Hand-rolled PSI, KS, Jensen-Shannon, Wasserstein; four alert channels | The drift detector. The request path never depends on a report library. Thresholds are justified by the injection measurements; see `MONITORING.md`. |
+| `scripts/simulate.py` | Longitudinal churn panel with a known drift schedule | The temporal validation Telco cannot give. Same schema as Telco, labels from a known rule, schedule written down before any result was measured. |
+| `scripts/drift_experiments.py` | Controlled drift injection | Measures detection delay in windows and false alarms on clean windows, per detector. Writes `benchmarks/results/drift_experiments.json`. |
+| `scripts/retrain.py` | Trigger rules, shadow runs, promotion margin | The retraining loop. A trigger starts a shadow run, never a promotion. Writes `benchmarks/results/retraining_log.jsonl` and `retraining_run.json`. |
+| `scripts/evidently_report.py` | Scheduled Evidently HTML reports | Renders one clean week and one drifted week as HTML artifacts in `benchmarks/reports/`. Never on the request path. |
 | `scripts/train.py` | Trains all 27 configs, picks the champion, writes the artifact and all result files | The experiment runner. The threshold is chosen on out-of-fold train predictions, never on test. |
 | `scripts/measure_latency.py` | Scores 200 test rows through the API, reports p50/p95/p99 | Latency is measured through the real path, not the bare model call. |
-| `scripts/ci_gate.py` | Fails the build if a champion metric regresses | The eval harness is a gate, not a report. |
+| `scripts/ci_gate.py` | Fails the build if a champion metric regresses, or if injected drift is missed | The eval harness is a gate, not a report. The drift half checks the experiment table and the retraining log. |
 
 ## Request path (query time)
 
@@ -66,7 +86,10 @@ tests/test_contract.py ──► the artifact reproduces its recorded scores
 4. `risk_tier` maps the probability: below 0.30 LOW, 0.30 to 0.60
    MEDIUM, at or above 0.60 HIGH.
 5. The score is logged to SQLite with a UTC timestamp, then the
-   response is returned.
+   response is returned. The log row carries drift flags: the
+   per-row quality check (null TotalCharges, out-of-range
+   features) and the alerts from the latest evaluated window, if
+   any window has been evaluated yet.
 
 ## Decisions, trade-offs, and rejected alternatives
 
@@ -204,6 +227,169 @@ scale neither matters.
 **Rejected:** Postgres (overhead, not engineering), and no log at
 all (then a wrong score is unexplainable).
 
+### 9. Hand-rolled detectors vs Evidently on the request path
+
+**Chosen: hand-rolled PSI, KS, Jensen-Shannon, and Wasserstein in
+`app/monitor.py`; Evidently only for scheduled HTML reports.**
+
+**Why:** the request path must never depend on a report library.
+Evidently is a reporting tool with a large dependency tree and a
+version-sensitive API; a drift decision that depends on it breaks
+when the library breaks. The four statistics are each a few lines,
+and the repo owns them, tests them, and can explain them. Evidently
+renders the human-readable report, which is a different job.
+
+**Measured:** the hand-rolled detectors catch the abrupt price rise
+in 0 windows and gradual Fiber in 2 to 4 windows, with 0 false
+alarms on 6 clean windows. Evidently 0.7.23 renders the same two
+weeks as HTML in about 12 seconds per report.
+
+**Rejected:** Evidently on the request path (a library version
+away from a broken API), and a single blended drift score (it
+hides which thing changed).
+
+### 10. Accumulating features are not distribution-drifted
+
+**Chosen: tenure and TotalCharges are skipped in the per-feature
+drift channel and monitored week-over-week instead, with a
+growth-law check on TotalCharges.**
+
+**Why:** against a fixed training reference they drift forever by
+construction. Tenure PSI is 0.43 already in clean week 2 and 1.20
+by week 6; TotalCharges PSI is 0.73 by week 6. Distribution drift
+is the wrong test for a value that only ever rises. The right
+tests are week-over-week: a stale feature (fewer than 1% of
+customers changed) and an accumulation break (more than 5% of
+customers saw TotalCharges fall).
+
+**Cost:** excluding TotalCharges from distribution drift made its
+breakage invisible at first. The growth-law check was added
+because the experiment showed the blind spot, and the docs record
+the sequence honestly: the fix for one blind spot created
+another, and the check closes it.
+
+**Rejected:** monitoring accumulating features against a fixed
+reference (cries wolf every week), and dropping them from
+monitoring entirely (their breakage is a real data failure).
+
+### 11. The simulator is a feature, not a fudge
+
+**Chosen: a longitudinal simulator with a known drift schedule,
+labels from a known rule, written down before any result was
+measured.**
+
+**Why:** Telco has no timestamps, so no temporal validation is
+possible on it, and no honest drift measurement is possible
+without ground truth. A simulator whose schedule is written
+before the measurements is the only way to measure detection
+delay and false alarms, because the truth is known in advance.
+The schedule is in `scripts/simulate.py` and `MONITORING.md`;
+the results are checked against it, not fitted to it.
+
+**Cost:** the simulator's labels come from a known logistic rule,
+a different labelling process from Telco, so the champion's
+measured performance on simulator weeks (precision at 100 0.6633,
+PR-AUC 0.5463) differs from its Telco test numbers (0.76,
+0.6395). The retraining loop compares against the simulator
+baseline, not the Telco numbers; comparing against Telco flagged
+every clean week.
+
+**Rejected:** inventing timestamps on Telco (pretends the split
+is temporal), and measuring drift on Telco alone (no ground
+truth, so no delay or false-alarm measurement is possible).
+
+### 12. Shadow promotion with a noise-floor margin
+
+**Chosen: a trigger starts a shadow run, never a promotion. The
+challenger must beat the champion on profit at the frozen
+threshold by more than $2,500 per 1,000 customers on two
+labelled weeks.**
+
+**Why:** a retrain that promotes itself on one noisy week is how
+a good model gets replaced by a lucky one. Two shadow weeks and
+a margin exist for the same reason: the champion's own profit per
+1,000 fluctuates with a standard deviation of $3,010 across clean
+weeks, so a win smaller than the margin is not evidence. The
+12-week run shows both sides: TRG-08-1 promoted on a $9,490
+margin, TRG-11-2 was refused on a $130 margin.
+
+**Cost:** a challenger that is genuinely better by less than the
+margin waits for the next trigger. That is the price of not
+promoting noise, and it is stated, not hidden.
+
+**Rejected:** promoting on any win (promotes noise), promoting
+on one week (too noisy to decide on), and retraining on a
+data-quality alert (launders a data failure into the weights).
+
+### 13. Trigger streaks: two windows, except performance drop
+
+**Chosen: top-feature drift, dataset drift, and prediction drift
+need two consecutive windows; performance drop needs one labelled
+window. A clean week resets a streak.**
+
+**Why:** one noisy window is not a retrain. A labelled window is
+already a month of evidence given the 30-day label lag, so by the
+time a second labelled window arrives, the model has been wrong
+for two months. The asymmetry is deliberate and documented.
+
+**Measured:** in the 12-week run, the price rise and Fiber growth
+never triggered a retrain, because they touched features outside
+the top 5 and drift_share stayed under 0.5. The monitor detected
+them; the trigger rules are calibrated for drift on important
+features. Detection and retraining are different decisions.
+
+**Rejected:** firing on one window for every rule (alert
+fatigue), and firing on data-quality issues (see decision 12).
+
+### 14. pandas 2.3.3, because Evidently 0.7.23 cannot import on 3.1
+
+**Chosen: pandas pinned to 2.3.3, evidently pinned to 0.7.23.**
+
+**Why:** Evidently 0.7.23 is the latest 0.7.x release. It installs
+on pandas 3.1.1 but `import evidently` fails with `cannot import
+name 'infer_dtype_from_object' from 'pandas.core.dtypes.common'`,
+the known pandas 3.1 break. Downgrading pandas to 2.3.3 makes the
+import work. The Phase 1 metrics were re-verified after the
+downgrade: the full 27-config retrain reproduced the champion and
+every metric bit for bit (ROC-AUC 0.8366, PR-AUC 0.6395, Brier
+0.1392, precision at 100 0.76, threshold 0.0934).
+
+**Cost:** the repo stays one major version behind on pandas until
+Evidently ships a 3.x-compatible release. The pin is recorded in
+`requirements.txt` with the reason and the re-verification.
+
+**Rejected:** running Evidently without the pin (it does not
+import), and dropping Evidently (the HTML reports are the
+human-readable half of the monitoring story).
+
+### 15. GET /drift reads the log, not a live stream
+
+**Chosen: `GET /drift` compares the most recent logged scores
+(at least 200 rows, at most 500) against the training reference,
+with the same monitor the offline experiments use.**
+
+**Why:** the log is the only window the API has, and reusing the
+offline monitor means the endpoint and the experiments cannot
+disagree. A contract test scores drifted rows through `/score`
+and checks the endpoint reports the same numbers the monitor
+computes offline on the same frame.
+
+**Measured:** a clean 60-row window has a MonthlyCharges
+Wasserstein distance of 0.105, over the 0.1 threshold, while a
+clean 200-row window sits at 0.065. Windows under 200 rows are
+too small for the monitor's thresholds, which were validated on
+2,000-row windows, so the endpoint refuses them with
+`not_enough_data` instead of reporting noise.
+
+**Cost:** the endpoint needs 200 logged rows before it says
+anything, and it has no labels, so the realised-performance
+channel is null there. Both limits are in the response and the
+docs, not hidden.
+
+**Rejected:** a smaller minimum window (reports noise as drift),
+and a separate endpoint-only detector (two detectors that can
+disagree).
+
 ### 8. Profit assumptions stated, not hidden
 
 **Chosen: offer cost $50, saved value $500, in `app/config.py`,
@@ -239,6 +425,13 @@ re-runs the threshold selection, which is one function call.
    happen.
 7. **No committed database.** `data/predictions.db` is gitignored.
    The committed artifacts are the model and the result files.
+8. **Drift thresholds come from measurements.** A threshold is
+   set by the injection experiments, not chosen in advance and
+   defended. If a measurement disagrees with a starting point,
+   the measurement wins and the doc says so.
+9. **A trigger is never a promotion.** Retraining promotes only
+   on a labelled-window win above the margin. Data-quality
+   issues never trigger a retrain.
 
 ## Failure modes
 
@@ -250,21 +443,45 @@ re-runs the threshold selection, which is one function call.
 | Metric regression | `scripts/ci_gate.py` + GitHub workflow | Build fails; thresholds are pinned |
 | Blank TotalCharges in a request | Pydantic allows null | Pipeline imputes the training median, same as the 11 blank training rows |
 | Unknown category in a request | Pydantic validation, `handle_unknown="ignore"` as backstop | 422 at the API; the encoder would ignore it if it ever got through |
+| Drift window under 200 rows | `GET /drift` returns `not_enough_data` | Windows that small are noise for the monitor's thresholds |
+| Injected drift missed, or clean windows alert | `scripts/ci_gate.py` drift gate + GitHub workflow | Build fails; the experiment table is the evidence |
+| Evidently report fails | `scripts/evidently_report.py` in the workflow | Build fails; the monitor itself is unaffected, it never depends on Evidently |
 
-## Known limitations (Phase 1)
+## Known limitations (Phases 1 and 2)
 
 - **No timestamps, no temporal validation.** The random split
   measures interpolation, not the future. Phase 2 closes this with
-  a longitudinal simulator.
+  a longitudinal simulator, not with the real data.
 - **Champion margin is noise.** The top 5 configs are within $142
   per 1,000 on out-of-fold profit.
 - **SMOTE does not earn its place on ranking.** Mean PR-AUC 0.6231
   vs 0.6357 for threshold-only. It is in the champion by $8.87 per
   1,000.
-- **Latency.** p50 64.07 ms, about 6 times a single logistic model,
+- **Latency.** p50 63.52 ms, about 6 times a single logistic model,
   because the champion scores three calibrated XGBoost models.
-- **No drift monitoring.** No drift fields in the API or the log.
-  Phase 2.
+  The monitor adds no measurable per-request latency (p50 64.07
+  ms before, 63.52 ms after); the one-time reference build happens
+  on the first score and is absorbed by warm-up.
+- **The simulator is not the real world.** Its labels come from a
+  known logistic rule, so the champion's simulator baseline
+  (precision at 100 0.6633, PR-AUC 0.5463) differs from its Telco
+  test numbers (0.76, 0.6395). The retraining loop compares
+  against the simulator baseline.
+- **Concept drift is caught late.** The MonthlyCharges flip
+  degrades PR-AUC by 0.023 in week 6 and 0.014 in week 7, below
+  the 0.03 rule, and the trigger fires only in week 8. A slow
+  concept change costs three weeks before the loop acts.
+- **Prevalence shift is invisible to input detectors, by
+  design.** Only the label-shift and realised-performance channels
+  see it, and only after labels arrive, about 30 days late in
+  production.
+- **The promotion margin is a judgment call.** $2,500 per 1,000
+  is set just above the two-week shadow's noise floor, measured
+  from the champion's clean-week profit standard deviation of
+  $3,010. A challenger genuinely better by less than the margin
+  waits for the next trigger.
+- **GET /drift needs 200 logged rows and has no labels.** The
+  realised-performance channel is null there.
 - **Profit rests on two assumed numbers.** $50 and $500 are
   illustrative; change them and the threshold moves.
 - **S6E3 scale run pending.** No 594k-row numbers exist yet.

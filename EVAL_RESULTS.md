@@ -1,4 +1,4 @@
-# Eval Results, Phase 1
+# Eval Results, Phases 1 and 2
 
 All numbers below come from real local runs on 20 Nov 2026, on this
 VM (Python 3.12.3, 1.5 shared CPUs, 6 GB RAM). Nothing here is
@@ -237,13 +237,21 @@ calibration is what keeps this curve on the diagonal at all.
 Measured 20 Nov 2026 with `scripts/measure_latency.py`: 200
 held-out test rows, one at a time, through the API (TestClient,
 in-process, includes HTTP handling and the SQLite log write).
+Re-measured after Phase 2 (the monitor's per-row quality flags
+and the drift-flag log column): p50 63.52 ms against 64.07 ms
+before, mean 69.70 ms against 66.04 ms, p95 99.10 ms against
+77.47 ms, p99 122.84 ms against 93.40 ms. The p50 is unchanged,
+so the monitor costs nothing measurable per request; the p95 and
+p99 moved on a 1.5-shared-CPU VM, which is run-to-run jitter,
+not a monitor cost (the one-time reference build happens in the
+10-row warm-up, before the timed run).
 
-| Metric | Value |
-|---|---|
-| Mean | 66.04 ms |
-| p50 | 64.07 ms |
-| p95 | 77.47 ms |
-| p99 | 93.40 ms |
+| Metric | Phase 1 | Phase 2 |
+|---|---|---|
+| Mean | 66.04 ms | 69.70 ms |
+| p50 | 64.07 ms | 63.52 ms |
+| p95 | 77.47 ms | 99.10 ms |
+| p99 | 93.40 ms | 122.84 ms |
 
 The raw model call alone is 61.97 ms at p50, so the cost is the
 model, not the HTTP layer: the champion is a CalibratedClassifierCV
@@ -273,11 +281,123 @@ DecisionAPI (the closest existing project, read during research)
 reports Logistic Regression, ROC-AUC 0.833 held-out, PR-AUC 0.625,
 Brier 0.142, latency p50 9.8 ms. This project, same dataset and
 same split shape: ROC-AUC 0.8366, PR-AUC 0.6395, Brier 0.1392,
-latency p50 64.07 ms. Ranking and calibration are better, latency
+latency p50 63.52 ms. Ranking and calibration are better, latency
 is worse, for the reason above. DecisionAPI also lists its own
 gaps (no tests, drift computed but not returned, threshold not
-tuned); this project has tests (57), returns no drift in Phase 1
-by design, and tunes the threshold on out-of-fold profit.
+tuned); this project has tests (140), returns drift through
+`GET /drift` and stores drift flags on every log row, and tunes
+the threshold on out-of-fold profit.
+
+## Phase 2: the simulator baseline
+
+The simulator (`scripts/simulate.py`) builds a longitudinal
+panel, 2,000 customers over 12 weeks, on the Telco schema, with
+labels from a known logistic rule. The champion's measured
+performance on clean simulator weeks is the reference the
+retraining loop compares against, not the Telco test numbers:
+the two labelling processes differ, and comparing against Telco
+flagged every clean week.
+
+| Metric | Clean simulator weeks (mean of 6) | Telco test |
+|---|---|---|
+| Precision at 100 | 0.6633 | 0.76 |
+| PR-AUC | 0.5463 | 0.6395 |
+| Churn rate | 0.2658 | 0.2654 |
+
+## Phase 2: drift detection table
+
+Reference: the Phase 1 training split (5,634 rows). Windows:
+2,000 rows each. Delay is counted in windows: 0 means the
+detector fired in the injected window itself. "n/a" means the
+detector does not apply (KS and Wasserstein need numeric
+features; InternetService is categorical), not "never detected".
+Raw records: `benchmarks/results/drift_experiments.json`.
+
+| Drift type | PSI delay | KS delay | Jensen-Shannon delay | Wasserstein delay | False alarms (6 clean windows) |
+|---|---|---|---|---|---|
+| Abrupt price rise (+$25 MonthlyCharges) | 0 | 0 | 0 | 0 | 0 on all four detectors |
+| Gradual Fiber growth (+5 points per week) | 4 (at 25 points) | n/a | 2 (at 15 points) | n/a | 0 on all four detectors |
+| Prevalence shift (churn rate 0.2658 to 0.3875) | invisible | invisible | invisible | invisible | 0; label shift flagged instead |
+| TotalCharges breakage | not a distribution event | not a distribution event | not a distribution event | not a distribution event | caught by the data-quality channel (accumulation broken, 0.9115 of customers saw TotalCharges fall) |
+| Null storm (40% of TotalCharges null) | not a distribution event | not a distribution event | not a distribution event | not a distribution event | caught by the data-quality channel (null rate 0.400 against 0.0014 reference) |
+| Stale tenure (frozen at week 11) | not a distribution event | not a distribution event | not a distribution event | not a distribution event | caught by the data-quality channel (stale feature, 0.000 changed) |
+
+Detection values at the abrupt rise (MonthlyCharges): PSI
+1.631, KS statistic 0.3223 with p 0.0, Jensen-Shannon 0.317,
+Wasserstein 0.806. Gradual Fiber values by step (5, 10, 15, 20,
+25 points): PSI 0.009, 0.038, 0.086, 0.157, 0.252;
+Jensen-Shannon 0.033, 0.069, 0.104, 0.140, 0.177. PSI crosses
+0.1 at 20 points and 0.25 at 25; Jensen-Shannon crosses 0.1 at
+15 points. Clean windows: drift_share 0.0 every week, all four
+detectors 0 false alarms.
+
+Prevalence deserves a row of its own. The churn rate rose
+0.2658 to 0.3875 (a relative change of +0.4579) with no feature
+change, so no input detector fired, which is the honest result:
+there was nothing in the inputs to detect. The label-shift
+channel flagged it, and the realised-performance channel did
+not: precision at 100 ROSE by 0.1467 and PR-AUC rose by 0.1222,
+because more churners overall means more churners in the top
+100. A prevalence shift that lifts the base rate can make a
+model look better while it is drifting, and the docs say so.
+
+## Phase 2: threshold justification
+
+The starting points came from the research report. The
+measurements kept most of them and corrected one. Full
+reasoning: `MONITORING.md`.
+
+| Threshold | Value | What the measurement says |
+|---|---|---|
+| PSI act | 0.25 | The abrupt rise gives 1.631; clean windows never cross 0.1. |
+| PSI warn | 0.1 | Gradual Fiber crosses 0.1 at 20 points of growth. |
+| Jensen-Shannon | 0.1 | The abrupt rise gives 0.317; gradual Fiber crosses 0.1 at 15 points. |
+| Wasserstein | 0.1 | The abrupt rise gives 0.806. Clean 2,000-row windows never cross 0.1, but a clean 60-row window gives 0.105, so the API refuses windows under 200 rows. |
+| KS p | 0.05 | Reported, never the verdict. Flags the abrupt rise (p 0.0), quiet on clean windows. |
+| drift_share | 0.5 | The abrupt rise moves it to 0.059, Fiber growth plus the price rise to 0.118. Dataset drift means most features moved, not one. |
+| Predicted-rate relative move | 0.10 | The prevalence shift moves it +0.24; clean weeks move -0.04 to +0.01. |
+| Precision at 100 drop | 0.05 | The concept drift drops it 0.033 in week 8 and 0.053 in week 11. Clean weeks never fire it (0.72 to 0.76, all above the 0.6633 baseline). |
+| PR-AUC drop | 0.03 | The concept drift drops it 0.023 in week 6, 0.014 in week 7, 0.038 in week 8, which is where the trigger fires. Clean weeks never fire it (0.5482 to 0.5863, all above the 0.5463 baseline). |
+| Promotion margin | $2,500 per 1,000 | The champion's own profit per 1,000 has a standard deviation of $3,010 across 6 clean weeks (range $8,870). |
+
+## Phase 2: retraining log summary
+
+12-week scheduled run, seed 42, 5,000 customers. Full log:
+`benchmarks/results/retraining_log.jsonl`; weekly summaries:
+`benchmarks/results/retraining_run.json`.
+
+| Trigger | Week | Rule | Decision | Champion profit per 1,000 | Challenger profit per 1,000 | Margin |
+|---|---|---|---|---|---|---|
+| TRG-08-1 | 8 | performance_drop | promote | $144,435 | $153,925 | $9,490 |
+| TRG-11-2 | 11 | performance_drop | refuse | $149,910 | $150,040 | $130 |
+
+TRG-08-1: the concept drift (weeks 6 to 9) degraded the
+champion's ranking until PR-AUC fell 0.0379 below the clean
+baseline in week 8. The challenger, trained on weeks 5 to 8,
+beat the champion on shadow weeks 9 and 10 by $9,490 per 1,000,
+well above the $2,500 margin. Promoted.
+
+TRG-11-2: the challenger, trained on weeks 8 to 11, beat the
+champion on shadow week 12 by $130 per 1,000, far below the
+$2,500 margin. Refused. A $130 win on 5,000 rows is noise, and
+the loop correctly refused it.
+
+The monitor detected the drift in both cases, but no trigger
+fired for the price rise or the Fiber growth: they touched
+features outside the top 5, and drift_share stayed under 0.5.
+Detection and retraining are different decisions.
+
+## Phase 2: pandas 2.3.3 re-verification
+
+Evidently 0.7.23 cannot import on pandas 3.1.1 (`cannot import
+name 'infer_dtype_from_object'`), so pandas is pinned to 2.3.3.
+After the downgrade, the full 27-config retrain reproduced the
+Phase 1 metrics bit for bit: same champion
+(churn-xgboost-smote-isotonic-v1), ROC-AUC 0.8366, PR-AUC
+0.6395, Brier 0.1392, precision at 100 0.76, threshold 0.0934.
+`benchmarks/results/all_configs.json` differs only in
+`train_time_s`; zero metric mismatches. The artifact is the same
+byte size, 2,983,546.
 
 ## How to reproduce
 
@@ -287,8 +407,11 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python -m scripts.train            # 27 configs, about 204 s
 python -m scripts.measure_latency  # 200 rows through the API
-python -m pytest tests/ -q         # 57 passed
-python -m scripts.ci_gate          # gate passes
+python -m scripts.drift_experiments  # injection table
+python -m scripts.retrain          # 12-week scheduled run
+python -m scripts.evidently_report # two HTML reports
+python -m pytest tests/ -q         # 140 passed
+python -m scripts.ci_gate          # metric gate plus drift gate, both pass
 ```
 
 ## CI gate
@@ -296,11 +419,17 @@ python -m scripts.ci_gate          # gate passes
 Thresholds in `app/config.py`, set below the measured champion
 numbers: ROC-AUC at least 0.80 (measured 0.8366), PR-AUC at least
 0.55 (measured 0.6395), Brier at most 0.20 (measured 0.1392),
-precision at 100 at least 0.50 (measured 0.76). The gate passes.
-It has not yet run on GitHub Actions; the workflow
-`.github/workflows/eval.yml` runs train, latency, tests, then the
-gate on every push and PR, and its first run is pending repo
-creation.
+precision at 100 at least 0.50 (measured 0.76). The metric gate
+passes. The drift gate checks the injection table and the
+retraining log: abrupt drift caught in 0 windows, gradual Fiber
+caught within 4 windows (PSI) and 2 (Jensen-Shannon), clean
+windows quiet on all detectors, prevalence label shift flagged,
+breakage, null storm, and stale tenure all quality-flagged, and
+the retraining log holding one promotion and one refusal. The
+drift gate passes. The workflow `.github/workflows/eval.yml`
+runs train, latency, drift experiments, retrain, Evidently
+reports, tests, then the gate on every push and PR. The first
+Actions run after the Phase 1 push has not been checked yet.
 
 ## Known limits
 
@@ -316,10 +445,19 @@ creation.
   profit rule picked it by $8.87 per 1,000.
 - The reliability curve overstates risk in the 0.4 to 0.5 and 0.8
   to 0.9 bins.
-- Latency p50 64.07 ms is about 6 times a single logistic model,
+- Latency p50 63.52 ms is about 6 times a single logistic model,
   because the champion scores three calibrated XGBoost models.
-- No drift monitoring in Phase 1. The API has no drift fields and
-  the log has none. That is Phase 2.
+- The simulator is not the real world: its labels come from a
+  known rule, so its baseline (precision at 100 0.6633, PR-AUC
+  0.5463) differs from the Telco test numbers (0.76, 0.6395).
+- Concept drift is caught late: the trigger fires in week 8, the
+  third flipped week.
+- A prevalence shift is invisible to input detectors by design;
+  only the label-shift and realised-performance channels see it,
+  after labels arrive.
+- The promotion margin ($2,500 per 1,000) is a judgment call, set
+  just above the shadow's noise floor.
+- `GET /drift` needs 200 logged rows and has no labels.
 - No S6E3 scale numbers yet (pending, see above).
 - The profit figures rest on the $50 offer cost and $500 saved
   value assumptions. Change them and the threshold and the profit

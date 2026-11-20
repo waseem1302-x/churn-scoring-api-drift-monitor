@@ -8,7 +8,8 @@ Em-dashes read as AI-generated, so no doc file may contain one.
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = ["README.md", "ARCHITECTURE.md", "EVAL_RESULTS.md", "DATA.md"]
+DOCS = ["README.md", "ARCHITECTURE.md", "EVAL_RESULTS.md", "DATA.md",
+        "MONITORING.md"]
 
 
 def test_no_em_dash_in_docs():
