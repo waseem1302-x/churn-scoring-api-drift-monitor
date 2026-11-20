@@ -228,9 +228,11 @@ def score(req: ScoreRequest, _key: None = Depends(require_api_key)):
 def drift(_key: None = Depends(require_api_key)):
     """The latest window's drift summary: the most recent logged scores
     compared against the Phase 1 training reference, by the same
-    monitor the offline experiments use. No labels exist in the log,
-    so the realised-performance channel is null here; the window is
-    inputs and predictions only."""
+    monitor the offline experiments use. Rows that have a label
+    (backfilled late, about 30 days after the score, with
+    scripts/backfill_labels.py) add the realised-performance channel;
+    without any labelled rows that channel stays null, and the window
+    is inputs and predictions only."""
     global _LATEST_DRIFT
     _ensure_model()
     rows = db.recent_predictions(_DB_PATH, limit=DRIFT_WINDOW_ROWS)
@@ -243,14 +245,55 @@ def drift(_key: None = Depends(require_api_key)):
         }
     frame = pd.DataFrame([json.loads(r["inputs_json"]) for r in rows])
     scores = np.array([r["probability"] for r in rows])
+    labelled = [(r["label"], r["probability"]) for r in rows
+                if r.get("label") is not None]
+    y_true = y_proba = None
+    reference_metrics = None
+    if labelled:
+        y_true = np.array([label for label, _ in labelled])
+        y_proba = np.array([prob for _, prob in labelled])
+        reference_metrics = _reference_metrics()
     ref_frame, ref_scores = get_reference()
     summary = monitor.evaluate_window(
-        ref_frame, frame, ref_scores, scores, _THRESHOLD)
+        ref_frame, frame, ref_scores, scores, _THRESHOLD,
+        y_true=y_true, y_proba=y_proba,
+        reference_metrics=reference_metrics)
     summary["status"] = "ok"
     summary["model_version"] = _MODEL_VERSION
     summary["window_rows"] = len(rows)
+    summary["n_labelled"] = len(labelled)
     _LATEST_DRIFT = summary
-    return summary
+    return _json_safe(summary)
+
+
+def _json_safe(value):
+    """Replace non-finite floats with None, recursively. The realised
+    channel can produce NaN when the labelled rows hold only one
+    class (ROC-AUC is undefined then), and NaN is not valid JSON:
+    without this the endpoint fails to serialise instead of
+    reporting the channel."""
+    import math
+
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+    if isinstance(value, dict):
+        return {k: _json_safe(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_json_safe(v) for v in value]
+    return value
+
+
+def _reference_metrics():
+    """The Phase 1 test metrics for the champion, used as the
+    baseline for the realised-performance drops on /drift. None
+    when the metrics file is missing or has no champion block."""
+    path = Path(config.METRICS_PATH)
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text())
+    champion = data.get("champion") or {}
+    metrics = champion.get("metrics") or {}
+    return metrics or None
 
 
 @app.post("/reload")
