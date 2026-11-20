@@ -357,12 +357,3 @@ uvicorn started the same way answers `/health`, `/score`,
 `/drift`, and `/metrics` on localhost:8000. Build it
 with Docker on a normal machine before trusting it there; the
 Dockerfile is unchanged and needs no proxy workaround there.
-
-## What is not done yet
-
-- Phase 3: deployment (Oracle Always Free VM or Cloud Run, same
-  route as the RAG project), Bank Customer Churn generalisation
-  check, NannyML CBPE for performance estimation while labels are
-  delayed.
-- S6E3 scale run: pending. No Kaggle credentials were present, so
-  no 594k-row numbers are claimed. See `EVAL_RESULTS.md`.
