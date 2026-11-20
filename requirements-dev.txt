@@ -1,0 +1,17 @@
+# Dev and reporting dependencies. Install alongside requirements.txt
+# for local work and CI: pip install -r requirements.txt
+# -r requirements-dev.txt. Never installed in the Docker image:
+# pytest is test-only and Evidently is reporting-only (scheduled
+# HTML drift reports), and Evidently pulls matplotlib, plotly and
+# kaleido, about 570 MB of the Phase 2 image.
+pytest==9.2.0
+
+# Phase 2: Evidently for scheduled drift reports only. Evidently 0.7.23
+# is the latest 0.7.x release and cannot import on pandas 3.1.x
+# (it needs pandas.core.dtypes.common.infer_dtype_from_object, removed
+# in pandas 3.1; issue 1974). pandas is pinned to 2.3.3 for that
+# reason. The downgrade was verified: the full 27-config retrain
+# reproduces the Phase 1 metrics bit for bit (ROC-AUC 0.8366, PR-AUC
+# 0.6395, Brier 0.1392, threshold 0.0934, same champion). Evidently is
+# never on the request path; the live monitor is hand-rolled.
+evidently==0.7.23

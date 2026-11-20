@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-11-20T04:34:13.955033+00:00",
+  "tag": "churn-scoring-api:phase3",
+  "previous_size_gb": 1.39,
+  "size_bytes": 805000000,
+  "size_mb": 805.0,
+  "size_gb": 0.81,
+  "size_note": "parsed from buildah's displayed size (decimal MB); exact to the megabyte",
+  "built_with": "buildah 1.33.7, direct commands (docker cannot run in this VM)",
+  "smoke_test": {
+    "method": "chroot, uvicorn on 127.0.0.1:8001, contract row 0",
+    "health": true,
+    "score_probability": 0.0137,
+    "score_tier": "LOW",
+    "drift_endpoint": true,
+    "metrics_endpoint": true
+  }
+}

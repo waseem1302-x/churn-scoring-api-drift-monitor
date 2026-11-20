@@ -113,7 +113,7 @@ What was not used, and why:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements-dev.txt
 
 # 1. Train all 27 configs, pick the champion, save the artifact
 python -m scripts.train
@@ -358,33 +358,48 @@ docker run -p 8000:8000 churn-scoring-api
 ```
 
 The image ships the trained artifact, so the container starts
-without training. Image size 1.39 GB, measured 20 Nov 2026
-(823 MB in Phase 1; Evidently and its reporting dependencies
-added about 570 MB).
+without training. Image size 805 MB, measured 20 Nov 2026
+(1.39 GB in Phase 2; the multi-stage build dropped Evidently and
+its reporting dependencies, about 570 MB, from the image).
+Evidently is reporting-only and pytest is test-only, so both live
+in requirements-dev.txt and are never installed in the image; the
+runtime stage ships only the API code, the artifacts, the Telco
+file the drift reference reads, and the metrics file /metrics
+serves. Build it with `bash scripts/build_image.sh`, then record
+the size and smoke-test it with `bash scripts/smoke_image.sh`
+(the smoke test mounts the image, starts uvicorn in chroot, and
+scores contract row 0, which must reproduce its recorded
+probability and tier exactly).
 **Note (verified 20 Nov 2026):** Docker cannot start containers in
 this development VM (the VM's seccomp policy blocks `setns`, same
 as the RAG project). The image was built and smoke-tested with
-Buildah 1.33.7 using chroot isolation instead. Two VM quirks
-needed workarounds, both recorded here so the build is
-reproducible. First, `buildah bud` fails at `pip install`: the
-egress proxy presents a self-signed certificate, and the
-container does not trust it (the host trusts it through
-`SSL_CERT_FILE=/run/hatch/egress-tls/ca-bundle.pem`). The build
-was done with direct `buildah` commands instead, mounting the
-host CA bundle read-only for the install step only, so nothing
-about the proxy leaks into the image config:
+Buildah 1.33.7 using chroot isolation instead, following the two
+stages of the Dockerfile by hand (`scripts/build_image.sh`): the
+builder stage installs only requirements.txt with
+`--prefix=/install`, the runtime stage copies `/install` to
+`/usr/local` plus the API code, the artifacts, the Telco file and
+the metrics file. Two VM quirks needed workarounds, both recorded
+here so the build is reproducible. First, `buildah bud` fails at
+`pip install`: the egress proxy presents a self-signed
+certificate, and the container does not trust it (the host trusts
+it through `SSL_CERT_FILE=/run/hatch/egress-tls/ca-bundle.pem`).
+The build was done with direct `buildah` commands instead,
+mounting the host CA bundle read-only for the install step only,
+so nothing about the proxy leaks into the image config:
 `buildah --storage-driver vfs from python:3.12-slim`, then
-`buildah copy` for requirements, app, data, artifacts and
-benchmarks, then `buildah run --volume
+`buildah copy` for requirements, then `buildah run --volume
 /run/hatch/egress-tls/ca-bundle.pem:/ca-bundle.pem:ro --env
 SSL_CERT_FILE=/ca-bundle.pem <container> pip install
---no-cache-dir -r /app/requirements.txt`, then `buildah commit`
-to `churn-scoring-api:phase2`. Second, `buildah commit` stages
-blobs in `/var/tmp`, a 2 GB tmpfs, and the 1.39 GB image does not
-fit there; the commit was run with `TMPDIR=~/buildah-tmp` on the
-overlay filesystem. A chroot run loads the artifact and scores a
-row (probability 0.2695, tier LOW, the same row as Phase 1), and
-uvicorn started the same way answers `/health`, `/score`,
-`/drift`, and `/metrics` on localhost:8000. Build it
-with Docker on a normal machine before trusting it there; the
-Dockerfile is unchanged and needs no proxy workaround there.
+--no-cache-dir --prefix=/install -r /install/requirements.txt`,
+then `buildah commit` to `churn-scoring-api:builder`, then a
+second container for the runtime stage and `buildah commit` to
+`churn-scoring-api:phase3`. Second, `buildah commit` stages
+blobs in `/var/tmp`, a 2 GB tmpfs, and the image does not fit
+there; the commits were run with `TMPDIR=~/buildah-tmp` on the
+overlay filesystem. A chroot run loads the artifact and scores
+contract row 0 (probability 0.0137, tier LOW, exactly the
+recorded contract row), and uvicorn started the same way answers
+`/health`, `/score`, `/drift`, and `/metrics` on localhost:8001.
+Build it with Docker on a normal machine before trusting it
+there; the Dockerfile is unchanged and needs no proxy workaround
+there.
