@@ -156,6 +156,21 @@ def get_reference():
 def _ensure_model():
     global _MODEL, _MODEL_VERSION, _THRESHOLD
     if _MODEL is None:
+        # Opt-in fast model: one logistic pipeline instead of the
+        # three-model calibrated champion. Set CHURN_FAST_MODEL=1 at
+        # startup; the default is the champion, and the pointer still
+        # decides which champion artifact serves.
+        if os.environ.get("CHURN_FAST_MODEL") == "1":
+            path = config.FAST_ARTIFACT_PATH
+            if not path.exists():
+                raise HTTPException(
+                    status_code=503,
+                    detail="fast model artifact not found: "
+                           "run scripts/train_fast.py first")
+            _MODEL, meta = scoring.load_artifact(str(path))
+            _MODEL_VERSION = meta["model_version"]
+            _THRESHOLD = meta["threshold"]
+            return
         try:
             path = model_store.resolve_current_artifact()
         except (FileNotFoundError, ValueError) as exc:

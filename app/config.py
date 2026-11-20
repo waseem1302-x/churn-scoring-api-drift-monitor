@@ -15,6 +15,7 @@ TEST_SIZE = 0.2
 DATA_PATH = ROOT / "data" / "raw" / "telco.csv"
 SOURCES_PATH = ROOT / "data" / "sources.json"
 ARTIFACT_PATH = ROOT / "artifacts" / "model.joblib"
+FAST_ARTIFACT_PATH = ROOT / "artifacts" / "model-fast.joblib"
 METRICS_PATH = ROOT / "benchmarks" / "results" / "metrics.json"
 CONTRACT_PATH = ROOT / "benchmarks" / "results" / "contract_rows.json"
 DB_PATH = ROOT / "data" / "predictions.db"

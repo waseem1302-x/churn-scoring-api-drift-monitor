@@ -1,0 +1,9 @@
+{
+  "model_version": "churn-xgboost-smote-isotonic-v1",
+  "n": 200,
+  "mean_ms": 48.89,
+  "p50_ms": 42.51,
+  "p95_ms": 81.89,
+  "p99_ms": 104.18,
+  "note": "Quiet re-measure with the S6E3 sweep stopped (SIGSTOP) and the CBPE pip install still running. Same method as measure_latency.py. Not added to latency_runs.json: it is a one-off comparison point for the fast model, not a new latest run."
+}

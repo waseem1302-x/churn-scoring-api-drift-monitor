@@ -1,0 +1,9 @@
+{
+  "model_version": "churn-logistic-none-platt-v1",
+  "n": 200,
+  "mean_ms": 26.81,
+  "p50_ms": 25.86,
+  "p95_ms": 33.0,
+  "p99_ms": 36.78,
+  "note": "In-process TestClient on this VM (1.5 shared CPUs). Includes HTTP handling and the SQLite log write. Same method as measure_latency.py, fast artifact."
+}

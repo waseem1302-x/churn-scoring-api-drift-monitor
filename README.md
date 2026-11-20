@@ -174,6 +174,19 @@ pointed model. Call it after a promotion moves the pointer; a
 restart serves the pointed model too. It returns the new model
 version, and `/health` afterwards reports it.
 
+### Fast model (opt-in)
+
+The best logistic config is saved as a separate artifact,
+`artifacts/model-fast.joblib` (`scripts/train_fast.py` builds it,
+and refuses to save a refit that does not reproduce the Phase 1
+numbers for this config). Start the API with
+`CHURN_FAST_MODEL=1` to serve it instead of the champion; the
+default is the champion, and the champion artifact is never
+overwritten. Measured quiet: p50 25.86 ms against the champion's
+42.51 ms, p95 33.00 ms against 81.89 ms, for 0.0047 PR-AUC on
+Telco. See "Fast alternative" in EVAL_RESULTS.md before
+choosing it: on Bank the same trade gives up 0.2371 PR-AUC.
+
 `POST /score` takes the 19 model features (plus an optional
 `customerID` for the audit log) and returns the churn probability,
 the risk tier, and the model version. Every field is validated:

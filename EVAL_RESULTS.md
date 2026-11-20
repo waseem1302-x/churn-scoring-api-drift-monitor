@@ -343,6 +343,56 @@ under a lock now: 8 threads scoring at once used to each build it.
 Re-measure on the deployment machine before quoting latency
 anywhere else.
 
+### Fast alternative
+
+The champion is three calibrated XGBoost models, and the best
+logistic config (churn-logistic-none-platt-v1) is nearly as good
+at ranking: PR-AUC 0.6348 against the champion's 0.6395, a
+0.0047 gap, ROC-AUC 0.8420 against 0.8366, Brier 0.1380 against
+0.1392. It is saved as a separate artifact,
+artifacts/model-fast.joblib, trained by scripts/train_fast.py,
+which refuses to save a refit that does not reproduce the Phase 1
+numbers for this config. The API serves it only when
+CHURN_FAST_MODEL=1 is set; the default is the champion, and
+artifacts/model.joblib is never overwritten.
+
+Measured the same way as the champion (200 held-out rows, one at
+a time, in-process TestClient), with the S6E3 sweep stopped so
+both models are measured under the same quiet conditions:
+
+| Metric | Champion API | Fast API |
+|---|---|---|
+| Mean | 48.89 ms | 26.81 ms |
+| p50 | 42.51 ms | 25.86 ms |
+| p95 | 81.89 ms | 33.00 ms |
+| p99 | 104.18 ms | 36.78 ms |
+
+The fast model is 1.6 times faster at p50 and 2.5 times faster
+at p95, not 6 times. The 6-times figure from Phase 1 compared
+raw model calls; at the API level the fixed costs dominate. The
+raw numbers, same quiet conditions: champion 23.64 ms at p50,
+fast calibrated logistic 19.20 ms, and a single uncalibrated
+logistic 6.05 ms. The calibrated wrapper runs three pipelines
+either way, so most of the gap between the two calibrated
+models is the XGBoost compute inside them, and the rest of the
+request (HTTP, the SQLite log write, the drift flags) costs the
+same for both. The champion's earlier API runs (p50 63.52 to
+98.10 ms) were all measured under heavier VM load; the quiet
+re-measure above is in benchmarks/results/latency_champion_quiet.json
+and is a one-off comparison point, not a new latest run.
+
+The default stays the champion. The fast model buys 1.6 times
+the p50 speed for 0.0047 PR-AUC on Telco, and on Bank the same
+trade would give up 0.2371 PR-AUC (logistic collapses there,
+mean PR-AUC 0.4679 against XGBoost 0.7140), so a swap is not
+obviously right even on speed. On test profit the fast model
+earns slightly more ($94,251.24 per 1,000 against $93,789.92),
+but the champion won the pre-registered out-of-fold rule
+($94,266.95 against $93,938.59 per 1,000), and both margins are
+noise. Use the fast model only if latency becomes a real
+constraint: CHURN_FAST_MODEL=1, and /health reports the version
+it serves.
+
 ## S6E3 scale run
 
 The Kaggle Playground Series S6E3 synthetic train set was fetched
