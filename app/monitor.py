@@ -350,6 +350,28 @@ def top_features_by_permutation(model, X, y, n=5, n_repeats=5):
     return [config.FEATURES[i] for i in order]
 
 
+def row_quality_flags(inputs, reference):
+    """Per-row data-quality flags against a reference frame.
+
+    Returns {"null_total_charges": bool, "out_of_range": [features]}.
+    A null TotalCharges is legitimate for a brand-new customer (tenure
+    0), so it is flagged as information, not as an alert by itself.
+    A feature outside the reference min/max is out of range.
+    """
+    flags = {"null_total_charges": False, "out_of_range": []}
+    if inputs.get("TotalCharges") is None:
+        flags["null_total_charges"] = True
+    for col in config.NUMERIC_FEATURES:
+        value = inputs.get(col)
+        if value is None:
+            continue
+        lo = float(reference[col].min())
+        hi = float(reference[col].max())
+        if not (lo <= float(value) <= hi):
+            flags["out_of_range"].append(col)
+    return flags
+
+
 def evaluate_window(ref, cur, ref_scores, cur_scores, threshold,
                     thresholds=None, y_true=None, y_proba=None,
                     previous_frame=None, id_column=None,
