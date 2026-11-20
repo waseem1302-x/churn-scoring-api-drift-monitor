@@ -25,6 +25,17 @@ EXPECTED_COLUMNS = 21
 EXPECTED_CHURN_RATE = 0.2654
 EXPECTED_BLANK_TOTAL_CHARGES = 11
 
+# Kaggle Playground Series S6E3 synthetic train set. Same schema as
+# Telco except the identifier is "id", not "customerID". Downloaded
+# 20 Nov 2026 via the Kaggle web UI (Google account
+# waseemmushtaq045@gmail.com); the 80 MB file lives outside the repo
+# and is never committed.
+S6E3_PATH = Path(
+    "/home/hatch/workspace/browser_downloads/sess-3804851174/"
+    "browser-download-20261120T014700.434094123Z-0-train.csv")
+S6E3_EXPECTED_ROWS = 594194
+S6E3_EXPECTED_CHURN_RATE = 0.2252
+
 # Column provenance and leakage class. "Leakage class" answers one
 # question per column: when does this information exist relative to the
 # churn outcome? A column recorded at or after cancellation would carry
@@ -63,6 +74,42 @@ def load_telco(path=DATA_PATH) -> pd.DataFrame:
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
     df[TARGET] = (df[TARGET] == "Yes").astype(int)
     return df
+
+
+def load_s6e3(path=S6E3_PATH) -> pd.DataFrame:
+    """Load the S6E3 synthetic train set onto the Telco shape: "id"
+    becomes "customerID" so the same pipeline and split run unchanged,
+    Churn Yes/No maps to 1/0 exactly as the Telco loader does."""
+    df = pd.read_csv(path)
+    df = df.rename(columns={"id": ID_COLUMN})
+    df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
+    df[TARGET] = (df[TARGET] == "Yes").astype(int)
+    return df
+
+
+def verify_s6e3(df: pd.DataFrame) -> dict:
+    """Check the file is the S6E3 set we think it is. Raises on failure.
+    The churn rate differs from Telco (22.52% vs 26.54%): the synthetic
+    set does not preserve the exact rate, and the scale run records
+    that instead of hiding it."""
+    if len(df) != S6E3_EXPECTED_ROWS:
+        raise ValueError(f"expected {S6E3_EXPECTED_ROWS} rows, got {len(df)}")
+    if len(df.columns) != EXPECTED_COLUMNS:
+        raise ValueError(f"expected {EXPECTED_COLUMNS} columns, got {len(df.columns)}")
+    churn_rate = float(df[TARGET].mean())
+    if abs(churn_rate - S6E3_EXPECTED_CHURN_RATE) > 0.001:
+        raise ValueError(f"expected churn rate ~{S6E3_EXPECTED_CHURN_RATE}, got {churn_rate:.4f}")
+    dups = int(len(df) - df[ID_COLUMN].nunique())
+    if dups != 0:
+        raise ValueError(f"expected 0 duplicate ids, got {dups}")
+    return {
+        "rows": len(df),
+        "columns": len(df.columns),
+        "churn_rate": churn_rate,
+        "blank_total_charges": int(df["TotalCharges"].isna().sum()),
+        "duplicate_ids": dups,
+        "has_timestamps": has_timestamps(df),
+    }
 
 
 def has_timestamps(df: pd.DataFrame) -> bool:

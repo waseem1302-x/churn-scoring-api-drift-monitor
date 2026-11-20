@@ -1,0 +1,107 @@
+{
+  "generated_at": "2026-11-20T03:24:09.456091+00:00",
+  "dataset": {
+    "name": "Kaggle Playground Series S6E3 synthetic train set",
+    "source_file": "/home/hatch/workspace/browser_downloads/sess-3804851174/browser-download-20261120T014700.434094123Z-0-train.csv",
+    "rows": 594194,
+    "columns": 21,
+    "churn_rate": 0.2252,
+    "blank_total_charges": 0,
+    "duplicate_ids": 0,
+    "train_rows": 475355,
+    "test_rows": 118839,
+    "do_nothing_accuracy": 0.7748
+  },
+  "frozen_threshold": 0.0934,
+  "configs": {
+    "champion": {
+      "model": "xgboost",
+      "handling": "smote",
+      "calibration": "isotonic",
+      "model_version": "churn-xgboost-smote-isotonic-v1",
+      "train_time_s": 384.21,
+      "oof_threshold": 0.1001,
+      "oof_profit_per_1000": 83914.23,
+      "metrics_frozen_threshold": {
+        "n": 118839,
+        "churn_rate": 0.2252,
+        "roc_auc": 0.9135,
+        "pr_auc": 0.7474,
+        "brier": 0.0966,
+        "precision_at_100": 0.97,
+        "precision_at_10pct": 0.8251,
+        "precision_at_threshold": 0.4553,
+        "recall_at_threshold": 0.9575,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.7748
+      },
+      "test_profit_frozen": 9998550.0,
+      "test_profit_frozen_per_1000": 84135.26,
+      "metrics_reoptimized_threshold": {
+        "n": 118839,
+        "churn_rate": 0.2252,
+        "roc_auc": 0.9135,
+        "pr_auc": 0.7474,
+        "brier": 0.0966,
+        "precision_at_100": 0.97,
+        "precision_at_10pct": 0.8251,
+        "precision_at_threshold": 0.4621,
+        "recall_at_threshold": 0.9534,
+        "threshold": 0.1001,
+        "do_nothing_accuracy": 0.7748
+      },
+      "test_profit_reoptimized": 9996950.0,
+      "test_profit_reoptimized_per_1000": 84121.8
+    },
+    "logistic": {
+      "model": "logistic",
+      "handling": "none",
+      "calibration": "platt",
+      "model_version": "churn-logistic-none-platt-v1",
+      "train_time_s": 112.19,
+      "oof_threshold": 0.1048,
+      "oof_profit_per_1000": 83612.56,
+      "metrics_frozen_threshold": {
+        "n": 118839,
+        "churn_rate": 0.2252,
+        "roc_auc": 0.9084,
+        "pr_auc": 0.7271,
+        "brier": 0.0997,
+        "precision_at_100": 0.87,
+        "precision_at_10pct": 0.8033,
+        "precision_at_threshold": 0.4566,
+        "recall_at_threshold": 0.9512,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.7748
+      },
+      "test_profit_frozen": 9940550.0,
+      "test_profit_frozen_per_1000": 83647.2,
+      "metrics_reoptimized_threshold": {
+        "n": 118839,
+        "churn_rate": 0.2252,
+        "roc_auc": 0.9084,
+        "pr_auc": 0.7271,
+        "brier": 0.0997,
+        "precision_at_100": 0.87,
+        "precision_at_10pct": 0.8033,
+        "precision_at_threshold": 0.4664,
+        "recall_at_threshold": 0.9468,
+        "threshold": 0.1048,
+        "do_nothing_accuracy": 0.7748
+      },
+      "test_profit_reoptimized": 9953150.0,
+      "test_profit_reoptimized_per_1000": 83753.23
+    }
+  },
+  "latency": {
+    "model_version": "churn-xgboost-smote-isotonic-v1-s6e3",
+    "n": 200,
+    "mean_ms": 42.74,
+    "p50_ms": 28.99,
+    "p95_ms": 63.46,
+    "p99_ms": 75.43,
+    "note": "In-process TestClient on this VM (1.5 shared CPUs), S6E3-trained champion, same method as measure_latency.py."
+  },
+  "honesty_limits": "S6E3 rows are near-duplicates of Telco (about 85 copies of each original row), so these metrics are NOT independent evidence about new customers. They measure scale (train time, latency) and pipeline stability on a larger file, not generalisation. Churn rate is 22.52%, not Telco's 26.54%.",
+  "full_sweep": "not run: at this scale the 27-config sweep would take hours for numbers that add nothing to the scale question."
+}
