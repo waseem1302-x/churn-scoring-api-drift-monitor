@@ -34,6 +34,12 @@ DRIFT_SCHEDULE = {
     "weeks_10_to_11": "single-feature breakage: TotalCharges replaced by "
                       "MonthlyCharges (broken join)",
     "week_12": "stale feature: tenure frozen at its week 11 value",
+    "weeks_6_to_9": "concept drift: the MonthlyCharges coefficient in the "
+                    "true churn rule flips from +0.015 to -0.015, so "
+                    "high-spending customers now churn LESS (a premium "
+                    "loyalty programme). No feature distribution changes; "
+                    "only the label rule changes, so input detectors "
+                    "cannot see it. Only labelled outcomes can.",
 }
 
 START_DATE = date(2026, 1, 5)  # a Monday; simulated calendar, not real dates
@@ -45,6 +51,8 @@ PREVALENCE_SHIFT_WEEK = 9
 PREVALENCE_INTERCEPT_SHIFT = 0.6
 BREAKAGE_WEEKS = (10, 11)
 STALE_WEEK = 12
+CONCEPT_FLIP_WEEKS = (6, 9)
+CONCEPT_MONTHLY_COEF = -0.015
 MAX_TENURE = 72
 
 # The true churn rule. Coefficients are on the raw features; the
@@ -67,13 +75,29 @@ _ADDONS = ["OnlineSecurity", "OnlineBackup", "DeviceProtection",
            "TechSupport", "StreamingTV", "StreamingMovies"]
 
 
-def true_churn_probability(frame, intercept_shift=0.0) -> np.ndarray:
-    """The known label rule. Returns a probability per row."""
+def true_churn_probability(frame, intercept_shift=0.0,
+                           monthly_coef=None) -> np.ndarray:
+    """The known label rule. Returns a probability per row. monthly_coef
+    overrides the MonthlyCharges coefficient: the concept-drift event
+    flips it, so the same features produce different labels. A flip is
+    recentred: the intercept moves by (old coef - new coef) times the
+    mean MonthlyCharges, so the overall churn rate stays near baseline
+    and only the RANKING changes. That is the point of concept drift:
+    the features look the same, the rate looks the same, but the
+    model's ranking is wrong. Without recentring, flipping a
+    coefficient on a variable with mean 65 would move the mean logit
+    by about 2 and crash the churn rate to 0.04, which is a prevalence
+    shift wearing a concept drift costume."""
     r = TRUE_RULE
+    coef = r["MonthlyCharges"] if monthly_coef is None else monthly_coef
+    shift = intercept_shift
+    if monthly_coef is not None and monthly_coef != r["MonthlyCharges"]:
+        shift += ((r["MonthlyCharges"] - monthly_coef)
+                  * float(frame["MonthlyCharges"].mean()))
     logit = (
-        r["intercept"] + intercept_shift
+        r["intercept"] + shift
         + r["tenure"] * frame["tenure"].to_numpy(dtype=float)
-        + r["MonthlyCharges"] * frame["MonthlyCharges"].to_numpy(dtype=float)
+        + coef * frame["MonthlyCharges"].to_numpy(dtype=float)
         + r["Contract_Month_to_month"] * (frame["Contract"] == "Month-to-month").to_numpy(dtype=float)
         + r["InternetService_Fiber_optic"] * (frame["InternetService"] == "Fiber optic").to_numpy(dtype=float)
         + r["OnlineSecurity_Yes"] * (frame["OnlineSecurity"] == "Yes").to_numpy(dtype=float)
@@ -149,9 +173,15 @@ def simulate(n_customers: int = 2000, n_weeks: int = 12, seed: int = 42,
                                      + PRICE_RISE_DOLLARS * risen_weeks)
         # Labels from the known rule, with the prevalence shift from
         # week 9. The shift changes the outcome rate, not the features.
+        # The concept flip (weeks 6 to 9) changes the rule itself:
+        # high-spending customers churn less while it lasts.
         shift = (PREVALENCE_INTERCEPT_SHIFT
                  if (schedule and week >= PREVALENCE_SHIFT_WEEK) else 0.0)
-        proba = true_churn_probability(frame, intercept_shift=shift)
+        coef = (CONCEPT_MONTHLY_COEF
+                if (schedule and CONCEPT_FLIP_WEEKS[0] <= week <= CONCEPT_FLIP_WEEKS[1])
+                else None)
+        proba = true_churn_probability(frame, intercept_shift=shift,
+                                       monthly_coef=coef)
         frame["Churn"] = (rng.random(n_customers) < proba).astype(int)
         frame["week"] = week
         frame["date"] = START_DATE + timedelta(days=7 * (week - 1))

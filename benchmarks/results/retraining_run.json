@@ -1,0 +1,2741 @@
+{
+  "generated_at": "2026-11-20T00:59:35.023734+00:00",
+  "champion_version": "churn-xgboost-smote-isotonic-v1",
+  "threshold": 0.0934,
+  "baseline": {
+    "precision_at_100": 0.6633,
+    "pr_auc": 0.5463,
+    "churn_rate": 0.2658
+  },
+  "top_monitored_features": [
+    "Contract",
+    "OnlineSecurity",
+    "TechSupport",
+    "InternetService",
+    "MultipleLines"
+  ],
+  "weekly_summaries": [
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 0.005,
+          "psi_drifted": false,
+          "ks_stat": 0.0183,
+          "ks_p": 0.3315,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0251,
+          "js_drifted": false,
+          "wasserstein": 0.0229,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0074,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0063,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0071,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0073,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0067,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.0,
+      "prediction_drift": {
+        "score_psi": 0.0032,
+        "score_psi_drifted": false,
+        "ks_stat": 0.0202,
+        "ks_p": 0.224,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.6518,
+        "predicted_rate_change_rel": -0.0226,
+        "rate_drifted": false,
+        "drifted": false
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.2842,
+        "roc_auc": 0.7652,
+        "pr_auc": 0.5482,
+        "brier": 0.1716,
+        "precision_at_100": 0.73,
+        "precision_at_10pct": 0.634,
+        "precision_at_threshold": 0.3885,
+        "recall_at_threshold": 0.8909,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.7158,
+        "precision_at_100_drop": -0.0667,
+        "pr_auc_drop": -0.0019,
+        "churn_rate_change_rel": 0.0692
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      "week": 1,
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 0.005,
+          "psi_drifted": false,
+          "ks_stat": 0.0183,
+          "ks_p": 0.3315,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0251,
+          "js_drifted": false,
+          "wasserstein": 0.0229,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0074,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0063,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0071,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0073,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0067,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.0,
+      "prediction_drift": {
+        "score_psi": 0.0178,
+        "score_psi_drifted": false,
+        "ks_stat": 0.043,
+        "ks_p": 0.0001,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.6484,
+        "predicted_rate_change_rel": -0.0277,
+        "rate_drifted": false,
+        "drifted": false
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.278,
+        "roc_auc": 0.7975,
+        "pr_auc": 0.5719,
+        "brier": 0.1579,
+        "precision_at_100": 0.76,
+        "precision_at_10pct": 0.65,
+        "precision_at_threshold": 0.3945,
+        "recall_at_threshold": 0.9201,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.722,
+        "precision_at_100_drop": -0.0967,
+        "pr_auc_drop": -0.0256,
+        "churn_rate_change_rel": 0.0459
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      "week": 2,
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 0.005,
+          "psi_drifted": false,
+          "ks_stat": 0.0183,
+          "ks_p": 0.3315,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0251,
+          "js_drifted": false,
+          "wasserstein": 0.0229,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0074,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0063,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0071,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0073,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0067,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.0,
+      "prediction_drift": {
+        "score_psi": 0.0241,
+        "score_psi_drifted": false,
+        "ks_stat": 0.0451,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.6458,
+        "predicted_rate_change_rel": -0.0316,
+        "rate_drifted": false,
+        "drifted": false
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.2578,
+        "roc_auc": 0.7942,
+        "pr_auc": 0.558,
+        "brier": 0.151,
+        "precision_at_100": 0.74,
+        "precision_at_10pct": 0.654,
+        "precision_at_threshold": 0.3661,
+        "recall_at_threshold": 0.917,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.7422,
+        "precision_at_100_drop": -0.0767,
+        "pr_auc_drop": -0.0117,
+        "churn_rate_change_rel": -0.0301
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      "week": 3,
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 0.005,
+          "psi_drifted": false,
+          "ks_stat": 0.0183,
+          "ks_p": 0.3315,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0251,
+          "js_drifted": false,
+          "wasserstein": 0.0229,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0074,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0063,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0071,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0073,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0067,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.0,
+      "prediction_drift": {
+        "score_psi": 0.0283,
+        "score_psi_drifted": false,
+        "ks_stat": 0.0512,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.6404,
+        "predicted_rate_change_rel": -0.0397,
+        "rate_drifted": false,
+        "drifted": false
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.2728,
+        "roc_auc": 0.8022,
+        "pr_auc": 0.5863,
+        "brier": 0.1542,
+        "precision_at_100": 0.72,
+        "precision_at_10pct": 0.698,
+        "precision_at_threshold": 0.3929,
+        "recall_at_threshold": 0.9223,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.7272,
+        "precision_at_100_drop": -0.0567,
+        "pr_auc_drop": -0.04,
+        "churn_rate_change_rel": 0.0263
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": false
+      },
+      "week": 4,
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 1.6421,
+          "psi_drifted": true,
+          "ks_stat": 0.3199,
+          "ks_p": 0.0,
+          "ks_drifted": true,
+          "jensen_shannon": 0.3191,
+          "js_drifted": true,
+          "wasserstein": 0.8067,
+          "wasserstein_drifted": true,
+          "drifted": true
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0074,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0063,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0071,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0073,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0067,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.0588,
+      "prediction_drift": {
+        "score_psi": 0.0616,
+        "score_psi_drifted": false,
+        "ks_stat": 0.0648,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.665,
+        "predicted_rate_change_rel": -0.0028,
+        "rate_drifted": false,
+        "drifted": false
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.319,
+        "roc_auc": 0.7999,
+        "pr_auc": 0.6218,
+        "brier": 0.174,
+        "precision_at_100": 0.69,
+        "precision_at_10pct": 0.742,
+        "precision_at_threshold": 0.4424,
+        "recall_at_threshold": 0.9223,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.681,
+        "precision_at_100_drop": -0.0267,
+        "pr_auc_drop": -0.0755,
+        "churn_rate_change_rel": 0.2002
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": true
+      },
+      "week": 5,
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 1.6421,
+          "psi_drifted": true,
+          "ks_stat": 0.3199,
+          "ks_p": 0.0,
+          "ks_drifted": true,
+          "jensen_shannon": 0.3191,
+          "js_drifted": true,
+          "wasserstein": 0.8067,
+          "wasserstein_drifted": true,
+          "drifted": true
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0067,
+          "psi_drifted": false,
+          "jensen_shannon": 0.029,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0014,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0132,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0126,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0011,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0118,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0009,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0104,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0157,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0018,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0149,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.0588,
+      "prediction_drift": {
+        "score_psi": 0.0867,
+        "score_psi_drifted": false,
+        "ks_stat": 0.0658,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.6664,
+        "predicted_rate_change_rel": -0.0007,
+        "rate_drifted": false,
+        "drifted": false
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.3338,
+        "roc_auc": 0.6997,
+        "pr_auc": 0.523,
+        "brier": 0.2123,
+        "precision_at_100": 0.69,
+        "precision_at_10pct": 0.616,
+        "precision_at_threshold": 0.4229,
+        "recall_at_threshold": 0.8442,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.6662,
+        "precision_at_100_drop": -0.0267,
+        "pr_auc_drop": 0.0233,
+        "churn_rate_change_rel": 0.2558
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": true
+      },
+      "week": 6,
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 1.6421,
+          "psi_drifted": true,
+          "ks_stat": 0.3199,
+          "ks_p": 0.0,
+          "ks_drifted": true,
+          "jensen_shannon": 0.3191,
+          "js_drifted": true,
+          "wasserstein": 0.8067,
+          "wasserstein_drifted": true,
+          "drifted": true
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0331,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0642,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0014,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0132,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0126,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0011,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0118,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0009,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0104,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0157,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0018,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0149,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.0588,
+      "prediction_drift": {
+        "score_psi": 0.0885,
+        "score_psi_drifted": false,
+        "ks_stat": 0.0696,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.6628,
+        "predicted_rate_change_rel": -0.0061,
+        "rate_drifted": false,
+        "drifted": false
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.333,
+        "roc_auc": 0.7148,
+        "pr_auc": 0.5319,
+        "brier": 0.2082,
+        "precision_at_100": 0.67,
+        "precision_at_10pct": 0.632,
+        "precision_at_threshold": 0.4225,
+        "recall_at_threshold": 0.8408,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.667,
+        "precision_at_100_drop": -0.0067,
+        "pr_auc_drop": 0.0144,
+        "churn_rate_change_rel": 0.2528
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": true
+      },
+      "week": 7,
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 1.6421,
+          "psi_drifted": true,
+          "ks_stat": 0.3199,
+          "ks_p": 0.0,
+          "ks_drifted": true,
+          "jensen_shannon": 0.3191,
+          "js_drifted": true,
+          "wasserstein": 0.8067,
+          "wasserstein_drifted": true,
+          "drifted": true
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.0796,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0996,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0017,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0148,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0016,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0143,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0015,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0135,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0121,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.0024,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0172,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0022,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0165,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.0588,
+      "prediction_drift": {
+        "score_psi": 0.1011,
+        "score_psi_drifted": false,
+        "ks_stat": 0.0715,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.6622,
+        "predicted_rate_change_rel": -0.007,
+        "rate_drifted": false,
+        "drifted": false
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.3296,
+        "roc_auc": 0.6987,
+        "pr_auc": 0.5084,
+        "brier": 0.2114,
+        "precision_at_100": 0.63,
+        "precision_at_10pct": 0.59,
+        "precision_at_threshold": 0.4171,
+        "recall_at_threshold": 0.838,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.6704,
+        "precision_at_100_drop": 0.0333,
+        "pr_auc_drop": 0.0379,
+        "churn_rate_change_rel": 0.24
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": false,
+        "data_quality": false,
+        "performance_drop": true,
+        "label_shift": true
+      },
+      "week": 8,
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 1.6421,
+          "psi_drifted": true,
+          "ks_stat": 0.3199,
+          "ks_p": 0.0,
+          "ks_drifted": true,
+          "jensen_shannon": 0.3191,
+          "js_drifted": true,
+          "wasserstein": 0.8067,
+          "wasserstein_drifted": true,
+          "drifted": true
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.1479,
+          "psi_drifted": false,
+          "jensen_shannon": 0.1355,
+          "js_drifted": true,
+          "drifted": true
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0015,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0136,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0014,
+          "psi_drifted": false,
+          "jensen_shannon": 0.013,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0122,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0009,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0108,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.016,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0019,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0152,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.1176,
+      "prediction_drift": {
+        "score_psi": 0.4992,
+        "score_psi_drifted": true,
+        "ks_stat": 0.2481,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.8258,
+        "predicted_rate_change_rel": 0.2384,
+        "rate_drifted": true,
+        "drifted": true
+      },
+      "data_quality": [],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.4224,
+        "roc_auc": 0.7828,
+        "pr_auc": 0.6851,
+        "brier": 0.1965,
+        "precision_at_100": 0.84,
+        "precision_at_10pct": 0.736,
+        "precision_at_threshold": 0.4967,
+        "recall_at_threshold": 0.9711,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.5776,
+        "precision_at_100_drop": -0.1767,
+        "pr_auc_drop": -0.1388,
+        "churn_rate_change_rel": 0.5892
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": true,
+        "data_quality": false,
+        "performance_drop": false,
+        "label_shift": true
+      },
+      "week": 9,
+      "model_version": "churn-xgboost-smote-isotonic-v1-challenger-1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 1.6421,
+          "psi_drifted": true,
+          "ks_stat": 0.3199,
+          "ks_p": 0.0,
+          "ks_drifted": true,
+          "jensen_shannon": 0.3191,
+          "js_drifted": true,
+          "wasserstein": 0.8067,
+          "wasserstein_drifted": true,
+          "drifted": true
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.2402,
+          "psi_drifted": false,
+          "jensen_shannon": 0.1723,
+          "js_drifted": true,
+          "drifted": true
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0014,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0132,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0126,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0011,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0118,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0009,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0104,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0157,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0018,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0149,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.1176,
+      "prediction_drift": {
+        "score_psi": 0.7935,
+        "score_psi_drifted": true,
+        "ks_stat": 0.2233,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.6292,
+        "predicted_rate_change_rel": -0.0565,
+        "rate_drifted": false,
+        "drifted": true
+      },
+      "data_quality": [
+        {
+          "feature": "TotalCharges",
+          "kind": "accumulation_broken",
+          "detail": "1.000 of customers saw TotalCharges fall since the previous window; an accumulating feature never falls",
+          "decreased_frac": 1.0
+        }
+      ],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.4182,
+        "roc_auc": 0.7522,
+        "pr_auc": 0.6504,
+        "brier": 0.2571,
+        "precision_at_100": 0.7,
+        "precision_at_10pct": 0.722,
+        "precision_at_threshold": 0.5579,
+        "recall_at_threshold": 0.8393,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.5818,
+        "precision_at_100_drop": -0.0367,
+        "pr_auc_drop": -0.1041,
+        "churn_rate_change_rel": 0.5734
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": true,
+        "data_quality": true,
+        "performance_drop": false,
+        "label_shift": true
+      },
+      "week": 10,
+      "model_version": "churn-xgboost-smote-isotonic-v1-challenger-1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 1.6421,
+          "psi_drifted": true,
+          "ks_stat": 0.3199,
+          "ks_p": 0.0,
+          "ks_drifted": true,
+          "jensen_shannon": 0.3191,
+          "js_drifted": true,
+          "wasserstein": 0.8067,
+          "wasserstein_drifted": true,
+          "drifted": true
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.2402,
+          "psi_drifted": false,
+          "jensen_shannon": 0.1723,
+          "js_drifted": true,
+          "drifted": true
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0063,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0071,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0073,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0067,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.1176,
+      "prediction_drift": {
+        "score_psi": 0.7537,
+        "score_psi_drifted": true,
+        "ks_stat": 0.2231,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.626,
+        "predicted_rate_change_rel": -0.0612,
+        "rate_drifted": false,
+        "drifted": true
+      },
+      "data_quality": [
+        {
+          "feature": "TotalCharges",
+          "kind": "stale_feature",
+          "detail": "only 0.000 of customers changed TotalCharges since the previous window; the feature stopped updating",
+          "changed_frac": 0.0
+        }
+      ],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.403,
+        "roc_auc": 0.769,
+        "pr_auc": 0.6481,
+        "brier": 0.2437,
+        "precision_at_100": 0.61,
+        "precision_at_10pct": 0.712,
+        "precision_at_threshold": 0.5482,
+        "recall_at_threshold": 0.8516,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.597,
+        "precision_at_100_drop": 0.0533,
+        "pr_auc_drop": -0.1018,
+        "churn_rate_change_rel": 0.5162
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": true,
+        "data_quality": true,
+        "performance_drop": true,
+        "label_shift": true
+      },
+      "week": 11,
+      "model_version": "churn-xgboost-smote-isotonic-v1-challenger-1"
+    },
+    {
+      "n_ref": 5634,
+      "n_cur": 5000,
+      "feature_drift": {
+        "SeniorCitizen": {
+          "feature": "SeniorCitizen",
+          "type": "numeric",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "ks_stat": 0.0005,
+          "ks_p": 1.0,
+          "ks_drifted": false,
+          "jensen_shannon": 0.0005,
+          "js_drifted": false,
+          "wasserstein": 0.0014,
+          "wasserstein_drifted": false,
+          "drifted": false
+        },
+        "tenure": {
+          "feature": "tenure",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "MonthlyCharges": {
+          "feature": "MonthlyCharges",
+          "type": "numeric",
+          "psi": 1.6421,
+          "psi_drifted": true,
+          "ks_stat": 0.3199,
+          "ks_p": 0.0,
+          "ks_drifted": true,
+          "jensen_shannon": 0.3191,
+          "js_drifted": true,
+          "wasserstein": 0.8067,
+          "wasserstein_drifted": true,
+          "drifted": true
+        },
+        "TotalCharges": {
+          "feature": "TotalCharges",
+          "type": "numeric",
+          "skipped": "accumulating",
+          "reason": "distribution moves by design; monitored week-over-week by the stale check",
+          "drifted": false
+        },
+        "gender": {
+          "feature": "gender",
+          "type": "categorical",
+          "psi": 0.0013,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0129,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Partner": {
+          "feature": "Partner",
+          "type": "categorical",
+          "psi": 0.0,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0003,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Dependents": {
+          "feature": "Dependents",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0046,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PhoneService": {
+          "feature": "PhoneService",
+          "type": "categorical",
+          "psi": 0.0002,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0054,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "MultipleLines": {
+          "feature": "MultipleLines",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.007,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "InternetService": {
+          "feature": "InternetService",
+          "type": "categorical",
+          "psi": 0.2402,
+          "psi_drifted": false,
+          "jensen_shannon": 0.1723,
+          "js_drifted": true,
+          "drifted": true
+        },
+        "OnlineSecurity": {
+          "feature": "OnlineSecurity",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0063,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "OnlineBackup": {
+          "feature": "OnlineBackup",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "DeviceProtection": {
+          "feature": "DeviceProtection",
+          "type": "categorical",
+          "psi": 0.0003,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0058,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "TechSupport": {
+          "feature": "TechSupport",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0071,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingTV": {
+          "feature": "StreamingTV",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0073,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "StreamingMovies": {
+          "feature": "StreamingMovies",
+          "type": "categorical",
+          "psi": 0.0004,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0067,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "Contract": {
+          "feature": "Contract",
+          "type": "categorical",
+          "psi": 0.0012,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0124,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaperlessBilling": {
+          "feature": "PaperlessBilling",
+          "type": "categorical",
+          "psi": 0.0001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.0028,
+          "js_drifted": false,
+          "drifted": false
+        },
+        "PaymentMethod": {
+          "feature": "PaymentMethod",
+          "type": "categorical",
+          "psi": 0.001,
+          "psi_drifted": false,
+          "jensen_shannon": 0.011,
+          "js_drifted": false,
+          "drifted": false
+        }
+      },
+      "drift_share": 0.1176,
+      "prediction_drift": {
+        "score_psi": 0.459,
+        "score_psi_drifted": true,
+        "ks_stat": 0.2489,
+        "ks_p": 0.0,
+        "ref_predicted_rate": 0.6668,
+        "cur_predicted_rate": 0.8198,
+        "predicted_rate_change_rel": 0.2294,
+        "rate_drifted": true,
+        "drifted": true
+      },
+      "data_quality": [
+        {
+          "feature": "tenure",
+          "kind": "stale_feature",
+          "detail": "only 0.000 of customers changed tenure since the previous window; the feature stopped updating",
+          "changed_frac": 0.0
+        }
+      ],
+      "realised_performance": {
+        "n": 5000,
+        "churn_rate": 0.4052,
+        "roc_auc": 0.7545,
+        "pr_auc": 0.6322,
+        "brier": 0.2014,
+        "precision_at_100": 0.64,
+        "precision_at_10pct": 0.71,
+        "precision_at_threshold": 0.4657,
+        "recall_at_threshold": 0.9423,
+        "threshold": 0.0934,
+        "do_nothing_accuracy": 0.5948,
+        "precision_at_100_drop": 0.0233,
+        "pr_auc_drop": -0.0859,
+        "churn_rate_change_rel": 0.5245
+      },
+      "alerts": {
+        "feature_drift": false,
+        "prediction_drift": true,
+        "data_quality": true,
+        "performance_drop": false,
+        "label_shift": true
+      },
+      "week": 12,
+      "model_version": "churn-xgboost-smote-isotonic-v1-challenger-1"
+    }
+  ],
+  "triggers": [
+    {
+      "trigger_id": "TRG-08-1",
+      "week": 8,
+      "rules": [
+        "performance_drop"
+      ],
+      "decision": "promote",
+      "champion_profit_per_1000": 144435.0,
+      "challenger_profit_per_1000": 153925.0,
+      "profit_margin_per_1000": 9490.0,
+      "promotion_margin_per_1000": 2500.0,
+      "challenger_version": "churn-xgboost-smote-isotonic-v1-challenger-1",
+      "challenger_trained_on_weeks": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "shadow_weeks": [
+        9,
+        10
+      ],
+      "model_version": "churn-xgboost-smote-isotonic-v1"
+    },
+    {
+      "trigger_id": "TRG-11-2",
+      "week": 11,
+      "rules": [
+        "performance_drop"
+      ],
+      "decision": "refuse",
+      "champion_profit_per_1000": 149910.0,
+      "challenger_profit_per_1000": 150040.0,
+      "profit_margin_per_1000": 130.0,
+      "promotion_margin_per_1000": 2500.0,
+      "challenger_version": "churn-xgboost-smote-isotonic-v1-challenger-2",
+      "challenger_trained_on_weeks": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "shadow_weeks": [
+        12
+      ],
+      "model_version": "churn-xgboost-smote-isotonic-v1-challenger-1"
+    }
+  ]
+}

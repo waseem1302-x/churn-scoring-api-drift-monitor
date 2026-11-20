@@ -80,6 +80,22 @@ def test_schedule_stale_tenure_in_week_12():
     assert (w11 > w10).any(), "tenure still moved in week 11"
 
 
+def test_schedule_concept_flip_reverses_charges_effect():
+    # In a clean week, churners pay more per month than non-churners
+    # (the rule's MonthlyCharges coefficient is positive). In a
+    # flipped week the relationship reverses, while no feature
+    # distribution changes.
+    frame = simulate.simulate(n_customers=2000, n_weeks=9, seed=42)
+    clean = frame[frame["week"] == 3]
+    flipped = frame[frame["week"] == 8]
+    clean_gap = (clean.loc[clean["Churn"] == 1, "MonthlyCharges"].mean()
+                 - clean.loc[clean["Churn"] == 0, "MonthlyCharges"].mean())
+    flip_gap = (flipped.loc[flipped["Churn"] == 1, "MonthlyCharges"].mean()
+                - flipped.loc[flipped["Churn"] == 0, "MonthlyCharges"].mean())
+    assert clean_gap > 5.0
+    assert flip_gap < -5.0
+
+
 def test_schedule_prevalence_shift_raises_churn():
     frame = simulate.simulate(n_customers=2000, n_weeks=12, seed=42)
     early = frame[frame["week"] <= 4]["Churn"].mean()
