@@ -26,10 +26,13 @@ challenger beats the champion on profit at the frozen threshold on
 those weeks by more than the promotion margin. Two weeks, not one,
 because a single 2,000-row week is too noisy to promote on, and the
 margin exists for the same reason: the champion's own profit per
-1,000 fluctuates with a standard deviation of $3,010 across clean
-weeks (measured over 6 clean simulator weeks), so a win smaller than
-the noise floor is not evidence. The margin is $2,500 per 1,000,
-just above the two-week shadow's noise floor. A tie is not a win,
+1,000 fluctuates with a standard deviation of $4,319.60 across the
+4 clean simulator weeks, so the pooled two-week shadow noise is
+$3,054.42 and a win smaller than the margin is not evidence. The
+margin is $2,500 per 1,000, which is 0.82 of that pooled std: a
+thin margin, quantified in scripts/margin_sensitivity.py, kept
+because the two recorded decisions do not discriminate between
+$1,000, $2,500 and $5,000. A tie is not a win,
 and neither is a $130 win. On promotion the challenger becomes the
 current model for later weeks; the Phase 1 artifact file is never
 overwritten.
@@ -75,9 +78,13 @@ TRIGGER_RULES = {
 
 # Promotion margin: a challenger must beat the champion by more than
 # this, in profit per 1,000 customers on the shadow weeks. Measured
-# noise floor: the champion's own profit per 1,000 has a standard
-# deviation of $3,010 across 6 clean simulator weeks (range $8,870),
-# so a win of a few hundred dollars is noise, not evidence.
+# noise floor (scripts/margin_sensitivity.py): the champion's own
+# profit per 1,000 has a standard deviation of $4,319.60 across the
+# 4 clean simulator weeks, so the pooled two-week shadow noise is
+# $3,054.42. $2,500 is 0.82 of that pooled std, a thin margin kept
+# because the two recorded decisions do not discriminate between
+# $1,000, $2,500 and $5,000. A win of a few hundred dollars is
+# noise, not evidence.
 PROMOTION_MARGIN_PER_1000 = 2500.0
 
 

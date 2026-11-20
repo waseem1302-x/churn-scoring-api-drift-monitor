@@ -162,10 +162,36 @@ because a single 2,000-row week is too noisy to promote on).
 Promotion happens only when the challenger beats the champion on
 profit at the frozen threshold (0.0934) on those weeks by more
 than the promotion margin of $2,500 per 1,000 customers. The
-margin is the noise floor: the champion's own profit per 1,000
-fluctuates with a standard deviation of $3,010 across clean
-weeks (range $8,870), so a win smaller than the margin is not
-evidence. A tie is not a win, and neither is a $130 win.
+margin is meant to sit above the noise floor: the champion's own
+profit per 1,000 fluctuates across clean weeks, so a win smaller
+than the margin is not evidence. A tie is not a win, and neither
+is a $130 win.
+
+The margin was quantified in Phase 3
+(`scripts/margin_sensitivity.py`,
+`benchmarks/results/margin_sensitivity.json`), and the honest
+result is that $2,500 is a thin margin. Recomputed from the
+champion's own profit on the four clean simulator weeks
+($94,010.82, $95,474.66, $85,914.68, $93,782.96 per 1,000), the
+single-week standard deviation is $4,319.60, and the shadow
+decision pools two weeks, so its noise is $4,319.60 over the
+square root of 2, which is $3,054.42. The Phase 2 docstring
+quoted $3,010, which matches that pooled figure within $44, so
+the quoted number is the pooled two-week noise, not the
+single-week noise. Against that floor, $2,500 is 0.82 of one
+pooled standard deviation, just below it, not above it. A
+challenger no better than the champion still promotes about 21%
+of the time by noise alone at $2,500; at $5,000 that falls to 5%.
+
+Does $2,500 still stand? For the two decisions on record, yes,
+and the sensitivity run proves it: the decisions are identical
+at $1,000, $2,500 and $5,000, because the observed margins are
+$130 and $9,490, far apart, and every margin from $130 to $9,490
+gives the same two decisions. The margin is kept at $2,500
+because no evidence here justifies changing it, but $5,000 is
+the conservative choice for a future operator: it would cut the
+false-promotion rate to 5% and would not change either decision.
+The thinness is stated here instead of hidden.
 
 Every trigger, every shadow result, and every promotion or
 refusal is recorded in `benchmarks/results/retraining_log.jsonl`.
@@ -232,7 +258,7 @@ check, and the alerts from the latest evaluated window.
 | Predicted-rate relative move | 0.10 | The prevalence shift moves it +0.24; clean weeks move -0.04 to +0.01. |
 | Precision at 100 drop | 0.05 | The concept drift drops it 0.033 in week 8 (firing on the PR-AUC rule instead), 0.053 in week 11. Clean weeks never fire it: their precision at 100 is 0.72 to 0.76, all above the 0.6633 baseline. |
 | PR-AUC drop | 0.03 | The concept drift drops PR-AUC 0.023 in week 6, 0.014 in week 7, 0.038 in week 8, which is where the trigger fires. Clean weeks never fire it: their PR-AUC is 0.5482 to 0.5863, all above the 0.5463 baseline. The rule is tight by design: it fires on the third flipped week, not the first. |
-| Promotion margin | $2,500 per 1,000 | The champion's own profit per 1,000 has a standard deviation of $3,010 across 6 clean weeks. |
+| Promotion margin | $2,500 per 1,000 | The champion's own profit per 1,000 has a single-week standard deviation of $4,319.60 across the 4 clean weeks, so the pooled two-week shadow noise is $3,054.42. $2,500 is 0.82 of that pooled std, a thin margin; the two recorded decisions are the same at $1,000, $2,500 and $5,000. |
 
 Full detection table with delays and false alarms:
 `EVAL_RESULTS.md`. Raw records:

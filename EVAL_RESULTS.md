@@ -678,7 +678,7 @@ reasoning: `MONITORING.md`.
 | Predicted-rate relative move | 0.10 | The prevalence shift moves it +0.24; clean weeks move -0.04 to +0.01. |
 | Precision at 100 drop | 0.05 | The concept drift drops it 0.033 in week 8 and 0.053 in week 11. Clean weeks never fire it (0.72 to 0.76, all above the 0.6633 baseline). |
 | PR-AUC drop | 0.03 | The concept drift drops it 0.023 in week 6, 0.014 in week 7, 0.038 in week 8, which is where the trigger fires. Clean weeks never fire it (0.5482 to 0.5863, all above the 0.5463 baseline). |
-| Promotion margin | $2,500 per 1,000 | The champion's own profit per 1,000 has a standard deviation of $3,010 across 6 clean weeks (range $8,870). |
+| Promotion margin | $2,500 per 1,000 | The champion's own profit per 1,000 has a single-week standard deviation of $4,319.60 across the 4 clean weeks, so the pooled two-week shadow noise is $3,054.42. $2,500 is 0.82 of that pooled std, a thin margin; the two recorded decisions are the same at $1,000, $2,500 and $5,000. |
 
 ## Phase 2: retraining log summary
 
