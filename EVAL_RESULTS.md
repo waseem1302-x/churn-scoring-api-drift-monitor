@@ -180,16 +180,55 @@ ones. The formula is one line: profit = true positives times
 | Threshold | Contacted | Precision | Recall | Profit on test |
 |---|---|---|---|---|
 | 0.5 (default) | 275 | 0.6727 | 0.4947 | $78,750 |
-| 0.0934 (frozen, champion) | 929 | 0.3851 | 0.9545 | $132,150 |
+| 0.0934 (frozen, champion) | 927 | 0.3851 | 0.9545 | $132,150 |
 
 The break-even precision is the offer cost divided by the saved
 value: $50 / $500 = 0.10. Any contacted group churning above 10%
 pays for itself, which is why the profit-maximising threshold is
 so low. At 0.0934 the contacted group churns at 38.51%, far above
 break-even, and the model catches 95.45% of all churners. The
-price is volume: 929 calls instead of 275. A team that can only
+price is volume: 927 calls instead of 275. A team that can only
 make 100 calls a day should read precision at 100 (0.76) instead,
 not this table. Doing nothing (contact nobody) profits $0.
+
+## Profit sensitivity
+
+The $50 offer cost and $500 saved value are assumptions, so this
+table recomputes the best threshold and the test profit for a
+grid of other assumptions, from the same recorded test curve
+(`benchmarks/results/profit_sensitivity.json`, built by
+`scripts/profit_sensitivity.py`). The gap column is what keeping
+the frozen 0.0934 threshold costs in each cell.
+
+| Offer cost | Saved value | Best threshold | Profit per 1,000 at best | Profit per 1,000 at frozen 0.0934 | Gap per 1,000 |
+|---|---|---|---|---|---|
+| $25 | $250 | 0.0775 | $47,107.88 | $46,894.96 | $212.92 |
+| $25 | $500 | 0.0775 | $111,515.26 | $110,237.76 | $1,277.50 |
+| $25 | $1000 | 0.0221 | $243,026.97 | $236,923.35 | $6,103.62 |
+| $50 | $250 | 0.1702 | $33,356.99 | $30,447.13 | $2,909.86 |
+| $50 | $500 | 0.0775 | $94,215.76 | $93,789.92 | $425.84 |
+| $50 | $1000 | 0.0775 | $223,030.52 | $220,475.51 | $2,555.01 |
+| $100 | $250 | 0.5004 | $13,307.31 | $-2,448.55 | $15,755.86 |
+| $100 | $500 | 0.1702 | $66,713.98 | $60,894.25 | $5,819.73 |
+| $100 | $1000 | 0.0775 | $188,431.51 | $187,579.84 | $851.67 |
+
+How to read it. The best threshold moves from 0.0221 to 0.5004
+across the grid, and it follows the cost-to-value ratio, not the
+absolute dollars: cells with the same ratio pick the same
+threshold (0.10 gives 0.0775, 0.20 gives 0.1702). The frozen
+0.0934 stays within 2.6% of the best profit in 6 of the 9 cells
+and within 8.8% in 8 of 9, so it carries over well when the
+ratio stays near the assumed 0.10. The one bad cell is a $100
+offer against a $250 saved value (ratio 0.40, break-even
+precision 0.40): the frozen threshold contacts a group churning
+at 38.51%, just below break-even, so it loses $2,448.55 per
+1,000 while the best threshold (0.5004) earns $13,307.31. The
+rule is plain: if the offer costs more than about a fifth of the
+saved value, refreeze the threshold; 0.0934 does not carry over.
+In the base cell the test-optimal threshold is 0.0775 against
+the frozen 0.0934, a gap of $425.84 per 1,000 (0.45%), so the
+threshold frozen on train is nearly optimal on test at the
+assumed costs.
 
 ## Risk tiers
 
@@ -284,7 +323,7 @@ same split shape: ROC-AUC 0.8366, PR-AUC 0.6395, Brier 0.1392,
 latency p50 63.52 ms. Ranking and calibration are better, latency
 is worse, for the reason above. DecisionAPI also lists its own
 gaps (no tests, drift computed but not returned, threshold not
-tuned); this project has tests (140), returns drift through
+tuned); this project has tests (147), returns drift through
 `GET /drift` and stores drift flags on every log row, and tunes
 the threshold on out-of-fold profit.
 
@@ -410,7 +449,7 @@ python -m scripts.measure_latency  # 200 rows through the API
 python -m scripts.drift_experiments  # injection table
 python -m scripts.retrain          # 12-week scheduled run
 python -m scripts.evidently_report # two HTML reports
-python -m pytest tests/ -q         # 140 passed
+python -m pytest tests/ -q         # 147 passed
 python -m scripts.ci_gate          # metric gate plus drift gate, both pass
 ```
 
@@ -461,4 +500,4 @@ Actions run after the Phase 1 push has not been checked yet.
 - No S6E3 scale numbers yet (pending, see above).
 - The profit figures rest on the $50 offer cost and $500 saved
   value assumptions. Change them and the threshold and the profit
-  move.
+  move; the Profit sensitivity section measures how much.

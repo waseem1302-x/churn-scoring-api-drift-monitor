@@ -483,5 +483,10 @@ re-runs the threshold selection, which is one function call.
 - **GET /drift needs 200 logged rows and has no labels.** The
   realised-performance channel is null there.
 - **Profit rests on two assumed numbers.** $50 and $500 are
-  illustrative; change them and the threshold moves.
+  illustrative; change them and the threshold moves. The cost
+  is measured in the Profit sensitivity table in EVAL_RESULTS.md
+  (`benchmarks/results/profit_sensitivity.json`): the frozen
+  0.0934 stays within 8.8% of the best profit in 8 of 9 cells,
+  but loses money when the offer costs $100 against a $250 saved
+  value, where the best threshold is 0.5004.
 - **S6E3 scale run pending.** No 594k-row numbers exist yet.

@@ -30,7 +30,7 @@ measured, not claimed.
 - Simulator: longitudinal panel, 2,000 customers, 12 weeks, known drift schedule
 - Retraining: shadow runs only, promotion on a labelled-window win
   above a $2,500 per 1,000 noise-floor margin
-- Testing: pytest 9.2.0, 140 tests
+- Testing: pytest 9.2.0, 147 tests
 - CI: GitHub Actions, eval gate workflow (`.github/workflows/eval.yml`),
   metric gate plus drift gate
 - Containers: Docker
@@ -67,7 +67,7 @@ shown next to every accuracy-adjacent claim so no reader is fooled.
 | Gradual Fiber growth, detection delay | PSI 4 windows (25 points), Jensen-Shannon 2 windows (15 points) |
 | Prevalence shift | Invisible to input detectors, as designed; label shift flagged |
 | Retraining loop, 12-week run | 2 triggers, 1 promotion, 1 refusal |
-| Tests | 140 passed, 0 failed |
+| Tests | 147 passed, 0 failed |
 | CI gate | Pass (metric gate plus drift gate) |
 | Cost | $0.00 (local CPU, no API calls) |
 
@@ -88,7 +88,7 @@ What was actually used, and what each piece does.
 | Drift reports | Evidently 0.7.23 (pandas 2.3.3) | Scheduled HTML reports only, never on the request path |
 | Simulator | Hand-rolled longitudinal panel | `scripts/simulate.py`; known drift schedule, labels from a known rule |
 | Retraining | Shadow runs, promotion margin | `scripts/retrain.py`; log in `benchmarks/results/retraining_log.jsonl` |
-| Testing | pytest | 140 tests |
+| Testing | pytest | 147 tests |
 | CI | GitHub Actions (`.github/workflows/eval.yml`) | Train, latency, drift experiments, retrain, reports, tests, gate on every push/PR |
 | Containers | Docker | See the Docker note below |
 
@@ -266,7 +266,7 @@ contacted customer and a saved customer is worth $500. The
 break-even precision is $50 / $500 = 0.10, so any contacted group
 churning above 10% pays for itself. The profit-maximising
 threshold, chosen on out-of-fold train predictions, is 0.0934:
-it contacts 929 of 1,409 test customers, catches 95.45% of
+it contacts 927 of 1,409 test customers, catches 95.45% of
 churners, and profits $132,150 against $78,750 at 0.5. The price
 is volume. A team that can only make 100 calls a day should read
 precision at 100 (0.76) instead.
@@ -299,7 +299,7 @@ Full table: [EVAL_RESULTS.md](EVAL_RESULTS.md). Raw records:
 ## Tests
 
 ```bash
-python -m pytest tests/ -q   # 140 passed
+python -m pytest tests/ -q   # 147 passed
 ```
 
 Tests cover data loading and verification (row and column counts,
