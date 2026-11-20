@@ -17,6 +17,7 @@ from fastapi.testclient import TestClient
 from app import api as api_mod
 from app import data as d
 from app import monitor
+from tests.conftest import AUTH_HEADERS
 from tests.test_api import VALID_ROW
 
 OUT_OF_RANGE_ROW = dict(VALID_ROW, MonthlyCharges=200.0)
@@ -71,13 +72,13 @@ def _telco_rows(n, monthly_delta=0.0):
 def _score_rows(c, rows):
     for i, row in enumerate(rows):
         payload = dict(row, customerID=f"DRIFT-{i:04d}")
-        resp = c.post("/score", json=payload)
+        resp = c.post("/score", json=payload, headers=AUTH_HEADERS)
         assert resp.status_code == 200, resp.text
 
 
 def test_drift_needs_a_minimum_window(client):
     c, _ = client
-    resp = c.get("/drift")
+    resp = c.get("/drift", headers=AUTH_HEADERS)
     assert resp.status_code == 200
     body = resp.json()
     assert body["status"] == "not_enough_data"
@@ -87,7 +88,7 @@ def test_drift_needs_a_minimum_window(client):
 def test_drift_quiet_on_clean_rows(client):
     c, _ = client
     _score_rows(c, _telco_rows(200))
-    resp = c.get("/drift")
+    resp = c.get("/drift", headers=AUTH_HEADERS)
     assert resp.status_code == 200
     body = resp.json()
     assert body["status"] == "ok"
@@ -99,7 +100,7 @@ def test_drift_quiet_on_clean_rows(client):
 def test_drift_matches_offline_monitor_on_drifted_rows(client):
     c, db_path = client
     _score_rows(c, _telco_rows(200, monthly_delta=25.0))
-    resp = c.get("/drift")
+    resp = c.get("/drift", headers=AUTH_HEADERS)
     assert resp.status_code == 200
     body = resp.json()
     assert body["status"] == "ok"
@@ -125,8 +126,8 @@ def test_score_stores_drift_flags_in_log(client):
     c, db_path = client
     # A /drift call first, so the window alerts exist to be attached.
     _score_rows(c, _telco_rows(200))
-    assert c.get("/drift").json()["status"] == "ok"
-    c.post("/score", json=OUT_OF_RANGE_ROW)
+    assert c.get("/drift", headers=AUTH_HEADERS).json()["status"] == "ok"
+    c.post("/score", json=OUT_OF_RANGE_ROW, headers=AUTH_HEADERS)
     row = sqlite3.connect(db_path).execute(
         "SELECT drift_flags FROM predictions ORDER BY id DESC LIMIT 1"
     ).fetchone()
@@ -144,7 +145,7 @@ def test_score_row_with_null_total_charges_flags_it(client):
     c, db_path = client
     row = dict(VALID_ROW)
     row["TotalCharges"] = None
-    assert c.post("/score", json=row).status_code == 200
+    assert c.post("/score", json=row, headers=AUTH_HEADERS).status_code == 200
     flags = json.loads(sqlite3.connect(db_path).execute(
         "SELECT drift_flags FROM predictions ORDER BY id DESC LIMIT 1"
     ).fetchone()[0])

@@ -136,12 +136,13 @@ python -m pytest tests/ -q
 # 7. Run the CI gate (metric gate plus drift gate)
 python -m scripts.ci_gate
 
-# 8. Run the API
-uvicorn app.api:app --port 8000
+# 8. Run the API (set the API key first; see the API section below)
+CHURN_API_KEY=change-me uvicorn app.api:app --port 8000
 
 # 9. Score a customer
 curl -X POST http://localhost:8000/score \
   -H "Content-Type: application/json" \
+  -H "X-API-Key: change-me" \
   -d '{"gender": "Female", "SeniorCitizen": 0, "Partner": "Yes",
        "Dependents": "No", "tenure": 12, "PhoneService": "Yes",
        "MultipleLines": "No", "InternetService": "DSL",
@@ -156,6 +157,17 @@ curl -X POST http://localhost:8000/score \
 ## API
 
 `GET /health` returns `{"status": "ok", "model_version": ...}`.
+It needs no key: it is what a load balancer calls.
+
+`POST /score` and `GET /drift` need an API key.
+Set it as the `CHURN_API_KEY` environment variable on the server
+and send it as the `X-API-Key` header. A missing or wrong key is
+401. A server with no key configured answers 503 on those two
+endpoints: the key is required, never optional, and never committed
+to the repo. Rotate it by restarting the server with a new value;
+the key is read at request time, so no code change is needed.
+`GET /metrics` needs no key: it serves the published benchmark
+file from `benchmarks/results/metrics.json`.
 
 `POST /score` takes the 19 model features (plus an optional
 `customerID` for the audit log) and returns the churn probability,

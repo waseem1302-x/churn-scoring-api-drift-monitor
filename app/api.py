@@ -4,6 +4,13 @@ POST /score: one customer in, churn probability and risk tier out.
 GET /health: liveness plus the loaded model version.
 GET /metrics: the measured Phase 1 metrics (from benchmarks/results/).
 
+Auth: /score and /drift need the API key from the
+CHURN_API_KEY environment variable, sent as the X-API-Key header.
+Missing or wrong key is 401; a server with no key configured is 503
+on those endpoints. /health and /metrics stay open: /health is what
+a load balancer calls, and /metrics serves the published benchmark
+file. The key is never committed and never logged.
+
 Every score is logged to SQLite with its inputs, probability, tier,
 model version and latency, plus Phase 2 drift flags: the per-row
 quality check, and the alerts from the latest evaluated window.
@@ -14,6 +21,8 @@ no separate serving code path.
 """
 
 import json
+import os
+import secrets
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,12 +30,31 @@ from typing import Literal, Optional
 
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from pydantic import BaseModel, Field
 
 from app import config, data, db, monitor, scoring
 
 app = FastAPI(title="Churn Scoring API")
+
+API_KEY_ENV = "CHURN_API_KEY"
+API_KEY_HEADER = "X-API-Key"
+
+
+def require_api_key(request: Request) -> None:
+    """Check the X-API-Key header against CHURN_API_KEY.
+
+    Read at request time, not import time, so the key can be set after
+    the process starts and tests can swap it. A missing server key is
+    a 503: the endpoint is misconfigured, not unauthorised."""
+    expected = os.environ.get(API_KEY_ENV)
+    if not expected:
+        raise HTTPException(status_code=503,
+                            detail="API key not configured on the server")
+    provided = request.headers.get(API_KEY_HEADER)
+    if not provided or not secrets.compare_digest(provided, expected):
+        raise HTTPException(status_code=401,
+                            detail="Invalid or missing API key")
 
 _MODEL = None
 _MODEL_VERSION = "not-loaded"
@@ -139,7 +167,7 @@ def health():
 
 
 @app.post("/score")
-def score(req: ScoreRequest):
+def score(req: ScoreRequest, _key: None = Depends(require_api_key)):
     _ensure_model()
     started = time.perf_counter()
     inputs = req.model_dump()
@@ -169,7 +197,7 @@ def score(req: ScoreRequest):
 
 
 @app.get("/drift")
-def drift():
+def drift(_key: None = Depends(require_api_key)):
     """The latest window's drift summary: the most recent logged scores
     compared against the Phase 1 training reference, by the same
     monitor the offline experiments use. No labels exist in the log,

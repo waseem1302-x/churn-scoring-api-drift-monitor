@@ -8,6 +8,7 @@ Run after scripts/train.py.
 """
 
 import json
+import os
 import time
 from pathlib import Path
 
@@ -19,6 +20,15 @@ from app import config, data, scoring
 
 RESULTS = config.ROOT / "benchmarks" / "results"
 N_ROWS = 200
+
+
+def _headers():
+    """The API needs a key since Phase 3. The script reads it from the
+    environment, same as a real caller, and fails clearly without it."""
+    key = os.environ.get(api_mod.API_KEY_ENV)
+    if not key:
+        raise SystemExit(f"set {api_mod.API_KEY_ENV} before measuring latency")
+    return {api_mod.API_KEY_HEADER: key}
 
 
 def _row_to_payload(row) -> dict:
@@ -45,13 +55,14 @@ def main():
     rows = [_row_to_payload(X_test.iloc[i]) for i in range(N_ROWS)]
 
     with TestClient(api_mod.app) as client:
+        headers = _headers()
         # Warm-up: 10 scores, then the timed run.
         for row in rows[:10]:
-            assert client.post("/score", json=row).status_code == 200
+            assert client.post("/score", json=row, headers=headers).status_code == 200
         latencies = []
         for row in rows:
             t0 = time.perf_counter()
-            resp = client.post("/score", json=row)
+            resp = client.post("/score", json=row, headers=headers)
             assert resp.status_code == 200
             latencies.append((time.perf_counter() - t0) * 1000)
     lat = np.array(latencies)
