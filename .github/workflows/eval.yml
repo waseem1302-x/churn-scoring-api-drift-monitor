@@ -18,6 +18,12 @@ jobs:
         run: python -m scripts.train
       - name: Measure latency
         run: python -m scripts.measure_latency
+      - name: Drift injection experiments
+        run: python -m scripts.drift_experiments
+      - name: Retraining loop
+        run: python -m scripts.retrain
+      - name: Evidently drift reports
+        run: python -m scripts.evidently_report
       - name: Run tests
         run: python -m pytest tests/ -q
       - name: CI gate
