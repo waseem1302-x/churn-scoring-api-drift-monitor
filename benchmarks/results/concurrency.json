@@ -1,0 +1,12 @@
+{
+  "model_version": "churn-xgboost-smote-isotonic-v1",
+  "workers": 8,
+  "calls": 200,
+  "succeeded": 200,
+  "wall_s": 23.07,
+  "mean_ms": 891.75,
+  "p50_ms": 584.39,
+  "p95_ms": 1706.74,
+  "p99_ms": 5948.07,
+  "note": "In-process TestClient on this VM (1.5 shared CPUs), 8 threads scoring at once, includes HTTP handling and the SQLite log write. Measured while the S6E3 27-config sweep was running on the same VM, so the tail is heavier than a quiet run would be."
+}

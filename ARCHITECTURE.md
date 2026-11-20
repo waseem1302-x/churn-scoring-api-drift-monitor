@@ -222,7 +222,12 @@ data. The log exists so a past decision can be replayed, not to
 serve analytics.
 
 **Cost:** no concurrent-write story, no managed backups. At this
-scale neither matters.
+scale neither matters. The concurrent-write story changed in
+Phase 3: the log now runs in WAL mode with a 30-second busy
+timeout, and 200 parallel scores all succeed with all 200 rows
+logged (see "Concurrency" in EVAL_RESULTS.md). That is enough
+for a scoring API; it is not a claim that SQLite fits high-write
+analytics.
 
 **Rejected:** Postgres (overhead, not engineering), and no log at
 all (then a wrong score is unexplainable).

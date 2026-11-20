@@ -312,6 +312,37 @@ latency for it. If latency mattered more than ranking, the logistic
 config would be the right champion. Cost is $0.00: local CPU, no
 API calls.
 
+### Concurrency: 200 parallel scores
+
+Measured with `scripts/measure_concurrency.py`: 8 threads scoring
+200 held-out rows at once through the API, same TestClient method.
+The log database runs in WAL mode with a 30-second busy timeout
+(`app/db.py`), so concurrent writers queue instead of failing.
+
+| Metric | Under load (8 threads) |
+|---|---|
+| Calls | 200 |
+| Succeeded | 200 |
+| Mean | 891.75 ms |
+| p50 | 584.39 ms |
+| p95 | 1706.74 ms |
+| p99 | 5948.07 ms |
+| Wall time | 23.07 s |
+
+Read these numbers with their conditions attached. They were
+measured while the S6E3 27-config sweep was running on the same
+1.5-CPU VM, training XGBoost models, so 8 scoring threads and a
+training sweep shared one and a half CPUs. Per-call latency under
+that load is about 9 times the quiet single-threaded p50, and the
+p99 tail is thread scheduling, not the database: no call failed
+with "database is locked", and all 200 rows landed in the log.
+A separate test holds a write lock for 7 seconds and requires the
+next write to wait it out and succeed; the default 5-second
+timeout fails that test. The drift reference is also built once
+under a lock now: 8 threads scoring at once used to each build it.
+Re-measure on the deployment machine before quoting latency
+anywhere else.
+
 ## S6E3 scale run
 
 The Kaggle Playground Series S6E3 synthetic train set was fetched

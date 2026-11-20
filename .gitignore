@@ -5,3 +5,5 @@ __pycache__/
 data/predictions.db
 *.log
 .DS_Store
+data/predictions.db-wal
+data/predictions.db-shm

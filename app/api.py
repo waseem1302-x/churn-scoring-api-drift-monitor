@@ -26,6 +26,7 @@ code path.
 import json
 import os
 import secrets
+import threading
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -65,8 +66,11 @@ _DB_PATH = str(config.DB_PATH)
 _THRESHOLD = 0.5
 # The drift reference (training frame plus the champion's scores on it)
 # and the latest evaluated window, cached in process. The reference is
-# built once, on first use, and reset by set_model.
+# built once, on first use, and reset by set_model. The lock stops
+# concurrent first calls from each building it: without it, 8 threads
+# scoring at once would build the same reference 8 times.
 _REFERENCE = None
+_REFERENCE_LOCK = threading.Lock()
 _LATEST_DRIFT = None
 # A drift window needs this many logged rows before it means anything.
 # 200, not 50: measured with the champion, a clean 60-row window has
@@ -122,7 +126,8 @@ def reset_drift_state() -> None:
     """Clear the cached drift reference and latest window. Used when a
     different model is installed, and by the drift tests."""
     global _REFERENCE, _LATEST_DRIFT
-    _REFERENCE = None
+    with _REFERENCE_LOCK:
+        _REFERENCE = None
     _LATEST_DRIFT = None
 
 
@@ -138,11 +143,13 @@ def get_reference():
     global _REFERENCE
     _ensure_model()
     if _REFERENCE is None:
-        df = data.load_telco(data.DATA_PATH)
-        X_train, _, _, _ = data.split(df)
-        ref_frame = X_train.drop(columns=[config.ID_COLUMN])
-        ref_scores = _MODEL.predict_proba(ref_frame[config.FEATURES])[:, 1]
-        _REFERENCE = (ref_frame, ref_scores)
+        with _REFERENCE_LOCK:
+            if _REFERENCE is None:
+                df = data.load_telco(data.DATA_PATH)
+                X_train, _, _, _ = data.split(df)
+                ref_frame = X_train.drop(columns=[config.ID_COLUMN])
+                ref_scores = _MODEL.predict_proba(ref_frame[config.FEATURES])[:, 1]
+                _REFERENCE = (ref_frame, ref_scores)
     return _REFERENCE
 
 

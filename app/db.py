@@ -9,6 +9,24 @@ import json
 import sqlite3
 from pathlib import Path
 
+# Concurrency: every connection waits up to 30 seconds for a held
+# write lock instead of failing after the sqlite3 default of 5, and
+# the log runs in WAL mode so readers never block the writer. Without
+# this, parallel /score calls can fail with "database is locked":
+# tests/test_concurrency.py holds a write lock for 7 seconds and
+# requires the next write to wait it out and succeed.
+BUSY_TIMEOUT_MS = 30000
+
+
+def _connect(path: str) -> sqlite3.Connection:
+    """One connection with the concurrency settings applied. WAL is
+    persistent per database, but setting it on every connection is
+    harmless and keeps a fresh copy in the right mode."""
+    conn = sqlite3.connect(path, timeout=BUSY_TIMEOUT_MS / 1000)
+    conn.execute(f"PRAGMA busy_timeout={BUSY_TIMEOUT_MS}")
+    conn.execute("PRAGMA journal_mode=WAL")
+    return conn
+
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS predictions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +47,7 @@ def init_db(path: str) -> None:
     the drift_flags column to a database created by Phase 1, which did
     not have it."""
     Path(path).parent.mkdir(parents=True, exist_ok=True)
-    with sqlite3.connect(path) as conn:
+    with _connect(path) as conn:
         conn.executescript(SCHEMA)
         cols = [r[1] for r in conn.execute("PRAGMA table_info(predictions)")]
         if "drift_flags" not in cols:
@@ -43,7 +61,7 @@ def log_prediction(path: str, timestamp: str, customer_id, inputs: dict,
     flags and the latest window alerts, or None before any window has
     been evaluated."""
     init_db(path)
-    with sqlite3.connect(path) as conn:
+    with _connect(path) as conn:
         cur = conn.execute(
             "INSERT INTO predictions "
             "(timestamp, customer_id, inputs_json, probability, tier, "
@@ -61,7 +79,7 @@ def recent_predictions(path: str, limit: int = 500) -> list:
     inputs_json, probability and timestamp. The drift endpoint scores
     these against the training reference."""
     init_db(path)
-    with sqlite3.connect(path) as conn:
+    with _connect(path) as conn:
         conn.row_factory = sqlite3.Row
         rows = conn.execute(
             "SELECT inputs_json, probability, timestamp FROM predictions"
