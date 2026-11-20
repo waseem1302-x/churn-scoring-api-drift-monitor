@@ -98,6 +98,44 @@ def recent_predictions(path: str, limit: int = 500) -> list:
     return [dict(r) for r in reversed(rows)]
 
 
+def archive_old_predictions(path: str, before: str, archive_path: str,
+                            dry_run: bool = False) -> dict:
+    """Archive prediction rows older than `before` (ISO timestamp) to
+    a CSV file, then delete them from the log. Returns how many rows
+    were archived and deleted, and the archive file path.
+
+    The CSV is written and flushed before anything is deleted, so a
+    failed archive never loses rows. With dry_run the CSV is still
+    written, but nothing is deleted."""
+    import csv
+
+    init_db(path)
+    columns = ["id", "timestamp", "customer_id", "inputs_json",
+               "probability", "tier", "model_version", "latency_ms",
+               "drift_flags", "label"]
+    Path(archive_path).parent.mkdir(parents=True, exist_ok=True)
+    with _connect(path) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            "SELECT " + ", ".join(columns) + " FROM predictions"
+            " WHERE timestamp < ? ORDER BY id", (before,)).fetchall()
+        rows = [dict(r) for r in rows]
+    with open(archive_path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows(rows)
+    deleted = 0
+    if rows and not dry_run:
+        with _connect(path) as conn:
+            ids = [r["id"] for r in rows]
+            conn.execute(
+                "DELETE FROM predictions WHERE id IN (%s)"
+                % ",".join("?" * len(ids)), ids)
+            deleted = len(ids)
+    return {"archived": len(rows), "deleted": deleted,
+            "archive_file": archive_path}
+
+
 def set_label(path: str, customer_id: str, label: float):
     """Set the label on the most recent unlabelled row for one
     customer, and return its id, or None when no such row exists.
