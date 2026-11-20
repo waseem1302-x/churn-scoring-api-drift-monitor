@@ -1,0 +1,256 @@
+{
+  "generated_at": "2026-11-20T04:19:44.580319+00:00",
+  "nannyml_version": "0.13.1",
+  "model_version": "churn-xgboost-smote-isotonic-v1",
+  "threshold": 0.0934,
+  "reference_weeks": [
+    1,
+    4
+  ],
+  "analysis_weeks": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "chunk_size": 5000,
+  "metrics": [
+    {
+      "metric": "roc_auc",
+      "reference_estimated": [
+        0.7956,
+        0.7896,
+        0.7885,
+        0.7892
+      ],
+      "per_week": [
+        {
+          "week": 5,
+          "estimated": 0.7751,
+          "realised": 0.7999,
+          "absolute_error": 0.0248,
+          "sampling_error": 0.0058,
+          "nannyml_alert": false
+        },
+        {
+          "week": 6,
+          "estimated": 0.7736,
+          "realised": 0.6997,
+          "absolute_error": 0.0739,
+          "sampling_error": 0.0058,
+          "nannyml_alert": false
+        },
+        {
+          "week": 7,
+          "estimated": 0.7729,
+          "realised": 0.7148,
+          "absolute_error": 0.0581,
+          "sampling_error": 0.0058,
+          "nannyml_alert": false
+        },
+        {
+          "week": 8,
+          "estimated": 0.7714,
+          "realised": 0.6987,
+          "absolute_error": 0.0727,
+          "sampling_error": 0.0058,
+          "nannyml_alert": false
+        },
+        {
+          "week": 9,
+          "estimated": 0.7702,
+          "realised": 0.6892,
+          "absolute_error": 0.081,
+          "sampling_error": 0.0058,
+          "nannyml_alert": false
+        },
+        {
+          "week": 10,
+          "estimated": 0.7666,
+          "realised": 0.7744,
+          "absolute_error": 0.0078,
+          "sampling_error": 0.0058,
+          "nannyml_alert": false
+        },
+        {
+          "week": 11,
+          "estimated": 0.7662,
+          "realised": 0.7892,
+          "absolute_error": 0.023,
+          "sampling_error": 0.0058,
+          "nannyml_alert": false
+        },
+        {
+          "week": 12,
+          "estimated": 0.7693,
+          "realised": 0.7746,
+          "absolute_error": 0.0053,
+          "sampling_error": 0.0058,
+          "nannyml_alert": false
+        }
+      ],
+      "mae": 0.0433
+    },
+    {
+      "metric": "precision",
+      "reference_estimated": [
+        0.4009,
+        0.3836,
+        0.3805,
+        0.378
+      ],
+      "per_week": [
+        {
+          "week": 5,
+          "estimated": 0.3629,
+          "realised": 0.4424,
+          "absolute_error": 0.0795,
+          "sampling_error": 0.0086,
+          "nannyml_alert": false
+        },
+        {
+          "week": 6,
+          "estimated": 0.3596,
+          "realised": 0.4229,
+          "absolute_error": 0.0633,
+          "sampling_error": 0.0086,
+          "nannyml_alert": false
+        },
+        {
+          "week": 7,
+          "estimated": 0.3582,
+          "realised": 0.4225,
+          "absolute_error": 0.0643,
+          "sampling_error": 0.0086,
+          "nannyml_alert": false
+        },
+        {
+          "week": 8,
+          "estimated": 0.3563,
+          "realised": 0.4171,
+          "absolute_error": 0.0608,
+          "sampling_error": 0.0086,
+          "nannyml_alert": false
+        },
+        {
+          "week": 9,
+          "estimated": 0.3537,
+          "realised": 0.5204,
+          "absolute_error": 0.1667,
+          "sampling_error": 0.0086,
+          "nannyml_alert": false
+        },
+        {
+          "week": 10,
+          "estimated": 0.3757,
+          "realised": 0.5399,
+          "absolute_error": 0.1642,
+          "sampling_error": 0.0086,
+          "nannyml_alert": false
+        },
+        {
+          "week": 11,
+          "estimated": 0.3724,
+          "realised": 0.5347,
+          "absolute_error": 0.1623,
+          "sampling_error": 0.0086,
+          "nannyml_alert": false
+        },
+        {
+          "week": 12,
+          "estimated": 0.3503,
+          "realised": 0.544,
+          "absolute_error": 0.1937,
+          "sampling_error": 0.0086,
+          "nannyml_alert": false
+        }
+      ],
+      "mae": 0.1193
+    },
+    {
+      "metric": "recall",
+      "reference_estimated": [
+        0.916,
+        0.9131,
+        0.9124,
+        0.9107
+      ],
+      "per_week": [
+        {
+          "week": 5,
+          "estimated": 0.9121,
+          "realised": 0.9223,
+          "absolute_error": 0.0102,
+          "sampling_error": 0.0077,
+          "nannyml_alert": false
+        },
+        {
+          "week": 6,
+          "estimated": 0.912,
+          "realised": 0.8442,
+          "absolute_error": 0.0678,
+          "sampling_error": 0.0077,
+          "nannyml_alert": false
+        },
+        {
+          "week": 7,
+          "estimated": 0.9108,
+          "realised": 0.8408,
+          "absolute_error": 0.07,
+          "sampling_error": 0.0077,
+          "nannyml_alert": false
+        },
+        {
+          "week": 8,
+          "estimated": 0.9101,
+          "realised": 0.838,
+          "absolute_error": 0.0721,
+          "sampling_error": 0.0077,
+          "nannyml_alert": false
+        },
+        {
+          "week": 9,
+          "estimated": 0.9097,
+          "realised": 0.8139,
+          "absolute_error": 0.0958,
+          "sampling_error": 0.0077,
+          "nannyml_alert": false
+        },
+        {
+          "week": 10,
+          "estimated": 0.915,
+          "realised": 0.8804,
+          "absolute_error": 0.0346,
+          "sampling_error": 0.0077,
+          "nannyml_alert": false
+        },
+        {
+          "week": 11,
+          "estimated": 0.9132,
+          "realised": 0.8958,
+          "absolute_error": 0.0174,
+          "sampling_error": 0.0077,
+          "nannyml_alert": false
+        },
+        {
+          "week": 12,
+          "estimated": 0.9039,
+          "realised": 0.8667,
+          "absolute_error": 0.0372,
+          "sampling_error": 0.0077,
+          "nannyml_alert": false
+        }
+      ],
+      "mae": 0.0506
+    }
+  ],
+  "reference_low_estimated_roc_auc": 0.7885,
+  "max_weekly_move_estimated_roc_auc": 0.0036,
+  "nannyml_alert_on_any_analysis_week": false,
+  "retraining_loop_trigger_week": 8,
+  "honesty_limits": "CBPE estimates performance from the model's own confidence, not from labels. It is checked here against realised performance on the same simulator weeks, which is the only way to know if the estimate is any good. On real production data there is no such check until the labels arrive about 30 days later."
+}

@@ -518,6 +518,82 @@ difference is noise on a 2,000-row test set, but the point
 stands: a threshold is fitted to its own data, and reusing
 another dataset's threshold is a guess, not a setting.
 
+## CBPE: performance without labels
+
+NannyML CBPE estimates performance from the model's own
+confidence while labels are delayed (about 30 days in
+production). The question was whether it catches the concept
+drift earlier than the retraining loop, which fires on realised
+performance in week 8. The answer is no, and the experiment
+proves it with numbers instead of asserting it.
+
+Version honesty first. NannyML 0.6.0, the version the research
+named, cannot install here: it needs Python below 3.11 and this
+stack runs Python 3.12.3, so pip refuses it outright. NannyML
+0.13.1 is the version that installs on Python 3.12, and CBPE
+still exists in it. It lives in its own venv (`.venv-cbpe`,
+gitignored), because 0.13.1 would downgrade the repo's pinned
+xgboost 3.4.1 to 2.1.4 and break the bit-for-bit Phase 1
+reproduction. CBPE works on predictions, not on model objects,
+so the CBPE venv never touches the artifact: `scripts/cbpe_prepare.py`
+runs in the repo venv and writes the scored frames, and
+`scripts/cbpe_estimate.py` runs in the CBPE venv and reads only
+that CSV. Two install gaps, recorded so the setup reproduces:
+the first install failed with no space left on device because
+pip builds in /tmp, a 512 MB tmpfs here; it needs
+TMPDIR on the overlay disk. And NannyML 0.13.1 imports
+statsmodels but does not declare it, so the venv needs an
+explicit `pip install statsmodels` (0.15.0 here) before the
+import works.
+
+Method: the champion scores the same 12-week simulator run the
+retraining loop used (5,000 customers a week, seed 42).
+Reference weeks 1 to 4 (clean, labelled) fit the estimator;
+analysis weeks 5 to 12 are estimated one chunk per week, and
+the estimates are checked against realised performance on the
+same weeks. The labels are used only for the check, after the
+fact, exactly as they would be when they arrive 30 days late.
+
+| Week | Estimated ROC-AUC | Realised ROC-AUC | Error |
+|---|---|---|---|
+| 5 | 0.7751 | 0.7999 | 0.0248 |
+| 6 | 0.7736 | 0.6997 | 0.0739 |
+| 7 | 0.7729 | 0.7148 | 0.0581 |
+| 8 | 0.7714 | 0.6987 | 0.0727 |
+| 9 | 0.7702 | 0.6892 | 0.0810 |
+| 10 | 0.7666 | 0.7744 | 0.0078 |
+| 11 | 0.7662 | 0.7892 | 0.0230 |
+| 12 | 0.7693 | 0.7746 | 0.0053 |
+
+Mean absolute error: ROC-AUC 0.0433, precision 0.1193, recall
+0.0506. The pattern is the finding. When the label rule is
+stable (weeks 5, 10 to 12), the estimates are close, errors
+0.005 to 0.025. In the concept-drift weeks 6 to 9, the realised
+ROC-AUC falls from 0.80 to 0.69 while the estimates sit flat
+at 0.77, errors 0.058 to 0.081, ten to fourteen times the
+sampling error of 0.0058. The largest week-to-week move in the
+estimated ROC-AUC across all eight weeks is 0.0036, and
+NannyML raises no alert on any analysis week. Precision is
+worse: CBPE underestimates it throughout (mean error 0.1193),
+and in weeks 9 to 12 the realised precision jumps to 0.52 to
+0.54 on the prevalence shift while the estimates fall to 0.35
+to 0.38, errors 0.16 to 0.19.
+
+The reason is structural, not a tuning failure. CBPE reads the
+model's confidence, and the concept flip changed the label rule
+without changing the features or the model's outputs: the same
+rows in give the same probabilities out, so there is nothing in
+the confidence distribution for CBPE to see. The prevalence
+shift is the same story for precision: the intercept moves the
+labels, not the confidence. So CBPE does not answer the late
+concept-drift detection, and it does not make the prevalence
+shift visible either. It is still useful for what it actually
+measures: when the features or the model's confidence move,
+its estimates track realised performance within 0.025. The
+retraining loop's realised trigger in week 8 remains the only
+thing that catches the concept drift, late, and that limit
+stands. Full numbers in benchmarks/results/cbpe_estimate.json.
+
 ## Comparison with DecisionAPI
 
 DecisionAPI (the closest existing project, read during research)

@@ -1,0 +1,109 @@
+{
+  "generated_at": "2026-11-20T04:05:08.572110+00:00",
+  "model_version": "churn-xgboost-smote-isotonic-v1",
+  "threshold": 0.0934,
+  "n_customers_per_week": 5000,
+  "n_weeks": 12,
+  "reference_weeks": [
+    1,
+    4
+  ],
+  "analysis_weeks": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "frame_file": "cbpe_frames.csv",
+  "rows": 60000,
+  "realised_per_week": {
+    "1": {
+      "rows": 5000,
+      "churn_rate": 0.2842,
+      "roc_auc": 0.7652,
+      "precision_at_threshold": 0.3885,
+      "recall_at_threshold": 0.8909
+    },
+    "2": {
+      "rows": 5000,
+      "churn_rate": 0.278,
+      "roc_auc": 0.7975,
+      "precision_at_threshold": 0.3945,
+      "recall_at_threshold": 0.9201
+    },
+    "3": {
+      "rows": 5000,
+      "churn_rate": 0.2578,
+      "roc_auc": 0.7942,
+      "precision_at_threshold": 0.3661,
+      "recall_at_threshold": 0.917
+    },
+    "4": {
+      "rows": 5000,
+      "churn_rate": 0.2728,
+      "roc_auc": 0.8022,
+      "precision_at_threshold": 0.3929,
+      "recall_at_threshold": 0.9223
+    },
+    "5": {
+      "rows": 5000,
+      "churn_rate": 0.319,
+      "roc_auc": 0.7999,
+      "precision_at_threshold": 0.4424,
+      "recall_at_threshold": 0.9223
+    },
+    "6": {
+      "rows": 5000,
+      "churn_rate": 0.3338,
+      "roc_auc": 0.6997,
+      "precision_at_threshold": 0.4229,
+      "recall_at_threshold": 0.8442
+    },
+    "7": {
+      "rows": 5000,
+      "churn_rate": 0.333,
+      "roc_auc": 0.7148,
+      "precision_at_threshold": 0.4225,
+      "recall_at_threshold": 0.8408
+    },
+    "8": {
+      "rows": 5000,
+      "churn_rate": 0.3296,
+      "roc_auc": 0.6987,
+      "precision_at_threshold": 0.4171,
+      "recall_at_threshold": 0.838
+    },
+    "9": {
+      "rows": 5000,
+      "churn_rate": 0.4224,
+      "roc_auc": 0.6892,
+      "precision_at_threshold": 0.5204,
+      "recall_at_threshold": 0.8139
+    },
+    "10": {
+      "rows": 5000,
+      "churn_rate": 0.4182,
+      "roc_auc": 0.7744,
+      "precision_at_threshold": 0.5399,
+      "recall_at_threshold": 0.8804
+    },
+    "11": {
+      "rows": 5000,
+      "churn_rate": 0.403,
+      "roc_auc": 0.7892,
+      "precision_at_threshold": 0.5347,
+      "recall_at_threshold": 0.8958
+    },
+    "12": {
+      "rows": 5000,
+      "churn_rate": 0.4052,
+      "roc_auc": 0.7746,
+      "precision_at_threshold": 0.544,
+      "recall_at_threshold": 0.8667
+    }
+  }
+}

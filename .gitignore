@@ -7,3 +7,4 @@ data/predictions.db
 .DS_Store
 data/predictions.db-wal
 data/predictions.db-shm
+.venv-cbpe/
