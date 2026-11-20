@@ -1,0 +1,6 @@
+# Evidently drift reports are generated output, not hand-written code.
+# GitHub counts every .html file as HTML, so these two reports (about
+# 8.1 MB together) made HTML the top language on the profile card.
+# Marking them generated keeps them in the repo as evidence but drops
+# them from GitHub's language counts.
+benchmarks/reports/*.html linguist-generated=true
