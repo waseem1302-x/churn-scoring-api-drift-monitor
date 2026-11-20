@@ -337,6 +337,7 @@ def evaluate_window(ref, cur, ref_scores, cur_scores, threshold,
                                   id_column=id_column, thresholds=th)
     realised = None
     perf_drop = False
+    label_shift = False
     if y_true is not None and y_proba is not None:
         realised = metrics_mod.evaluate_model(y_true, y_proba, threshold=threshold)
         if reference_metrics is not None:
@@ -348,6 +349,15 @@ def evaluate_window(ref, cur, ref_scores, cur_scores, threshold,
                              or pr_drop > th["pr_auc_drop"])
             realised["precision_at_100_drop"] = round(float(p100_drop), 4)
             realised["pr_auc_drop"] = round(float(pr_drop), 4)
+            # Label shift: the realised churn rate moved against the
+            # reference rate. Input detectors cannot see this at all:
+            # the features did not change, only the outcome rate did.
+            ref_rate = reference_metrics.get("churn_rate")
+            if ref_rate:
+                rel = (realised["churn_rate"] - ref_rate) / ref_rate
+                realised["churn_rate_change_rel"] = round(float(rel), 4)
+                label_shift = bool(
+                    abs(rel) > th["predicted_rate_rel_change"])
     return {
         "n_ref": len(ref),
         "n_cur": len(cur),
@@ -361,5 +371,6 @@ def evaluate_window(ref, cur, ref_scores, cur_scores, threshold,
             "prediction_drift": bool(pred["drifted"]),
             "data_quality": bool(quality),
             "performance_drop": perf_drop,
+            "label_shift": label_shift,
         },
     }

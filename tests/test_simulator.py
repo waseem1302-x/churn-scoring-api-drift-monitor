@@ -87,6 +87,21 @@ def test_schedule_prevalence_shift_raises_churn():
     assert late - early > 0.05
 
 
+def test_simulator_clean_schedule_has_no_drift_events():
+    frame = simulate.simulate(n_customers=1000, n_weeks=12, seed=42, schedule=False)
+    m1 = frame.loc[frame["week"] == 1, "MonthlyCharges"].mean()
+    m12 = frame.loc[frame["week"] == 12, "MonthlyCharges"].mean()
+    assert abs(m12 - m1) < 1e-9
+    shares = frame.groupby("week")["InternetService"].apply(
+        lambda s: (s == "Fiber optic").mean())
+    assert shares.max() - shares.min() < 1e-9
+    sub = frame[frame["week"] == 10]
+    assert (sub["TotalCharges"] != sub["MonthlyCharges"]).mean() > 0.98
+    early = frame[frame["week"] <= 4]["Churn"].mean()
+    late = frame[frame["week"] >= 9]["Churn"].mean()
+    assert abs(late - early) < 0.05
+
+
 def test_champion_scores_simulated_weeks():
     model, meta = scoring.load_artifact()
     frame = simulate.simulate(n_customers=200, n_weeks=2, seed=42)

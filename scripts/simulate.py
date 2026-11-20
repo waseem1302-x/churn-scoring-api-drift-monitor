@@ -99,10 +99,13 @@ def _base_panel(n_customers: int, seed: int) -> pd.DataFrame:
     return panel
 
 
-def simulate(n_customers: int = 2000, n_weeks: int = 12, seed: int = 42) -> pd.DataFrame:
+def simulate(n_customers: int = 2000, n_weeks: int = 12, seed: int = 42,
+             schedule: bool = True) -> pd.DataFrame:
     """One snapshot row per customer per week, with the known drift
     schedule applied. Columns: week, date, customerID, the 19 Telco
-    features, Churn."""
+    features, Churn. With schedule=False every week is clean baseline:
+    the controlled injection experiments need drift-free weeks to
+    inject into, and a drift-free run to measure false alarms on."""
     panel = _base_panel(n_customers, seed)
     rng = np.random.default_rng(seed + 1)
     base_tenure = panel["tenure"].to_numpy(dtype=float)
@@ -115,15 +118,16 @@ def simulate(n_customers: int = 2000, n_weeks: int = 12, seed: int = 42) -> pd.D
         frame = panel.copy()
         # Tenure grows one month per week, capped at 72; in the stale
         # week it stays at the previous week's value.
-        elapsed = week - 1 if week != STALE_WEEK else STALE_WEEK - 2
+        elapsed = week - 1 if (week != STALE_WEEK or not schedule) else STALE_WEEK - 2
         frame["tenure"] = np.minimum(base_tenure + elapsed, MAX_TENURE).astype(int)
         # MonthlyCharges: the price rise lands in week 5 and persists.
-        monthly = base_monthly + (PRICE_RISE_DOLLARS if week >= PRICE_RISE_WEEK else 0.0)
+        rise = PRICE_RISE_DOLLARS if (schedule and week >= PRICE_RISE_WEEK) else 0.0
+        monthly = base_monthly + rise
         frame["MonthlyCharges"] = monthly
         # Fiber growth: each week in the window, convert 5% of the
         # panel from other services to Fiber. Add-ons that said "No
         # internet service" become "No": the customer has internet now.
-        if FIBER_GROWTH_WEEKS[0] <= week <= FIBER_GROWTH_WEEKS[1]:
+        if schedule and FIBER_GROWTH_WEEKS[0] <= week <= FIBER_GROWTH_WEEKS[1]:
             not_fiber = np.where(internet != "Fiber optic")[0]
             n_convert = int(round(FIBER_GROWTH_POINTS_PER_WEEK * n_customers))
             chosen = rng.choice(not_fiber, size=min(n_convert, len(not_fiber)),
@@ -137,15 +141,16 @@ def simulate(n_customers: int = 2000, n_weeks: int = 12, seed: int = 42) -> pd.D
         frame["InternetService"] = internet
         # TotalCharges accumulates the billed months. Weeks 10 and 11
         # are the broken join: the column holds MonthlyCharges instead.
-        if BREAKAGE_WEEKS[0] <= week <= BREAKAGE_WEEKS[1]:
+        if schedule and BREAKAGE_WEEKS[0] <= week <= BREAKAGE_WEEKS[1]:
             frame["TotalCharges"] = monthly
         else:
-            risen_weeks = max(0, week - PRICE_RISE_WEEK)
+            risen_weeks = max(0, week - PRICE_RISE_WEEK) if schedule else 0
             frame["TotalCharges"] = (base_total + (week - 1) * base_monthly
                                      + PRICE_RISE_DOLLARS * risen_weeks)
         # Labels from the known rule, with the prevalence shift from
         # week 9. The shift changes the outcome rate, not the features.
-        shift = PREVALENCE_INTERCEPT_SHIFT if week >= PREVALENCE_SHIFT_WEEK else 0.0
+        shift = (PREVALENCE_INTERCEPT_SHIFT
+                 if (schedule and week >= PREVALENCE_SHIFT_WEEK) else 0.0)
         proba = true_churn_probability(frame, intercept_shift=shift)
         frame["Churn"] = (rng.random(n_customers) < proba).astype(int)
         frame["week"] = week
