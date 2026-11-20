@@ -317,7 +317,8 @@ loop (streak rules, shadow promotion and refusal, the margin
 rule), the drift endpoint (it reports the same numbers the
 monitor computes offline), the Evidently report artifacts, the
 CI drift gate (it fails on tampered tables), and doc integrity
-(no accuracy headline, no em-dash, honest S6E3 pending state).
+(no accuracy headline, no em-dash, S6E3 scale numbers matching
+their recorded file).
 
 ## Docker
 

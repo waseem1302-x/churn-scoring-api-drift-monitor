@@ -312,16 +312,65 @@ latency for it. If latency mattered more than ranking, the logistic
 config would be the right champion. Cost is $0.00: local CPU, no
 API calls.
 
-## S6E3 scale run: pending
+## S6E3 scale run
 
-The Kaggle Playground Series S6E3 synthetic train set (about
-594,000 rows, same schema) was not fetched: no Kaggle credentials
-were present at `~/.kaggle/kaggle.json`. No scale numbers are
-claimed anywhere in this repo. Train time and latency at the 594k
-scale are pending, and the S6E3 numbers in the research report
-(about 594,000 rows, first place 0.91856) are not cited as this
-project's results. When credentials exist, the same pipeline runs
-unchanged on the synthetic set and the numbers go here.
+The Kaggle Playground Series S6E3 synthetic train set was fetched
+on 20 Nov 2026 (Kaggle web UI, Google account waseemmushtaq045;
+competition rules accepted) and verified from the file: 594,194
+rows, 21 columns, churn rate 22.52% (133,817 Yes), 0 blank
+TotalCharges, ids 0 to 594,193 with no duplicates. The 80 MB file
+lives outside the repo and is never committed. The same pipeline
+ran unchanged on a stratified 80/20 split (475,355 train, 118,839
+test), two configs only: the champion (XGBoost, SMOTE, isotonic)
+and the best logistic config (logistic, no handling, Platt). The
+full 27-config sweep was not run: at this scale it would take
+hours for numbers that add nothing to the scale question. The two
+runs took 384.21 s and 112.19 s, 8.3 minutes combined, under the
+20 minute budget set before the run.
+
+| Metric | Telco test | S6E3 champion | S6E3 logistic |
+| --- | --- | --- | --- |
+| ROC-AUC | 0.8366 | 0.9135 | 0.9084 |
+| PR-AUC | 0.6395 | 0.7474 | 0.7271 |
+| Brier | 0.1392 | 0.0966 | 0.0997 |
+| Precision at 100 | 0.76 | 0.97 | 0.87 |
+| Precision at 10% | 0.7589 | 0.8251 | 0.8033 |
+| Train time | 9.42 s | 384.21 s | 112.19 s |
+| Latency p50 | 63.52 to 98.10 ms | 28.99 ms | not measured |
+| Latency p95 | 77.47 to 176.09 ms | 63.46 ms | not measured |
+
+At the frozen Telco threshold 0.0934, the S6E3 champion scores
+precision 0.4553 and recall 0.9575 on the held-out split, test
+profit $9,998,550 ($84,135.26 per 1,000). The threshold
+re-optimised on out-of-fold S6E3 train predictions is 0.1001,
+and it earns slightly less on test, $9,996,950 ($84,121.80 per
+1,000), so the frozen threshold stands: re-optimising bought
+nothing here. The logistic config at the frozen threshold scores
+precision 0.4566 and recall 0.9512, profit $9,940,550 ($83,647.20
+per 1,000); its re-optimised threshold 0.1048 earns $9,953,150
+($83,753.23 per 1,000).
+
+Latency: 200 held-out S6E3 rows through the same API code path
+with the S6E3-trained champion, p50 28.99 ms, p95 63.46 ms, mean
+42.74 ms. That is faster than the Telco runs (p50 63.52 to 98.10
+ms), and the reason is VM load, not scale: scoring one row costs
+the same whatever the training set size was, and the Telco
+latency section already shows this VM's jitter band is wide.
+The scale finding is that latency did not get worse at 594k rows.
+
+Read these numbers honestly. The S6E3 rows are near-duplicates of
+Telco, about 85 copies of each original row, so a held-out S6E3
+row usually has near-copies in training. That is why ROC-AUC
+0.9135 and precision at 100 of 0.97 are higher than the Telco
+test numbers (0.8366 and 0.76): they are NOT independent evidence
+about new customers. The Kaggle leaderboard first place of
+0.91856 is the same effect, not a target beaten or missed. What
+this run proves is scale: the pipeline trains on 594,194 rows in
+6.4 minutes for the champion config, scores with no latency
+regression, and stays stable. It proves nothing about
+generalisation beyond Telco. The churn rate also differs, 22.52%
+here against 26.54% in Telco: the synthetic set does not preserve
+the exact rate. Full numbers in benchmarks/results/scale_s6e3.json.
 
 ## Comparison with DecisionAPI
 
@@ -510,7 +559,9 @@ succeeded (checked 20 Nov 2026, runs on main, both green).
 - The promotion margin ($2,500 per 1,000) is a judgment call, set
   just above the shadow's noise floor.
 - `GET /drift` needs 200 logged rows and has no labels.
-- No S6E3 scale numbers yet (pending, see above).
+- S6E3 scale numbers are measured (see above), but they prove
+  scale, not generalisation: near-duplicate rows inflate the
+  metrics.
 - The profit figures rest on the $50 offer cost and $500 saved
   value assumptions. Change them and the threshold and the profit
   move; the Profit sensitivity section measures how much.

@@ -415,8 +415,9 @@ re-runs the threshold selection, which is one function call.
    comes from out-of-fold train predictions. Test never selects.
 4. **No invented numbers.** Every number in the README,
    `EVAL_RESULTS.md`, and `benchmarks/results/` comes from a real
-   local run. A number that cannot be measured yet is left pending,
-   as the S6E3 scale run is.
+   local run. A number that cannot be measured yet is left pending;
+   the S6E3 scale run was pending until 20 Nov 2026, when it was
+   measured.
 5. **The artifact is the model.** The API loads
    `artifacts/model.joblib` and scores through it. There is no
    separate serving code path.
@@ -489,4 +490,6 @@ re-runs the threshold selection, which is one function call.
   0.0934 stays within 8.8% of the best profit in 8 of 9 cells,
   but loses money when the offer costs $100 against a $250 saved
   value, where the best threshold is 0.5004.
-- **S6E3 scale run pending.** No 594k-row numbers exist yet.
+- **S6E3 scale run done (20 Nov 2026).** Champion trains on
+  594,194 rows in 384.21 s; latency p50 28.99 ms. Metrics are
+  inflated by near-duplicates and prove scale, not generalisation.

@@ -39,9 +39,9 @@
     "brier_max": 0.2,
     "precision_at_100": 0.5
   },
-  "s6e3_scale_run": "pending",
+  "s6e3_scale_run": "done",
   "s6e3": {
-    "train_time_s": null,
-    "note": "Kaggle credentials not present; scale run pending"
+    "train_time_s": 384.21,
+    "note": "Scale run done 20 Nov 2026; see benchmarks/results/scale_s6e3.json. Champion train time 384.21 s on 594,194 rows."
   }
 }

@@ -90,6 +90,9 @@ the seed, so every run trains and evaluates on the same rows.
 
 - No second dataset yet. The Bank Customer Churn generalisation
   check (10,000 rows, 20.4% churn) is Phase 3.
-- No S6E3 synthetic set yet (about 594,000 rows, same schema).
-  Not fetched: no Kaggle credentials. No scale numbers are
-  claimed. The scale run is pending.
+- S6E3 synthetic set: fetched 20 Nov 2026 from Kaggle
+  (Playground Series S6E3 train.csv, 594,194 rows, churn rate
+  22.52%, 0 blank TotalCharges, ids 0 to 594,193). Same schema as
+  Telco except the identifier is "id". The 80 MB file lives
+  outside the repo and is never committed. Scale numbers are in
+  EVAL_RESULTS.md and benchmarks/results/scale_s6e3.json.

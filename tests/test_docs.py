@@ -48,14 +48,16 @@ def test_eval_results_states_no_timestamps_limit():
     assert "no timestamps" in text.lower()
 
 
-def test_s6e3_scale_run_is_not_claimed_when_pending():
+def test_s6e3_scale_run_recorded_as_done():
     import json
 
     text = (ROOT / "EVAL_RESULTS.md").read_text()
     metrics_path = ROOT / "benchmarks" / "results" / "metrics.json"
     metrics = json.loads(metrics_path.read_text())
-    if metrics.get("s6e3_scale_run") == "pending":
-        assert "pending" in text.lower()
-        assert "S6E3" in text
-        # No S6E3 train time may be presented as measured while pending.
-        assert metrics["s6e3"].get("train_time_s") is None
+    assert metrics.get("s6e3_scale_run") == "done"
+    assert metrics["s6e3"].get("train_time_s") == 384.21
+    start = text.index("## S6E3 scale run")
+    end = text.index("## ", start + 3)
+    section = text[start:end]
+    assert "pending" not in section.lower()
+    assert "594,194" in section
