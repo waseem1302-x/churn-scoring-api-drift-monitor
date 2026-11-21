@@ -95,11 +95,12 @@ def load_telco(path=DATA_PATH) -> pd.DataFrame:
     return df
 
 
-def load_s6e3(path=S6E3_PATH) -> pd.DataFrame:
+def load_s6e3(path=S6E3_PATH, nrows=None) -> pd.DataFrame:
     """Load the S6E3 synthetic train set onto the Telco shape: "id"
     becomes "customerID" so the same pipeline and split run unchanged,
-    Churn Yes/No maps to 1/0 exactly as the Telco loader does."""
-    df = pd.read_csv(path)
+    Churn Yes/No maps to 1/0 exactly as the Telco loader does.
+    nrows limits the read (the memory test uses a 60k slice)."""
+    df = pd.read_csv(path, nrows=nrows)
     df = df.rename(columns={"id": ID_COLUMN})
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
     df[TARGET] = (df[TARGET] == "Yes").astype(int)

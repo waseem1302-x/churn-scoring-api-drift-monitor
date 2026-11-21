@@ -453,6 +453,82 @@ generalisation beyond Telco. The churn rate also differs, 22.52%
 here against 26.54% in Telco: the synthetic set does not preserve
 the exact rate. Full numbers in benchmarks/results/scale_s6e3.json.
 
+## S6E3 27-config sweep
+
+The full 27-config sweep ran on the same S6E3 set, 21 Nov 2026,
+on a free Colab CPU runtime (2 vCPUs, about 12 GB RAM). It could
+not run on this VM: a single calibrated random forest config
+peaks at 4,725 MB RSS and the cell limit is 6,144 MiB, and the
+driver died three times there. The sweep ran in four Colab
+sessions; the last resume (the final 11 configs) took 8,464 s
+wall time. Total train time is 19,829.52 s (5.5 hours). That
+number is the sum of the 27 config train times, not wall clock.
+Full numbers in benchmarks/results/scale_s6e3_sweep.json, and
+the run scripts in scripts/sweep_driver.py,
+scripts/sweep_single_config.py and scripts/sweep_s6e3.py.
+
+Champion by the pre-registered rule (highest out-of-fold profit):
+churn-xgboost-none-raw-v1. PR-AUC 0.7528, ROC-AUC 0.9160, Brier
+0.0954, precision at 100 0.98, out-of-fold profit $84,216.22
+per 1,000, test profit $84,363.72 per 1,000, train time 74.36 s.
+This is a different champion from Telco (XGBoost, SMOTE,
+isotonic) and from the 2-config scale run, which used the Telco
+champion config. The margin is noise: second on out-of-fold
+profit is XGBoost class_weight Platt at $84,215.17, $1.05 behind,
+and on test profit the champion is not even first (XGBoost
+class_weight raw earns $84,440.29 per 1,000). The rule picked the
+champion, not the test set, and the rule was followed.
+
+| Mean PR-AUC | Logistic | Random forest | XGBoost |
+| --- | --- | --- | --- |
+| By model | 0.7256 | 0.6982 | 0.7509 |
+
+| Mean PR-AUC by handling | None | Class weight | SMOTE |
+| --- | --- | --- | --- |
+| All models | 0.7272 | 0.7262 | 0.7213 |
+
+| Mean Brier by calibration | Raw | Platt | Isotonic |
+| --- | --- | --- | --- |
+| All models | 0.1149 | 0.1013 | 0.0998 |
+
+The Telco ranking holds at scale: XGBoost best, logistic
+second, random forest last, on both PR-AUC and ROC-AUC (mean
+ROC-AUC 0.9152, 0.9083, 0.8970). SMOTE hurts ranking again
+(mean PR-AUC 0.7213 against 0.7272 with no handling).
+Calibration clearly earns its place again: mean Brier falls
+from 0.1149 raw to 0.1013 Platt to 0.0998 isotonic. Slowest
+config is random forest SMOTE isotonic at 3,547.98 s; fastest
+is logistic none raw at 56.12 s. Mean train time by model:
+logistic 177.4 s, XGBoost 191.0 s, random forest 1,834.8 s.
+
+Configs 17 and 18 (random forest, SMOTE, Platt and isotonic)
+killed the sweep twice on Colab with exit -9: SMOTE grows the
+train set to about 736k rows and calibration holds three
+300-tree forests at once, about 14.7 GB, over the 12 GB limit.
+They ran through a disk-backed calibration path that fits each
+calibration fold exactly as sklearn does, writes the fitted
+calibrator to disk, frees RAM, and averages at predict time.
+The predictions are proven identical to the standard path
+(7 identity tests, probabilities equal to 1e-12). Peak RSS was
+6,844 MB for config 17 and 6,855 MB for config 18, under
+Colab's 12 GB. The maths is unchanged; only where the fitted
+forests live changed. Details in
+scripts/disk_backed_calibration.py. Configs 17 and 18 are the
+weakest random forest configs (PR-AUC 0.6977 and 0.6998), so
+nothing about the champion or the conclusions turns on them.
+
+One file quirk, recorded honestly: the merged file mixes null
+and "none" for uncalibrated configs. The first 10 configs,
+merged on the VM by the original driver, carry null; the rest,
+merged by the fixed driver, carry the string "none". Both mean
+the same thing. The cross-check test normalises them.
+
+The same honesty limits as the scale run apply: the S6E3 rows
+are near-duplicates of Telco, so these metrics are not
+independent evidence about new customers. The sweep proves the
+pipeline scales to 594k rows and the config ranking holds; it
+proves nothing new about generalisation.
+
 ## Bank generalisation
 
 The same pipeline, retrained on the Bank Customer Churn dataset
