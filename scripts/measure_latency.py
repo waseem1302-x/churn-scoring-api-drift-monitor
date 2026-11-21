@@ -10,6 +10,7 @@ Run after scripts/train.py.
 import json
 import os
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
@@ -19,6 +20,7 @@ from app import api as api_mod
 from app import config, data, scoring
 
 RESULTS = config.ROOT / "benchmarks" / "results"
+RUNS_PATH = RESULTS / "latency_runs.json"
 N_ROWS = 200
 
 
@@ -42,6 +44,36 @@ def _row_to_payload(row) -> dict:
         payload[f] = v
     payload["customerID"] = str(row[config.ID_COLUMN])
     return payload
+
+
+def _append_run(result, runs_path=RUNS_PATH):
+    """Append this measurement to the latency-runs log, so
+    latency.json always equals the latest run in the log on any
+    machine. The log is a history: earlier runs stay in place, the
+    new run goes last, labelled with the UTC date. If the log does
+    not exist yet, it is created with just this run."""
+    run = {
+        "label": datetime.now(timezone.utc).date().isoformat(),
+        "mean_ms": result["mean_ms"],
+        "p50_ms": result["p50_ms"],
+        "p95_ms": result["p95_ms"],
+        "p99_ms": result["p99_ms"],
+    }
+    if runs_path.exists():
+        try:
+            data = json.loads(runs_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            data = {}
+    else:
+        data = {}
+    runs = data.get("runs") or []
+    runs.append(run)
+    data["runs"] = runs
+    data["generated_at"] = datetime.now(timezone.utc).isoformat()
+    data["model_version"] = result["model_version"]
+    runs_path.parent.mkdir(parents=True, exist_ok=True)
+    runs_path.write_text(json.dumps(data, indent=2))
+    return run
 
 
 def main():
@@ -78,6 +110,7 @@ def main():
     }
     RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "latency.json").write_text(json.dumps(result, indent=2))
+    _append_run(result)
     print(json.dumps(result, indent=2))
 
 

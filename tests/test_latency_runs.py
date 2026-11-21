@@ -3,9 +3,14 @@
 Phase 1 measured p50 64.07 ms / p95 77.47 ms and Phase 2 measured
 p50 63.52 ms / p95 99.10 ms. Two fresh re-measurements disagreed
 with both, so benchmarks/results/latency_runs.json records all
-four runs and the docs table must match it exactly. latency.json
+four runs and the docs table must match them exactly. latency.json
 itself always holds the latest single run. If the JSON is missing,
 the message says to run scripts/measure_latency.py first.
+
+Later measurements are appended to the log by
+scripts/measure_latency.py, so the log can hold more than the four
+documented runs. The docs table covers only the four named runs;
+the latest-run check uses the last entry whatever it is.
 """
 
 import json
@@ -26,10 +31,12 @@ def _load_runs():
     return json.loads(RUNS.read_text())
 
 
-def test_four_runs_recorded():
+DOCUMENTED_LABELS = ["Phase 1", "Phase 2", "Re-measure A", "Re-measure B"]
+
+
+def test_documented_runs_recorded():
     data = _load_runs()
-    assert [r["label"] for r in data["runs"]] == [
-        "Phase 1", "Phase 2", "Re-measure A", "Re-measure B"]
+    assert [r["label"] for r in data["runs"][:4]] == DOCUMENTED_LABELS
     for run in data["runs"]:
         for key in ("mean_ms", "p50_ms", "p95_ms", "p99_ms"):
             assert isinstance(run[key], (int, float)), (run["label"], key)
@@ -61,8 +68,10 @@ def test_docs_latency_table_matches_runs():
             rows[parts[0]] = [_ms(p) for p in parts[1:]]
     assert set(rows) == {"Mean", "p50", "p95", "p99"}, rows.keys()
     keys = {"Mean": "mean_ms", "p50": "p50_ms", "p95": "p95_ms", "p99": "p99_ms"}
+    documented = [r for r in data["runs"] if r["label"] in DOCUMENTED_LABELS]
+    assert [r["label"] for r in documented] == DOCUMENTED_LABELS
     for name, key in keys.items():
-        assert rows[name] == [r[key] for r in data["runs"]], name
+        assert rows[name] == [r[key] for r in documented], name
 
 
 def test_docs_state_the_jitter_conclusion():

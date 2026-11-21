@@ -38,6 +38,26 @@ RESULTS = ROOT / "benchmarks" / "results"
 ARTIFACTS = ROOT / "artifacts"
 
 
+def _carry_s6e3_block(summary, metrics_path=RESULTS / "metrics.json"):
+    """Keep the recorded S6E3 scale-run state when train.py rewrites
+    metrics.json. The scale run is a separate step from training: it
+    needs the Kaggle CSV, which CI does not have. So train.py must
+    not reset a recorded 'done' back to 'pending'. When a previous
+    metrics.json already says the scale run is done, the new summary
+    keeps that state and its block; otherwise the pending default
+    stands. A missing or unreadable previous file changes nothing."""
+    if not metrics_path.exists():
+        return summary
+    try:
+        existing = json.loads(metrics_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return summary
+    if existing.get("s6e3_scale_run") == "done":
+        summary["s6e3_scale_run"] = "done"
+        summary["s6e3"] = existing.get("s6e3", summary["s6e3"])
+    return summary
+
+
 def _oof_threshold(model, X_train, y_train):
     """Profit-maximising threshold from out-of-fold train predictions."""
     oof_proba = cross_val_predict(model, X_train, y_train, cv=3,
@@ -176,6 +196,7 @@ def main():
         "s6e3_scale_run": "pending",
         "s6e3": {"train_time_s": None, "note": "Kaggle credentials not present; scale run pending"},
     }
+    summary = _carry_s6e3_block(summary)
     (RESULTS / "metrics.json").write_text(json.dumps(summary, indent=2))
     print(f"\nWrote {RESULTS / 'metrics.json'}")
     print(f"Champion: {champion['model_version']}")
