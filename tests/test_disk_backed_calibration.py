@@ -168,6 +168,11 @@ print("PEAK", resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024)
 """
 
 
+def _require_s6e3_file():
+    if not data.S6E3_PATH.exists():
+        pytest.skip(f"S6E3 file missing: {data.S6E3_PATH} (Kaggle download)")
+
+
 def _peak_rss_mb(mode: str, tmp_root: str | None) -> float:
     code = _PEAK_SNIPPET.format(
         root=str(ROOT), mode=mode, tmp_root=tmp_root)
@@ -192,6 +197,7 @@ def test_disk_backed_uses_less_memory(tmp_path):
     near 0.5. /tmp on this VM is a 512 MB tmpfs, so the
     disk-backed run uses a scratch dir under the home directory,
     where there is room."""
+    _require_s6e3_file()
     scratch = Path.home() / ".cache" / "diskcal-test"
     scratch.mkdir(parents=True, exist_ok=True)
     try:
@@ -209,3 +215,9 @@ def test_disk_backed_uses_less_memory(tmp_path):
         f"standard increment {std_inc:.0f} MB "
         f"(baseline {base_peak:.0f}, disk {disk_peak:.0f}, "
         f"standard {std_peak:.0f} MB)")
+
+
+def test_memory_test_skips_when_the_s6e3_file_is_absent(tmp_path, monkeypatch):
+    monkeypatch.setattr(data, "S6E3_PATH", tmp_path / "missing.csv")
+    with pytest.raises(pytest.skip.Exception):
+        _require_s6e3_file()
