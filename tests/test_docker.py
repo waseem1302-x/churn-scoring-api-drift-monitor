@@ -54,6 +54,16 @@ def test_runtime_requirements_exclude_reporting_and_tests():
     assert "pytest" in dev
 
 
+def test_container_listens_on_port_env():
+    # Cloud Run sets $PORT (default 8080) and requires the container
+    # to listen on it; locally $PORT is unset and 8000 applies.
+    # The Dockerfile CMD and the Buildah build script must agree.
+    text = _dockerfile()
+    assert "${PORT:-8000}" in text
+    build = (ROOT / "scripts" / "build_image.sh").read_text()
+    assert "${PORT:-8000}" in build
+
+
 def test_image_size_is_recorded_and_smaller():
     path = ROOT / "benchmarks" / "results" / "docker_image.json"
     if not path.exists():

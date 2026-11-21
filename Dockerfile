@@ -30,4 +30,7 @@ COPY artifacts/ ./artifacts/
 COPY data/raw/telco.csv ./data/raw/telco.csv
 COPY benchmarks/results/metrics.json ./benchmarks/results/metrics.json
 EXPOSE 8000
-CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]
+# Cloud Run sets $PORT (default 8080) and requires the container to
+# listen on it; locally $PORT is unset and the default 8000 applies.
+# exec keeps uvicorn as PID 1 so it receives the stop signal directly.
+CMD ["sh", "-c", "exec uvicorn app.api:app --host 0.0.0.0 --port ${PORT:-8000}"]

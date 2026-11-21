@@ -10,6 +10,10 @@
 # leaks into the image config. (2) buildah commit stages blobs in
 # /var/tmp, a 2 GB tmpfs the image does not fit in; the commit runs
 # with TMPDIR=~/buildah-tmp on the overlay filesystem.
+# (3) Cloud Run sets $PORT (default 8080) and requires the container
+# to listen on it, so the CMD uses ${PORT:-8000}; locally $PORT is
+# unset and the default 8000 applies. Keep this in sync with the
+# Dockerfile CMD.
 #
 # Run scripts/smoke_image.sh after this to record the size and
 # smoke-test the image in chroot.
@@ -41,7 +45,7 @@ buildah --storage-driver vfs copy "$runtime" benchmarks/results/metrics.json \
 buildah --storage-driver vfs config --workingdir /app \
     --env PYTHONDONTWRITEBYTECODE=1 --env PYTHONUNBUFFERED=1 \
     --port 8000 \
-    --cmd '["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]' \
+    --cmd '["sh", "-c", "exec uvicorn app.api:app --host 0.0.0.0 --port ${PORT:-8000}"]' \
     "$runtime"
 TMPDIR="$HOME/buildah-tmp" buildah --storage-driver vfs commit \
     "$runtime" "$TAG"
